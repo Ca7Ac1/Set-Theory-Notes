@@ -1,0 +1,964 @@
+\documentclass{article}
+\usepackage[utf8]{inputenc}
+
+\usepackage[a4paper, total={6in, 10in}]{geometry}
+
+\usepackage[english]{babel}
+
+\usepackage{amssymb}
+\usepackage{amsmath}
+\usepackage{amsthm}
+\usepackage{amsfonts}
+\usepackage{enumerate}
+\usepackage{mathtools}
+\usepackage{wasysym}
+
+\usepackage[boxed]{algorithm}
+\usepackage[noend]{algpseudocode}
+
+\usepackage{tikz}
+\usetikzlibrary{decorations.pathreplacing}
+
+\usepackage{graphicx}
+\graphicspath{ {../images/} }
+
+\usepackage{hyperref}
+\hypersetup{
+    colorlinks,
+    citecolor=black,
+    filecolor=black,
+    linkcolor=black,
+    urlcolor=black
+}
+
+\usepackage{mdframed}
+
+\theoremstyle{definition}
+\newtheorem{exer}{Exercise}[section]
+\newtheorem{thm}{Theorem}[section]
+\newtheorem{crly}[thm]{Corollary}
+\newtheorem{defn}[thm]{Definition}
+\newtheorem{axm}[thm]{Axiom}
+\newtheorem{lmma}[thm]{Lemma}
+
+\newcommand{\powset}[1]{\mathcal{P}(#1)}
+\newcommand{\N}{\mathbb{N}}
+\newcommand{\Z}{\mathbb{Z}}
+\newcommand{\Q}{\mathbb{Q}}
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\C}{\mathbb{C}}
+
+\newcommand\longdiv[2]{%
+\ensuremath{\strut#1$\kern.25em\smash{\raise.3ex\hbox{$\big)$}}$\mkern-8mu
+        \overline{\enspace\strut#2}}}
+
+\newcommand*{\mtset}{\ensuremath{\varnothing}}
+
+\DeclareMathOperator{\almu}{almu}
+\DeclareMathOperator{\gemu}{gemu}
+\DeclareMathOperator{\im}{im}
+\DeclareMathOperator{\GL}{GL}
+\DeclareMathOperator{\nullity}{nullity}
+\DeclareMathOperator{\rank}{rank}
+\DeclareMathOperator{\spanvec}{span}
+\DeclareMathOperator{\tr}{tr}
+\DeclareMathOperator{\inv}{inv}
+\DeclareMathOperator{\err}{err}
+\DeclareMathOperator{\rowsp}{rowsp}
+\DeclareMathOperator{\colsp}{colsp}
+\DeclareMathOperator{\Hom}{Hom}
+\DeclareMathOperator{\End}{End}
+\DeclareMathOperator{\Par}{Par}
+\DeclareMathOperator{\ran}{ran}
+\DeclareMathOperator{\dom}{dom}
+\DeclareMathOperator{\Ord}{Ord}
+\DeclareMathOperator{\cf}{cf}
+
+\newcommand{\ip}[1]{\left\langle #1 \right\rangle} % inner product
+\newcommand{\norm}[1]{\left\Vert #1 \right\Vert} % norm of a vector
+\newcommand{\abs}[1]{\lvert#1\rvert}
+\newcommand{\qint}[1]{\left[ #1 \right]_q}
+\newcommand{\qbinom}[2]{\begin{bmatrix} #1 \\ #2 \end{bmatrix}_q}
+
+\newlength{\defparindent}
+\setlength{\defparindent}{\parindent}
+
+\newenvironment{answer}
+    {\begin{mdframed}[backgroundcolor=gray!15, linewidth=0pt] \setlength{\parindent}{\defparindent}}
+    {\end{mdframed}}
+
+\title{Set Theory Exercises}
+\author{Ayan Chowdhury}
+\date{}
+
+\begin{document}
+
+\maketitle
+
+\tableofcontents
+
+\newpage
+
+\section{Axioms of Set Theory}
+
+\begin{exer}
+    Verify the definition of an ordered pair satisfies $(a, b) = (c, d) \leftrightarrow a = c \text{ and } b = d$.
+    \begin{answer}
+        If $a = c$ and $b = d$ then $(a, b) = (c, d)$ by substitution. If $(a, b) = (c, d)$ we have $\{\{a\}, \{a, b\}\} = \{\{c\}, \{c, d\}\}$. We thus have $\{a\} \in \{\{c\}, \{c, d\}\}$. Therefore $\{a\} = \{c\}$ or $\{a\} = \{c, d\}$. In the first case we have $a = c$. In the second case we have $a = c = d$. Either way, we have that $a = c$. Similarly we know $\{a, b\} \in \{\{c\}, \{c, d\}\}$. Thus either $\{a, b\} = \{c\}$ or $\{a, b\} = \{c, d\}$. In the first case, we have $a = b = c$. In the second we have $b = c$ or $b = d$. If $b = c$, and we know $a = c$, then it must hold that $\{c\} = \{c, d\}$, meaning $d = c = b$. Therefore, it holds that $b = d$.
+    \end{answer}
+\end{exer}
+
+\begin{exer}
+    Show there is no set $X$ such that $\powset{X} \subseteq X$.
+
+    \begin{answer}
+        Let us assume for the sake of contradiction that $\powset{X} \subseteq X$. By definition we have $X \in \powset{X}$. As $\powset{X} \subseteq X$ this would imply $X \in X$, which contradicts the axiom of regularity.
+    \end{answer}
+\end{exer}
+
+\begin{exer}
+    Show that if $X$ is inductive, then the set $\{x \in X \, | \, x \subseteq X\}$ is inductive. This implies $\N$ is transitive, and for each $n$, 
+    \[
+        n = \{m \in \N \, | \, m < n \}
+    \]
+
+    \begin{answer}
+        We have that $\mtset \in X$. It holds that $\mtset \subseteq X$, therefore $\mtset \in \{x \in X \, | \, x \subseteq X\}$. Consider an arbitrary $x \in \{x \in X \, | \, x \subseteq X\}$. It holds that $x \in X$. Therefore $x \cup \{x\} \in X$. We have that $x \subseteq X$ and $x \in X$ so $x \cup \{x\} \subseteq X$. Therefore $x \cup \{x\} \in \{x \in X \, | \, x \subseteq X\}$. 
+        
+        It then holds that $\{x \in \N \, | \, x \subseteq \N\}$ is an inductive and transitive subset of $\N$. By definition of $\N$, it must then hold $\N = \{x \in \N \, | \, x \subseteq \N\}$. Therefore $\N$ is transitive. 
+        
+        Trivially we have $\{m \in \N \, | \, m < n\} \subseteq n$. Consider an arbitrary $m \in n$. As $\N$ is transitive we have $n \subseteq \N$, which implies $m \in \N$. Therefore $m \in \{m \in \N \, | \, m < n\}$. Thus $n = \{m \in \N \, | \, m < n\}$. 
+    \end{answer}
+\end{exer}
+
+\begin{exer}
+    Show that if $X$ is inductive, then the set $\{x \in X \, | \, x \text{ is transitive} \}$ is inductive. Hence every $n \in \N $ is transitive.
+    \begin{answer}
+        We have $\mtset$ is vacuously transitive. Consider an arbitrary transitive $x \in X$. It must hold that $x \cup \{x\} \in X$. Consider an arbitrary $a \in x \cup \{x\}$. Either $a \in x$ or $a = x$. If $a \in x$ then $a \subseteq x \subseteq x \cup \{x\}$ as $x$ is transitive. If $a = x$ then $a \subseteq x \cup \{x\}$ as well. Therefore $x  \cup \{x\}$ is transitive, meaning it is contained in the set $\{x \in X \, | \, x \text{ is transitive} \}$. As $\N$ is the smallest inductive set it follows that $\N$ consists of only transitive elements.
+    \end{answer}
+\end{exer}
+
+\begin{exer}
+    Show that if $X$ is inductive, then the set $\{x \in X \, | \, x \text{ is transitive and } x \not\in x\}$ is inductive. Hence $n \not\in n$ and $n \ne n + 1$ for each $n \in \N$.
+
+    \begin{answer}
+        We have $\mtset$ is transitive and $\mtset \not\in \mtset$. Consider an arbitrary $x \in X$ which is transitive and does not contain itself. It holds that $x \cup \{x\}$ is transitive and contained in $X$. As $x \not\in x$ we have $x \ne x \cup \{x\}$. Therefore $x \cup \{x\} \not\in \{x\}$. We also then have $x \cup \{x\} \not\subseteq x$, which by the contrapositive of transitivity gives us $x \cup \{x\} \not\in x$. Therefore $x \cup \{x\} \not \in x \cup \{x\}$. Thus $x \cup \{x\}$ is in our set, meaning our set is inductive.  
+    \end{answer}
+\end{exer}
+
+\begin{exer}
+    Prove that $\N$ is $T$-infinite. 
+
+    \begin{answer}
+        Consider $\N \subseteq \powset{\N}$. Let $n$ be arbitrary in $\N$. We have $n \ne n + 1$ and $n \subsetneq n + 1$. Thus $n$ is not a $\subset$-maximal element. Therefore $\N$ does not have a $\subset$-maximal element, meaning $\N$ is $T$-infinite.
+    \end{answer}
+\end{exer}
+
+\newpage
+
+\begin{exer}
+    If $X$ is inductive, then 
+    \[
+        \{x \in X \, | \, x \text{ is transitive and every nonempty $z \subseteq x$ has an $\in$-minimal element}\}
+    \]
+    is inductive.
+
+    \begin{answer}
+        We have that $\mtset$ is contained in this set. Consider an arbitrary $x$ in our set. It holds that $x \cup \{x\}$ is contained in $X$ and is transitive. Assume $x \in x$. Then $\{x\} \subseteq x$ is a non-empty subset of $x$ with no $\in$-minimal element. It must thus hold that $x \not\in x$. Fix an arbitrary non-empty subset $z \subseteq x \cup \{x\}$. We consider two cases. 
+        \begin{itemize}
+            \item If $z \setminus \{x\}$ is empty, then $z = \{x\}$. As $x \not\in x$, we have $x$ is an  $\in$-minimal element of $z$. 
+            \item If $z \setminus \{x\}$ is nonempty then $z \setminus \{x\}$ has a $\in$-minimal element $t$. By transitivity, $t \subseteq x$, and so $x \not\in t$. It follows that $t$ is an $\in$-minimal element of $z$.
+        \end{itemize}
+        Therefore $x \cup \{x\}$ is in our set, meaning our set is inductive.
+    \end{answer}
+\end{exer}
+
+\begin{exer}
+    Every nonempty $X \subseteq \N$ has an $\in$-minimal element. 
+
+    \begin{answer}
+        Fix some $n \in X$. It holds that $n + 1 \cap X$ is a nonempty subset of $n + 1$. Therefore, it has some $\in$-minimal element $t$. Consider an arbitrary $x \in X$. If $x \in X \cap n + 1$ then $x \not\in t$. If $x \not\in X \cap n + 1$, then because $t \subseteq n + 1$ we have $x \not\in t$. Therefore $t$ is a $\in$-minimal element of $X$.
+    \end{answer}
+\end{exer}
+
+\begin{exer}
+    Show that if $X$ is inductive then so is $\{x \in X \, | \, x = \mtset \lor x = y \cup \{y\} \text{ for some $y$} \}$
+
+    \begin{answer}
+        $\mtset$ is contained in $X$ and our set. Consider an arbitrary $x$ in our set. It holds that $x \cup \{x\} \in X$ meaning it is contained in our set. Therefore our set is inductive. 
+    \end{answer}
+\end{exer}
+
+\begin{exer}[Induction]
+    Let $A$ be a subset of $\N$ such that $0 \in A$ and $n \in A \to n + 1 \in A$. Show that $A = \N$.
+    \begin{answer}
+        By assumtion we have $A \subseteq \N$. As $A$ is inductive we have $\N \subseteq A$. Therefore $A = \N$.
+    \end{answer}
+\end{exer}
+
+\begin{exer}
+    Show that each $n \in \N$ is $T$-finite. 
+    \begin{answer}
+        Let $A = \{n \in \N \, | \, n \text{ is $T$-finite}\}$. It holds that $0=\mtset$ is $T$-finite. Consider an arbitrary $n \in \N$ that is $T$-finite. Consider $n + 1$. Let $z$ be an arbitrary nonempty subset of $\powset{n + 1}$. Let $t$ be a $\subset$-maximal element of $\{u \setminus \{n\} \, | \, u \in z\} \subseteq \powset{n}$.
+        \begin{itemize}
+            \item If $t \cup \{n\} \in z$, then it holds that $t \cup \{n\}$ is a $\subset$-maximal element of $z$. This is because any other set containing $n$ must not contain some element of $t$, as $t$ is $\subset$-maximal.
+            \item $t \cup \{n\} \in z \not\in z$ then $t$ is a $\subset$-maximal element of $z$ by construction.
+        \end{itemize}
+        Thus by induction we have that $n$ is $T$-finite for all $n \in \N$. 
+    \end{answer}
+\end{exer}
+
+\begin{exer}
+    Show that every finite set is $T$-finite.
+    \begin{answer}
+        Consider a finite set $S$. Fix a bijection between $S$ and $n \in \N$. Consider an arbitrary $X \subseteq \powset{X}$. Our bijection induces a mapping from $X$ to $X'$, a subset of $\powset{n}$. $X'$ has a $\subset$-maximal element. The inverse of this $\subset$-maximal element will then be the $\subset$-maximal element of $X$.
+    \end{answer}
+\end{exer}
+
+\begin{exer}
+    Every infinite set is $T$-infinite.
+    \begin{answer}
+        Denote our infinite set as $S$. Consider the set $X = \{u \in \powset{S} \, | \, \text{$u$ is finite}\}$. We have such a set is not empty as $\mtset \in X$. Consider an arbitrary $x \in X$. Let us say $x$ has $n \in \N$ elements. If $S \setminus x = \mtset$ then there would be a bijection between $S$ and $n$, meaning $S$ is finite. As $s$ is infinite, it holds there exists some $c \in S \setminus x$. We can construct a bijection then between $x \cup \{c\}$ and $n + 1$. Therefore $x \cup \{c\} \in X$. We have $x \subsetneq x \cup \{c\}$. Therefore $x$ is not $\subset$-maximal. Thus $X$ has no $\subset$-maximal element, meaning $S$ is $T$-infinite.
+    \end{answer}
+\end{exer}
+
+\newpage
+
+\begin{exer}
+    Show that the seperation axioms follow from the replacement schema.
+    \begin{answer}
+        Let $\varphi$ be a property (with parameter $p$). Consider arbitrary $X$ and $p$. Let us define the property $F(x, y, p) := x = y \land \varphi(x, p)$. By the axiom of replacement we have $F[X]$ exists. Consider an arbitrary $y \in F[X]$. There exists some $x$ such that $F(x, y, p)$. This implies $x = y$ and $\varphi(x, p)$. Therefore $\varphi(y, p)$. Consider an arbitrary $y$ that satisfies $\varphi(y, p)$. We have $F(y, y, p)$, therefore $y \in F[X]$.
+    \end{answer}
+\end{exer}
+
+\begin{exer}
+    Instead of union, power set, and replacement axioms consider the following weaker versions 
+    \begin{itemize}
+        \item $\forall X \exists Y [\bigcup X \subseteq Y]$
+        \item $\forall X \exists Y [\powset{X} \subseteq Y]$
+        \item If $F$ is a function then  $\forall X \exists Y(F[X] \subseteq Y)$.
+    \end{itemize}
+    Prove axioms $IV$, $V$ anad $VII$ using these axioms and the seperation schema.
+    \begin{answer}
+        Consider an arbitrary set $X$. We have $\exists Y$ such that $\bigcup X \subseteq Y$. It then holds that $\bigcup X = \{y \in Y \, | \, \exists u \in X [y \in u] \}$. Thus we have the Axiom of Union.
+        
+        Consider an arbitrary set $X$. We have $\exists Y$ such that $\powset{X} \subseteq Y$. It then holds that $\powset{X} = \{y \in Y \, | \, y \subseteq X\}$. Thus we have the Axiom of Power Set.
+        
+        Consider an arbitrary function $F$. Let $X$ be an arbitrary set. We have there exists a $Y$ such that $F[X] \subseteq Y$. It then holds that $F[X] = \{y \in Y \, | \, \exists x \in X [F(x) = y] \}$. Thus we have the Axiom Schema of Replacement.
+    \end{answer}
+\end{exer}
+
+\section{Ordinal Numbers}
+
+\begin{exer}
+    Show that the relation ``$(P, <)$ is isomorphic to $(Q, <)''$ is an equivalence relation. 
+    \begin{answer}
+        We have that a the identity function is a isomorphism between any partially ordered set and itself. Therefore the relation is reflexive. An isomorphism between two partially ordered sets is invertible, and thus the relation is symmetric. Compositions of isomorphisms are isomorphisms, so our relation is transitive. Therefore our relation forms an equivalence relation.
+    \end{answer}
+\end{exer}
+
+% \begin{exer}
+%     Assume that each well-ordered set $W$ is assigned an ordinal $\alpha = \text{o.t.} W$. Show that the relation $\alpha < \beta$ is a linear ordering of the class of all ordinals and that every nonempty set of ordinals has a least element.
+%     \begin{answer}
+%         By 2.7 we have that $<$ is irreflexive, asymmetric, and total. Assume $\alpha < \beta$ and $\beta < \gamma$. Define $f$ as the isomorphism from $\alpha$ to an initial segment of $\beta$ and $g$ as the isomorphism of $\beta$ to an initial segment of $\gamma$. Then $g \restriction_{\ran(f)} \circ f$  is a isomorphism from $\alpha$ to an initial segment of $\gamma$, meaning $\alpha < \gamma$. Therefore $<$ is transitive. Thus $<$ defines a linear ordering of the class of all ordinals. 
+
+%         Consider a nonempty set $S$ of ordinals. We have that $\cap S$ will be the least ordinal. 
+%     \end{answer}
+% \end{exer}
+
+\begin{exer}
+    Show that $\alpha$ is a limit ordinal if and only if $\beta < \alpha$ implies $\beta + 1 < \alpha$ for every $\beta$. 
+
+    \begin{answer}
+        Let us first show that $\beta < \alpha \to \beta + 1 \le \alpha$. We have $\beta + 1 = \beta \cup \{\beta\}$. For any element in $\beta$, we have it is in $\alpha$ by assumption. Similarly, we have $\beta in \alpha$ by assumption. Thus $\beta + 1 \subseteq \alpha$, meaning $\beta + 1 \le \alpha$.
+
+        Let us assume $\alpha$ is a limit ordinal. Consider an arbitrary $\beta < \alpha$. We have $\beta + 1 \le \alpha$. As $\beta + 1$ is a successor ordinal, it is not a limit ordinal. Therefore $\beta + 1 \ne \alpha$, meaning $\beta + 1 < \alpha$.
+
+        Let us assume $\beta < \alpha \to \beta + 1 < \alpha$ for all $\beta$. For an arbitrary ordinal $\gamma$ we have that if $\gamma \ge \alpha$ then $\gamma + 1 \ne \alpha$. If $\gamma < \alpha$ then $\gamma + 1 < \alpha$ by assumption, which also gives us $\gamma + 1 \ne \alpha$. Therefore $\alpha$ is not the successor of any ordinal, meaning it is a limit ordinal.
+    \end{answer}
+\end{exer}
+
+\begin{exer}
+    Show that a set $X$ is inductive, then $X \cap \Ord$ is inductive. Then show that the set $\N = \bigcap \{X \, | \, X \text{ is inductive}\}$ is the least limit ordinal $\ne 0$. 
+
+    \begin{answer}
+        We have that $\mtset \in X$ and $\mtset \in \Ord$. Consider an arbitrary $x \in X \cap \Ord$. We have $x + 1 \in X$ by definition and $x + 1 \in \Ord$ by 2.11. Therefore $x + 1 \in X \cap \Ord$, meaning $X \cap \Ord$ is inductive.
+    
+        By exercise 2.2 it follows that the least limit ordinal (excluding $0$) is inductive. Thus $\N \subseteq \omega$. Let us assume for the sake of contradiction $\omega \not\subseteq \N$. There exists a least $\alpha \in \omega$ such that $\alpha \not\in \N$. It must hold that $\alpha \ne 0$, as $0 \in \N$. Therefore $\alpha$ is a successor ordinal, meaning $\alpha = \beta + 1$. However, $\beta \in \N$, meaning $\beta + 1 \in \N$, resulting in contradiction. Thus we have $\omega = \N$.
+    \end{answer}
+\end{exer}
+
+\newpage
+
+\begin{exer}
+    Let $\omega$ be the least limit ordinal (that is not $0$) if such it exists, or $\Ord$ otherwise. Without the Axiom of Infinity prove the following statements are equivalent
+    \begin{enumerate}[(i)]
+        \item There exists an inductive set
+        \item There exists an infinite set
+        \item $\omega$ is a set.
+    \end{enumerate}
+
+    \begin{answer}
+        If there exists an inductive set then the least limit ordinal exists, as it is a restriction of any inductive set. Thus $\omega$ is a set.
+
+        If $\omega$ is a set, then $\omega$ is an infinite set. This is because any finite number is not in bijection with $\omega$ (which can be shown by induction). Thus an infinite set exists.
+
+        Assume there exists an infinite set, $P$. Consider the set $A \subset \powset{P}$ which is the set of all finite subsets of $P$. As each each element of $A$ is finite, it is in bijection with some unique finite number. By replacement, there exists a set $N$ with each such finite number. We have $0 \in N$. For any $x \in N$, we know the set bijecting with $x$, denoted $X$, is not equal to $P$. Thus there must be some other element $p \in P$ that is not in $X$. We have $X \cup \{p\}$ is in bijection with $x + 1$. This means $X \cup \{p\} \in A$, so $x + 1 \in N$. Thus $N$ is inductive, so there exists an inductive set.  
+    \end{answer}
+\end{exer}
+
+\begin{exer}
+    If $W$ is a well-ordered set, then there exists no sequence $\langle a_n \, | \, n \in \N \rangle$ in $W$ such that $a_0 > a_1 > a_2 > \cdots$.
+    \begin{answer}
+        Let us assume for the sake of contradiction such a sequence exists. We have by the axiom of replacement that the image of such a sequence exists. The image is a subset of $W$, meaning it has a least element. Let $n$ be the index of this element in our sequence. We then have $a_n \ge a_{n + 1}$, resulting in contradiction.
+    \end{answer}
+\end{exer}
+
+\begin{exer}
+    Prove that there are arbitrarily large limit ordinals. That is, $\forall \alpha$, $\exists \beta > \alpha$ such that $\beta$ is a limit ordinal. 
+    \begin{answer}
+        We have shown that $\alpha + \omega$ is a limit ordinal, and it holds that $\alpha < \alpha + \omega$.
+    \end{answer}
+\end{exer}
+
+\begin{exer}
+    Show that normal sequence $\langle \gamma_\alpha \, | \, \alpha \in \Ord \rangle$ has arbitrariliy large fixed points, meaning ordinals $\alpha$ such that $\gamma_\alpha = \alpha$.
+    \begin{answer}
+        % \href{https://en.wikipedia.org/wiki/Fixed-point_lemma_for_normal_functions}{Soln}
+        Let $\beta \in \Ord$ be arbitrary. Consider the $\omega$-sequence $a$. Let $a_0 = \beta$ and $a_{n + 1}$ for $n \in \omega$ be $f(a_{n})$. By replacement, the image of such a sequence exists. The union over this image will then be the supremum, or limit, of this sequence. Denote this limit $\alpha$. In the case that $\alpha$ is a successor ordinal we have that $\alpha \in \im(a)$. This is because otherwise the previous ordinal would be an upper bound for our set. If $\alpha \in \im(a)$ we can say $a_n = \alpha$. We have $a_{n + 1} = f(\alpha) \ge \alpha$. However, $\alpha$ is a supremum, meaning $f(\alpha) = \alpha$, and thus $\alpha$ is a fixed point. Let us consider the case when $\alpha$ is a limit ordinal. As $\gamma$ is a normal sequence, we have $f(\alpha) = \lim_{\xi \to \alpha} \gamma_\xi$. By the properties of the supremum we have $\lim_{\xi \to \alpha} \gamma_\xi = \lim_{n \to \omega} a_n = \alpha$. Therefore $f(\alpha) = \alpha$. In either case, we have a fixed point larger than $\beta$. Thus a normal sequence of ordinals on the class of ordinals has arbitrarily large fixed points.
+    \end{answer}
+\end{exer}
+
+\newpage
+
+\begin{exer}
+    Show that for all $\alpha$, $\beta$, and $\gamma$, 
+    \begin{enumerate}[(i)]
+        \item $\alpha \cdot (\beta + \gamma) = \alpha \cdot \beta + \alpha \cdot \gamma$
+        
+        \begin{answer}
+            In the case $\gamma = 0$ we have $\alpha \cdot (\beta + 0) = \alpha \cdot \beta$. If $\gamma = \xi + 1$, and the statement holds for $\xi$, then 
+            \[
+                \alpha \cdot (\beta + \gamma) = \alpha \cdot (\beta + \xi + 1) = \alpha \cdot (\beta + \xi) + \alpha = \alpha \cdot \beta + \alpha \cdot \xi + \alpha = \alpha \cdot \beta + \alpha \cdot \gamma
+            \]
+            Let us consider the case of when $\gamma$ is a nonzero limit ordinal and all $\xi < \gamma$ satisfy the given property. If $\gamma$ is a limit ordinal, we also have that $\beta + \gamma$ is a limit ordinal. Then
+            \[
+                \alpha \cdot (\beta + \gamma) = 
+                \bigcup_{\xi \in (\beta + \gamma)} \alpha \cdot \xi
+                =
+                \bigcup_{\xi \in \gamma} \alpha \cdot (\beta + \xi)  
+                =
+                \bigcup_{\xi \in \gamma} \alpha \cdot \beta + \alpha \cdot \xi
+                =
+                \bigcup_{\xi \in (\alpha \cdot \gamma)} \alpha \cdot \beta +  \xi
+                =   
+                \alpha \cdot \beta + \alpha \cdot \gamma 
+            \]
+        \end{answer}
+        \item $\alpha^{\beta + \gamma} = \alpha^{\beta} \cdot \alpha^{\gamma}$
+        \begin{answer}        
+            In the case $\gamma = 0$ we have $\alpha^{\beta + \gamma} = \alpha^\beta = \alpha^\beta \cdot 1 = \alpha^\beta \cdot \alpha^\gamma$. If $\gamma = \xi + 1$, and the statement holds for $\xi$,  we have 
+            \[
+                \alpha^{\beta + \gamma} = \alpha^{\beta + \xi + 1} = \alpha^{\beta + \xi} \cdot \alpha = \alpha^{\beta} \cdot \alpha^{\xi} \cdot \alpha 
+                = \alpha^{\beta} \cdot \alpha^{\gamma}
+            \]
+            Let us consider the case $\gamma$ is a nonzero limit ordinal and all $\xi < \gamma$ satisfy the given property. If $\gamma$ is a limit ordinal, we have that $\beta + \gamma$ is also a limit ordinal. Then 
+            \[
+                \alpha^{\beta + \gamma} 
+                = 
+                \bigcup_{\xi \in (\beta + \gamma)} \alpha^{\xi}
+                =  
+                \bigcup_{\xi \in \gamma} \alpha^{\beta + \xi}
+                =  
+                \bigcup_{\xi \in \gamma} (\alpha^{\beta} + \alpha^{\xi})
+                =
+                \alpha^{\beta} + \bigcup_{\xi \in \gamma} \alpha^{\xi}
+                =
+                \alpha^{\beta} + \alpha^{\gamma}
+            \]
+        \end{answer}
+        \item $(\alpha^\beta)^\gamma = \alpha^{\beta \cdot \gamma}$
+        \begin{answer}
+            In the case $\gamma = 0$ we have $(\alpha^{\beta})^{\gamma} = 1 = \alpha^{\beta \cdot \gamma}$. If $\gamma = \xi + 1$, and the statement holds for $\xi$,  we have 
+            \[
+                (\alpha^{\beta})^{\gamma} 
+                = 
+                (\alpha^{\beta})^{\xi + 1}
+                =
+                (\alpha^{\beta})^{\xi} \cdot \alpha^{\beta}
+                =
+                \alpha^{\beta \cdot \xi} \cdot \alpha^{\beta}
+                =
+                \alpha^{\beta \cdot \xi + \beta}
+                =
+                \alpha^{\beta \cdot \gamma}
+            \]
+            Let us consider the case $\gamma$ is a nonzero limit ordinal and all $\xi < \gamma$ satisfy the given property. We have
+            \[
+                (\alpha^{\beta})^{\gamma}
+                =
+                \bigcup_{\xi \in \gamma} (\alpha^{\beta})^{\xi}
+                =
+                \bigcup_{\xi \in \gamma} \alpha^{\beta \cdot \xi} 
+                =
+                \alpha^{\bigcup_{\xi \in \gamma} (\beta \cdot \xi)} 
+                =
+                \alpha^{\beta \cdot \gamma} 
+            \]
+        \end{answer}
+    \end{enumerate}
+\end{exer}
+
+\begin{exer}
+    \hfill
+    \begin{enumerate}[(i)]
+        \item Show that $(\omega + 1) \cdot 2 \ne \omega \cdot 2 + 1 \cdot 2$
+        \begin{answer}
+            By our definitions of multiplication and addition we have 
+            \[
+                (\omega + 1) \cdot 2
+                =
+                (\omega + 1) \cdot 1 + (\omega + 1)
+                =
+            \]
+            \[
+                \omega + 1 + \omega + 1
+                =
+                \omega + (1 + \omega) + 1
+                =
+                \omega + \omega + 1
+                =
+                \omega \cdot 2 + 1
+            \]
+            It holds that $\omega \cdot 2 + 1 \cdot 2 = (\omega \cdot 2 + 1) + 1$ is not equal to this quantity, and instead is its successor.
+        \end{answer}
+
+        \item Show that $(\omega \cdot 2)^2 \ne \omega^2 \cdot 2^2$.
+        \begin{answer}
+            By the definitions of multiplication and exponentiation we have 
+            \[
+                (\omega \cdot 2)^2 =   
+                (\omega \cdot 2)^1 \cdot (\omega \cdot 2)
+                =
+            \]
+            \[
+                \omega \cdot 2 \cdot \omega \cdot 2 
+                =
+                \omega \cdot (2 \cdot \omega) \cdot 2 
+                = 
+                \omega \cdot \omega \cdot 2
+            \]
+            We have that this quantity is strictly less than $\omega^2 \cdot 2^2$.
+        \end{answer}
+    \end{enumerate}
+\end{exer}
+
+\newpage
+
+\begin{exer}
+    Show that if $\alpha < \beta$ then 
+    \begin{itemize}
+        \item $\alpha + \gamma \le \beta + \gamma$
+        \begin{answer}
+            In the case that $\gamma = 0$ we have $\alpha + \gamma = \alpha < \beta = \beta + \gamma$. Consider when $\gamma = \xi + 1$ and the statement holds for $\xi$. It follows from this assumption and the definition of the successor that $\alpha + \gamma = (\alpha + \xi) + 1 \le (\beta + \xi) + 1 = \beta + \gamma$. Consider when $\gamma$ is a nonzero limit ordinal and the statement is satisfied for all $\xi < \gamma$. We have 
+            \[
+                \alpha + \gamma = \bigcup_{\xi \in \gamma} \alpha + \xi 
+                \le 
+                \bigcup_{\xi \in \gamma} \beta + \xi
+                =
+                \beta + \gamma
+            \]
+            Thus by transfinite induction $\alpha + \gamma \le \beta + \gamma$.
+        \end{answer}
+
+        \item $\alpha \cdot \gamma \le \beta \cdot \gamma$
+        \begin{answer}
+            In the case that $\gamma = 0$ we have $\alpha \cdot \gamma = 0 = \beta \cdot \gamma$. Consider when $\gamma = \xi + 1$ and the statement holds for $\xi$. We have $\alpha \cdot \gamma = (\alpha \cdot \xi) + \alpha \le (\beta \cdot \xi) + \alpha < (\beta \cdot \xi) + \beta = \beta \cdot \gamma$. Consider when $\gamma$ is a nonzero limit ordinal and the statement is satisfied for all $\xi < \gamma$. We have 
+            \[
+                \alpha \cdot \gamma
+                =
+                \bigcup_{\xi \in \gamma} \alpha \cdot \xi 
+                \le 
+                \bigcup_{\xi \in \gamma} \beta \cdot \xi
+                = 
+                \beta \cdot \gamma
+            \]
+            Thus by transfinite induction $\alpha \cdot \gamma \le \beta \cdot \gamma$.
+        \end{answer}
+
+        \item $\alpha^\gamma \le \beta^\gamma$
+        \item \begin{answer}
+            In the case that $\gamma = 0$ we have $\alpha^\gamma = 1 = \beta^\gamma$. Consider when $\gamma = \xi + 1$ and the statement holds for $\xi$. We have $\alpha^\gamma = \alpha^\xi \cdot \alpha \le \beta^\xi \cdot \alpha < \beta^\xi \cdot \beta = \beta^\gamma$. Consider when $\gamma$ is a nonzero limit ordinal and the statement is satisfied for all $\xi < \gamma$. We have 
+            \[
+                \alpha^\gamma
+                =
+                \bigcup_{\xi \in \gamma} \alpha^{\xi}
+                \le 
+                \bigcup_{\xi \in \gamma} \beta^{\xi}
+                =
+                \beta^\gamma
+            \]
+            Thus by transfinite induction $\alpha^\gamma \le \beta^\gamma$.
+        \end{answer}
+    \end{itemize}
+\end{exer}
+
+\begin{exer}
+    Find $\alpha$, $\beta$, and $\gamma$ where 
+    $\alpha < \beta$ and $\alpha + \gamma = \beta + \gamma$, $\alpha \cdot \gamma = \beta \cdot \gamma$, and $\alpha^\gamma = \beta^\gamma$
+    \begin{answer}
+        Let $\alpha = 2$, $\beta = 3$, and $\gamma = \omega$.
+    \end{answer}
+\end{exer}
+
+\begin{exer}
+    Let $\varepsilon_0 = \lim_{n \to \omega} \alpha_n$ where $\alpha_0 = \omega$ and $\alpha_{n + 1} = \omega^{\alpha_n}$ for all $n$. Show that $\varepsilon_0$ is the least ordinal $\varepsilon$ such that $\omega^\varepsilon = \varepsilon$.
+    \begin{answer}
+        Let us show that $\alpha$ is strictly increasing. Vacuously we have $\alpha_0$ is greater than anything before it in $\alpha$. Let us assume $\alpha$ is strictly increasing up to $n$. We have $\alpha_{n + 1} = \omega^{\alpha_{n}}$. In the case $n$ is a successor ordinal we have $\omega^{\alpha_{n}} > \omega^{\alpha_{n - 1}} = \alpha_n$. Otherwise, we have $n = 0$, which still gives us $\omega^{\alpha_{n}} = \omega^\omega > \omega^{1} = \alpha_n$. Thus by induction, $\alpha$ is strictly increasing. This implies that the limit of $\alpha$ is not a successor ordinal. Therefore $\varepsilon_0$ is a limit ordinal, so by the definition of ordinal exponentiation we have 
+        \[
+            \omega^{\varepsilon_0} 
+            =
+            \lim_{\gamma \to \varepsilon_0} \omega^\gamma 
+            =
+            \lim_{n \to \omega} \omega^{\alpha_n}
+            =
+            \lim_{n \to \omega} a_{n + 1}
+            =
+            \varepsilon_0  
+        \]
+        For any ordinal $\beta < \varepsilon_0$ there will be some least $n$ such that $\beta \le \alpha_n$. If the least such $n$ is $0$, then we have $\beta \le \omega$, and it holds that $\omega^\beta \ne \beta$. Otherwise, we have $n = m + 1$ for some $m \in \omega$. Then $\alpha_m < \beta \le \alpha_{m + 1}$. Then $\omega^{\alpha_m} < \omega^{\beta} \le \omega^{\alpha_{m + 1}}$. Thus we have $\omega^{\alpha_m} = \alpha_{m + 1} = \alpha_n < \omega^\beta$. This gives us the inequality $\beta \le \alpha_n < \omega^\beta$. Therefore $\beta \ne \omega^\beta$. Thus such a $\beta$ is not the least $\varepsilon$ such that $\omega^\varepsilon = \varepsilon$. Therefore such an $\varepsilon$ must be greater than or equal to $\varepsilon_0$.
+    \end{answer} 
+\end{exer}
+
+\newpage
+
+\begin{exer}
+    Prove the equivalence of the following statements for a limit ordinal $\gamma > 0$
+    \begin{itemize}
+        \item $\gamma$ is indecomposable
+        \item $\alpha + \gamma = \gamma$ for all $\alpha < \gamma$ 
+        \item $\gamma = \omega^\alpha$ for some $\alpha$
+    \end{itemize}
+    \begin{answer}
+        Let us assume $\gamma$ is indecomposable. Consider an arbitrary $\alpha < \gamma$. We have $\gamma = 0 + \gamma \le \alpha + \gamma$. We also have $\alpha + \gamma = \bigcup_{\xi \in \gamma} \alpha + \xi \le \gamma$. Therefore $\alpha + \gamma = \gamma$.
+        
+
+        If $\gamma \ne \omega^\alpha$ for some $\alpha$ then Cantor's normal form immediately gives us the existence of $\alpha < \gamma$ such that $\alpha + \gamma > \gamma$ (being $\omega^{\beta_1}$ where $\beta_1$ is the largest power of $\omega$ in $\gamma$). Therefore if $\alpha + \gamma = \gamma$ for all $\alpha < \gamma$ then $\gamma = \omega^\alpha$.
+        
+        If $\gamma = \omega^\alpha$ then Cantor's normal form gives us all $\alpha, \beta$ less than $\gamma$ can be written as $\omega^{\xi} \cdot k + \cdots$ for $\xi < \alpha$. Their sum will have greatest power less than $\alpha$, meaning the sum will not equal $\gamma$. Thus $\gamma$ is indecomposable.
+    \end{answer}
+\end{exer}
+
+\begin{exer}
+    If $E$ is a well-rounded relation on $P$, then there is on sequence $\langle a_n \, | \, n \in \N \rangle$ in $P$ such that $a_1 E a_0$, $a_2 E a_1$, $a_3 E a_2$, $\cdots$.
+    \begin{answer}
+        Let us assume for the sake of contradiction such a function $F$ exists. Consider the image of $F$. We have $\im(F) \subseteq P$. Therefore, there exists a $a \in \im(F)$ that is an $E$-minimal element. Let $n$ be the natural number such that $a_n = a$. We have by construction $a_{n + 1} \, E \, x$, resulting in contradiction. Therefore, no such $F$ exists.
+    \end{answer}
+\end{exer}
+
+\begin{exer}[Well-Founded Recursion]
+    Let $E$ be a well-founded relation on a set $P$, and let $G$ be a function. Show that there exists a function $F$ such that $\forall x \in P$, $F(x) = G(x, F\restriction_{\{y \in P \, | \, y \, E \, x\}})$.
+    \begin{answer}
+        Let $\rho$ be the height function from $P$ to some ordinal. Let us define our function $F$ over our set $P$ where $F(x) = y$ if and only if there exists a function $X$ with domain $\{p \in P \, | \, \rho(p) < \rho(x)\}$ such that $\forall a \in \dom(X)$ we have $X(a) = G(a, X \restriction_{\{p \in P \, | \, p \, E \, a\}})$ and $y = G(x, X)$.
+
+        If there exist $X$ and $X'$ which satisfy this property, we can consider an $E$-minimal element $s \in \{p \in P \, | \, X(p) \ne X'(p)\}$. We have $X(s) = G(s, X\restriction_{\{y \in P \, | \, y \, E \, s\}}) = G(s, X'\restriction_{\{y \in P \, | \, y \, E \, s\}}) = X'(s)$, resulting in contradiction. Thus $X = X'$, implying that $F$ is well-defined. 
+
+        Assume for the sake of contradiction that $F$ does not satisfy the property $\forall x \in P$, $F(x) = G(x, F \restriction_{\{y \in P \, | \, y E x\}})$. Let $s$ be an element of $P$ with the least height (that is the least ordinal under $\rho$) which does not satisfy this (meaning either the property is not satisfied or $s$ is not in the domain of $F$). This implies that $F\restriction_{\{p \in P \, | \, \rho(p) < \rho(s)\}}$ satisfies this condition. This means it is a set $X$ satisfying the conditions of $F(s)$. Therefore $s$ is in the domain of $F$ and satisfies the given condition, resulting in contradiction. Thus we have $\forall x \in P$, $F(x) = G(x, F\restriction_{\{y \in P \, | \, y \, E \, x\}})$. 
+
+        Assume for the sake of contradiction that $\dom(F) \ne P$. Let $s$ be an  $E$-minimal element of $P \setminus \dom(F)$.
+        
+        Let $F'$ be an arbitrary function satisfying our constraints. If $F'$ does not equal $F$, then there exists an $E$-minimal element $s \in \{p \in P \, | \, F(p) \ne F'(p)\}$. However, we have $F(s) = G(s, F\restriction_{\{y \in P \, | \, y \, E \, s\}}) = G(s, F'\restriction_{\{y \in P \, | \, y \, E \, s\}}) = F'(s)$, resulting in contradiction. Therefore such a function must be unique.
+    \end{answer}
+\end{exer}
+
+\newpage
+
+\section{Cardinal Numbers}
+
+\begin{exer}
+    Show that 
+    \begin{enumerate}[(i)]
+        \item A subset of a finite set is finite.
+        \item The union of a finite set of finite sets is finite
+        \item The power set of a finite set is finite
+        \item The image of a finite set is finite.
+    \end{enumerate}
+    \begin{answer}
+        Vacuously we have that all subsets of a set with $0$ elements is finite. Let us assume any set with $n$ elements is finite. Let us consider $n + 1$. If the subset is the entire set then it is finite. Otherwise there must exist some element that is removed. We can construct a bijection between our set with this element removed and $n$. Therefore this subset is a subset of a finite with $n$ elements by our hypothesis. By induction, a subset of any finite set will be finite.
+
+        Trivially the union of a set containing $0$ or $1$ finite sets will be finite. Let us consider the case of $2$ sets, $A$ and $B$. Let $f$ and $g$ be the isomorphisms fron $A$ and $B$ some naturals $n$ and $m$ respectively. We can construct a function mapping each element of $A$ under $f$ and mapping each element of $B$ to $n +$ that element mapped under $g$. We have that such a function is a bijection between $A \cup B$ and $n + m$. Therefore such a union is finite.  Let us assume that a union of $n$ sets is finite for $n \ge 2$. Let us consider $n + 1$. Let $f$ be our isomorphism from $n + 1$ to our set. Such a union will be equal to the union of $\{\bigcup f[n], f(n)\}$. Thus by induction such a union is finite. Thus a finite union of finite sets is finite.
+
+        The powerset of a set $S$ is in bijection with $2^{\abs{S}}$. In the case $\abs{S} = 0$ we have that $2^\abs{S}$ is just the set containing the empty function, which is finite. Let us assume that $\abs{S} = n + 1$ and $2^{n}$. We have $2^{\abs{S}} = 2^n \cdot 2$. Multiplication of finite cardinals is finite, so we have the powerset of $S$ is in bijection to some finite cardinal, so it is finite. By induction we have the powerset of any finite set is finite.
+
+        We have that the image of a set with $0$ elements is finite vacuously. Let us assume that the image of a set with $\le n$ elements is finite. Consider a set with $n + 1$ elements. The image of such a set under any function is equal to the union of the image of the first $n$ elements, and the last element, which is a union of finite sets. Therefore the image is finite. By induction the image of any finite set is finite.
+    \end{answer}
+\end{exer}
+
+\begin{exer}
+    Show that 
+    \begin{enumerate}[(i)]
+        \item A subset of a countable set is at most countable
+        \item The union of a finite set of countable sets is countable
+        \item The image of a countable set is at most countable.
+        \begin{answer}
+            A subset of a countable set and the image of a finite set both have injections into such a set. Thus they have an injection into the natural numbers, and so they are at most countable.
+
+            We have that the union of a a single countable set is necesarily countable. Let us consider the union $2$ countable sets, $A$ and $B$. We have that $\N \le \abs{A \cup B} \le \abs{A} + \abs{B} = \aleph_0 + \aleph_0 = \aleph_0$. Any union of $n + 1 \ge 2$ countable sets can be decomposed into a union of $2$ sets, the first being a union of $n$ countable sets and the last being a single countable set. By induction, such a union it follows that such a union is countable.
+        \end{answer}
+    \end{enumerate}
+\end{exer}
+
+\begin{exer}
+    Show that $\N \times \N$ is countable. 
+    \begin{answer}
+        Let $f: \N \times \N \to \N$ be defined as $f(m, n) = 2^m(2n + 1) - 1$. Every natural number $> 1$ can be uniquely expressed as an odd multiplied by $2^k$ for some $k$. Thus $f$ is injective and surjective.
+    \end{answer}
+\end{exer}
+
+\newpage 
+
+\begin{exer}
+    Show that 
+    \begin{enumerate}[(i)]
+        \item The set of all finite sequences in $\N$ is countable.
+        \item The set of all finite subsets of a countable set is countable.
+        \begin{answer}
+            Both such sets are countable unions of countable sets. Thus both such sets are in bijection with $\N \times \N$ which is countable.
+        \end{answer}
+    \end{enumerate}
+\end{exer}
+
+\begin{exer}
+    Show that $\Gamma[\alpha \times \alpha] \le \omega^\alpha$.
+    \begin{answer}
+        In the case $\alpha = 0$ we have $\Gamma[\alpha \times \alpha] = \Gamma[0] = 0 < 1 = \omega^\alpha$. Let us consider the case when $\alpha = \gamma + 1$ and $\Gamma[\gamma \times \gamma] \le \omega^\gamma$. Then we have have 
+        \[
+            \Gamma[\alpha \times \alpha] 
+            = 
+            \Gamma(0, \alpha) = \Gamma(0, \gamma + 1) 
+            =
+            \Gamma[\gamma \times \gamma] + \gamma + \gamma + 1
+            \le 
+            \omega^\gamma \cdot 4 
+            <
+            \omega^\alpha
+        \]
+        Let us consider the case when $\alpha$ is a nonzero limit ordinal and $\Gamma[\gamma \times \gamma] < \omega^\gamma$ for all $\gamma < \alpha$. Consider an arbitrary $\beta \in \Gamma[\alpha \times \alpha]$. We have $\beta = \Gamma(a, b)$ for $a, b < \alpha$. Let $m = \max\{a, b\} + 1$. It holds that $m < \alpha$. We have $\Gamma(a, b) < \Gamma(0, m) = \Gamma[m \times m] < \omega^\gamma < \omega^\alpha$. Thus $\Gamma[\alpha \times \alpha] \le \omega^\alpha$.
+    \end{answer}
+\end{exer}
+
+\begin{exer}
+    Show that there is a well-ordering of the class of all finite sequences of ordinals such that for each $\alpha$, the set of all finite sequences in $\omega_\alpha$ is an initial segment and its order-type is $\omega_\alpha$.
+    \begin{answer}
+        We can biject each $\omega_{\alpha + 1} \setminus \omega_{\alpha}$ to the set of all finite sequences of ordinals of $\omega_{\alpha + 1}$, and let each such bijection induce a well-ordering.
+    \end{answer}
+\end{exer}
+
+\begin{exer}
+    Show that if $B$ is a projection of $\omega_\alpha$ then $\abs{B} \le \aleph_\alpha$.
+    \begin{answer}
+        We have that there exists a surjection, $g$ from $\omega_\alpha$ onto $B$. Let us defin a function $f: B \to \omega_\alpha$. Let $f(x)$ be some $\alpha \in \omega_\alpha$ such that $g(\alpha) = x$. By the definition of a function, if $g(\alpha) = x$, then $g(\alpha) \ne y$ for any $y \ne x$. Therefore our $f$ is injective, so $\abs{B} \le \aleph_\alpha$.
+    \end{answer}
+\end{exer}
+
+\begin{exer}
+    The set of all finite subsets of $\omega_\alpha$ has cardinality $\aleph_\alpha$.
+    \begin{answer}
+        We have that $\aleph_\alpha \le$ the set of all finite subsets of $\omega_\alpha$. We can map the set of all finite sequences of $\omega_\alpha$ onto the set of all finite subsets of of $\omega_\alpha$. Therefore the set of all finite sequences is greater than or equal to the set of all finite subsets in cardinality. We have that the set of all finite sequences is equal in cardinality to $\aleph_\alpha$. Therefore the the set of all finite subsets is $\le$ $\aleph_\alpha$. Therefore it is equal to $\aleph_\alpha$ in cardinality.
+    \end{answer}
+\end{exer}
+
+\begin{exer}
+    If $B$ is a projection of $A$ then $\abs{\powset{B}} \le \abs{\powset{A}}$.
+    \begin{answer}
+        There must exist some surjection, $g$, from $A$ onto $B$. Let us construct a function $f: \powset{B} \to \powset{A}$. Let $f(X) = g^{-1}[X]$. Consider arbitrary $X, Y \in \powset{B}$ such that $X \ne Y$. Without loss of generality there exists some $x \in X$ such that $x \not\in Y$. As $g$ is a surjection we have there exists a $c$ such that $g(c) = x$. Therefore $c \in f(X)$ and $c \not\in f(Y)$ Thus $f$ is an injection, so $\powset{B} \le \powset{A}$.
+    \end{answer}
+\end{exer}
+
+\begin{exer}
+    Prove that $\omega_{\alpha + 1}$ is a projection of $\powset{\omega_\alpha}$.
+    \begin{answer}
+        We have that $\omega_\alpha \times \omega_\alpha$ is in bijection with $\omega_\alpha$. Therefore $\abs{\powset{\omega_\alpha \times \omega_\alpha}} = \abs{\powset{\omega_\alpha}}$. We have that the set of all well-orderings of $\omega_\alpha$ is a subset of $\powset{\omega_\alpha \times \omega_\alpha}$. Denote such a set as $W$. We have that $\abs{W} \le \abs{\powset{\omega_\alpha \times \omega_\alpha}}$. Consider the function $f$, mapping each element of $W$ to its order-type. Each order-type will be less than $\omega_{\alpha + 1}$ as nothing in bijection with $\omega_\alpha$ is of order-type $\omega_{\alpha + 1}$. Similarly, any $\alpha \in \omega_{\alpha + 1}$ is of cardinality $\aleph_\alpha$, and its bijection into $\omega_\aleph$ induces a well-ordering which is of order-type $\alpha$. Therefore $\alpha \in \im(F)$. Thus $\im(F) = \omega_\alpha$. We have that $F$ is injective, so $\abs{W} = \abs{\omega_{\alpha + 1}}$. Thus we have  
+        \[
+            \abs{\omega_{\alpha + 1}} 
+            =
+            \abs{W}
+            \le 
+            \abs{\powset{\omega_\alpha \times \omega_\alpha}}
+            =
+            \abs{\powset{\omega_\alpha}}  
+        \]
+        This implies that $\omega_{\alpha + 1}$ is a projection of $\powset{\omega_\alpha}$. 
+    \end{answer}
+\end{exer}
+
+\newpage
+
+\begin{exer}
+    Show that $\aleph_{\alpha + 1} < 2^{2^{\aleph_\alpha}}$.
+    \begin{answer}
+        We have that $2^{2^{\aleph_\alpha}}$ is in bijection with $\powset{\powset{\omega_\alpha}}$. We have that $\omega_{\alpha + 1}$ is a projection of $\powset{\omega_\alpha}$, so $\abs{\powset{\omega_{\alpha + 1}}} \le \abs{\powset{\powset{\omega_\alpha}}}$. We have that $\abs{\omega_{\alpha + 1}} < \abs{\powset{\omega_{\alpha + 1}}}$ so $\aleph_{\alpha + 1} < 2^{2^{\aleph_\alpha}}$.
+    \end{answer}
+\end{exer}
+
+\begin{exer}
+    If $\aleph_\alpha$ is an uncountable limit cardinal, show that $\cf \omega_\alpha = \cf \alpha$.
+    \begin{answer}
+        We have that the $\alpha$-sequence, $\omega_\beta$, approaches $\omega_\alpha$. Thus theorem 3.21 gives us that $\cf \aleph_\alpha = \cf \alpha$.
+        % There also must exist a $(\cf \omega_\alpha)$-sequence approaching $\omega_\alpha$. Let $\delta_\beta$ then be a $(\cf \omega_\alpha)$-sequence where $\delta_\beta$ is equal to the least $\xi$ such that $\beta \le \omega_{\gamma_\xi}$.
+    \end{answer}
+\end{exer}
+
+\begin{exer}
+    Show that $\omega_2$ is not a countable union of countable sets. 
+    \begin{answer}
+        Let us assume for the sake of contradiction that $\omega_2 = \bigcup_{n < \omega} S_n$ where $S_n$ is countable. As $\omega_2$ is well-ordered by (the ordinal operator) $<$, we have each $S_n$ is also well-ordered by $<$. Therefore each $S_n$ is isomorphic to some unique ordinal. Let $\alpha_n$ then be the order-type of $S_n$. Let $\alpha = \sup \alpha_n$. As each $S_n$ is countable, we have its order-type is also countable. Therefore $\alpha_n < \omega_1$, so $\alpha \le \omega_1$. We can construct an injection, $f$, from $\bigcup_{n < \omega} S_n$ to $\alpha \times \omega$. Let $f(\gamma)$ be equal to $(n, \beta)$, where $n$ is the least natural such that $\gamma \in S_n$ and $\beta$ is the mapping of $\gamma$ under the isomorphism between $S_n$ and its order type. Such a $\beta$ will be less than some $\alpha_n$ and thus contained in $\alpha$, meaning $f$ is well-defined. Consider an arbitrary $\gamma, \delta \in \bigcup_{n < \omega} S_n$ such that $f(\gamma) = f(\delta) = (n, \beta)$. We have that $n$ is the least natural such that $\gamma \in S_n$ and $\delta \in S_n$. Then $\gamma$ and $\delta$ are both the unique inverse of $\beta$ under the isomorphism between $S_n$ and its order-type, and thus $\gamma = \delta$. Therefore $f$ is an injection. Thus we have 
+        \[
+            \abs{\omega_2} \le \abs{\alpha \times \omega} = \abs{\alpha} \times \abs{\omega} = \abs{\aleph_1} \times \abs{\aleph_0} = \abs{\aleph_1}
+        \]
+        resulting in contradiction. Therefore $\omega_2$ cannot equal a countable union of countable sets.
+    \end{answer}
+\end{exer}
+
+\begin{exer}
+    Show that a set $S$ is D-infinite if and only if $S$ has a countable subset.
+    \begin{answer}
+        Let us assume that $S$ has a countable subset, $N$. Let $f$ be an isomorphism from $\omega$ to $N$. Consider the function $g: S \to S \setminus f(0)$ where 
+        \[
+            g(x) =
+            \begin{cases*}
+                f(f^{-1}(x) + 1) & \text{if $x \in \ran(f)$}
+                \\
+                x & \text{ otherwise}
+            \end{cases*}   
+        \]
+        We have that such a $g$ is a bijection, meaning $S$ is D-infinite.
+
+        Let us assume that $S$ is D-infinite. Thus there exists a bijection $f$ from $S$ to $S \setminus D$ where $D$ is a non-empty subset of $S$. As $D$ is non-empty, there must exist some $d \in D$. Let us define the function $g: \omega \to S$ recursively. Let $g(0) = d$ and let $g(n) = f(g(n - 1))$ for $n > 0$. Vacuously we have $f(0) \ne f(m)$ for any $m < 0$. Let us assume $f(n) \ne f(m)$ for any $m < n$. Let us consider $n + 1$. We have that $f(n + 1) = g(f(n)) \in S \setminus D$. Thus $g(0) = d \ne f(n + 1)$. Consider an arbitrary $0 < m < n$. We have $f(m) = g(f(m - 1))$. By our hypothesis we have $f(n) \ne f(m - 1)$, so by the injectivity of $g$ we have $f(m) \ne f(n)$. Thus by induction $f(n) \ne f(m)$ for any $m < n$. It follows that $f$ is injective. Therefore $\ran(f)$ is by definition a countable subset of $S$. 
+    \end{answer}
+\end{exer}
+
+\newpage
+
+\begin{exer}
+    Show that 
+    \begin{enumerate}[(i)]
+        \item If $A$ and $B$ are D-finite then $A \cup B$ and $A \times B$ are D-finite. 
+        \begin{answer}
+            If $A \cup B$ or $A \times B$ are not D-finite, then they are D-infinite. Thus they have a countable subset. Denote the enumeration of such a subset as $f$. Let us consider both the case of $A \cup B$ and $A \times B$:
+            \begin{itemize}
+                \item For $A \cup B$ we have that either $f^{-1}[A]$ or $f^{-1}[B]$ are not bounded above any natural number, as otherwise $\dom(f) = f^{-1}[A \cup B] = f^{-1}[A]  \cup f^{-1}[B] \ne \omega$. Without loss of generality let us say $f^{-1}[A]$ is not bounded above. We can then recursively construct an injection $g$ from $\omega$ to $A$ where $g(0)$ is $a \in A$ with the least inverse under $f$ and $f(n)$ for $n > 0$ is the $a \in A$ with the least inverse under $f$ greater than $g^{-1}(f(n - 1))$. We have that $g$ is injective, and $\ran(g) \subseteq A$, so $A$ has a countable subset.
+                \item Let us consider the case of $A \times B$. We have that the cartesian product of finite sets is finite. As $A \times B$ is infinite, it must hold that either $A$ or $B$ is infinite.  Without loss of generality let us say $A$ is infinite. Let $S = \{a \in A \, | \, \exists b \in B \, [(a, b) \in \ran(f)]\}$. We have that $f: \omega \to S \times B$ is well-defined and injective. Then let us define $g: S \to \omega$ where $g(a) = \min\{f^{-1}(a, b) \, | \, b \in B\}$. From the injectivity of $f$ we have that $g$ is injective. Thus $g$ is bijective over its domain. As its domain is a set of naturals, which are well-ordered, it is necesarily isomorphic to some ordinal. We have that each element of its range is a natural, and thus the order type of $\ran(g)$ is less than  or equal to $\omega$. However, as $A$ is infinite, it cannot be in bijection with any $n < \omega$. Therefore $S$ and $\omega$ are in bijection, meaning some subset of $A$ is countable.
+            \end{itemize}
+            It follows that either $A$ or $B$ must be countable, and thus D-infinite. The contrapositive gives us that if $A$ and $B$ are D-finite then $A \cup B$ and $A \times B$ are D-finite.
+        \end{answer}
+        \item The set of all finite one-to-one sequences in a D-finite set is D-finite
+        \begin{answer}
+            Let us assume that the set of all finite one-to-one sequence of a set $X$ is $D$-infinite. There then exists a countable enumeration, $f$, of some subset, $S'$, of all finite one-to-one sequences of $X$. Let us denote $S = \{x \in X \, | \, \exists n \in \omega \, [x \in \ran(f(c))]\}$. We have that the set of all finite one-to-one sequences of a finite set is finite. As a D-infinite set is infinite, it follows that $S$ must be infinite. Let us then define $g: S \to \omega$ where $g(x)$ is equal to $n + m$ where $n$ is the least natural such that $x \in \ran(f(n))$ and $m = \sum_{j < n} \dom(f(j))$. By construction such a $g$ is injective. It is thus bijective over its domain, and isomorphic to the order type of its domain (with $<$ being the ordering over the ordinals). As $g(x) < \omega$ for all $x \in S$ we have $\ran(g) \le \omega$. However, the range cannot be a natural, as $S$ is infinite, so $\ran(g) = \omega$. Thus some subset of $X$ is in bijection with $\omega$, so $X$ is D-infinite. The contrapositive gives us that if $X$ is D-finite then the set of all finite one-to-one sequences of $X$ is D-finite.
+        \end{answer}
+
+        \item The union of a disjoint D-finite family of D-finite sets is D-finite.
+        \begin{answer}
+            Let $S$ be a $D$-finite family of $D$-finite sets. Let us assume for the sake of contradiction that $\bigcup S$ is $D$-infinite. We then have some injection $f: \omega \to \bigcup S$. Let us define $S_a = \{n \in \omega \, | \, f(n) \in a\}$ for $a \in S$. We have that the order-type of each $S_a$ is  $\le \omega$. However, as $f$ is injective, we have that $S_a$ is of injects into $a$. As each $a$ is D-finite, it must hold that $S_a$ is D-finite, so $S_a \ne \omega$. Therefore $S_a$ is of order-type $n$ for some $n \in \omega$. Define $S' = \{a \in S \, | \, S_a \ne \mtset\}$. It follows that $\omega = \bigcup_{a \in S'} S_a$. A finite union of finite sets is finite. Therefore $S'$ must be infinite. Let us then construct the map $g: S' \to \omega$ where $g(a)$ maps to the least element of $S_a$. As each set in $S$, and thus $S'$, is disjoint, each $S_a$ is disjoint, so $g$ is injective. As $g(a) < \omega$ for all $a \in S$ we have $\ran(g) \le \omega$ in order-type. Then as $S'$ is infinite we have must have the order-type of $\ran(g)$ is $\omega$. Thus some subset of $S$ is in bijection with $\omega$, meaning $S$ is D-infinite, resulting in contradiction.
+        \end{answer}
+    \end{enumerate}
+\end{exer}
+
+\newpage
+
+\begin{exer}
+    If $A$ is an infinite set, the $\powset{\powset{A}}$ is D-infinite.
+    \begin{answer}
+        We have that $\{\{X \subseteq A \, | \, \abs{X} = n \} \, n < \omega \} \subseteq \powset{\powset{A}}$. We can then define the function $f: \omega \to \{\{X \subseteq A \, | \, \abs{X} = n \}\}$ where $f(n) = \{X \subseteq A \, | \, \abs{X} = n \}$. By induction we have that for all $n \in \omega$, $n$ injects into an infinite set. It follows that $f$ is an injection. Thus $\powset{\powset{A}}$ has a countable subset, meaning it is D-infinite.
+    \end{answer}
+\end{exer}
+
+\section{Real Numbers}
+
+\begin{exer}
+    The set of all continuous functions $f: \R \to \R$ has cardinality $\abs{\R}$.
+    \begin{answer}
+        Let us construct a function $g$ from the set of all continuous functions to the set of all rational functions. Let $g(f) = f\restriction_{\Q}$. Consider arbitrary continuous functions $f_1, f_2$ such that $g(f_1) = g(f_2)$. Consider an arbitrary $r \in \R$. There exists a rational $(a_n)$ sequence in $\R$ converging to $r$. Then we have 
+        \begin{align*}    
+            f_1(r) & = f_1(\lim a_n) = \lim f_1(a_n) = \lim g(f_1(a_n))
+            \\
+            & = \lim g(f_2(a_n)) = \lim f_2(a_n) = f_2(\lim a_n) = f_2(r)  
+        \end{align*}
+        Therefore $f_1 = f_2$, meaning $g$ is injective. Therefore the cardinality of the set of all continuous functions from $\R$ to $\R$ is less than or equal to $\abs{\Q^{\Q}} = \abs{\omega^\omega} = \abs{\R}$. We can also map each real number to the continuous map $f(x) = x$. This is an injection from $\R$ to the set of all continuous functions over $\R$. Thus the cardinality of the set of all continuous functions over $\R$ is $\abs{R}$.
+    \end{answer}
+\end{exer}
+
+\begin{exer}
+    Prove there are at least $\abs{\R}$ countable order-types of linearly ordered sets.
+    \begin{answer}
+        Let us construct a mapping from the set of all $\omega$-sequences of natural numbers to an order-type of a linearly ordered set. Let $\langle a_n \, | \, n \in \N \rangle$ map to $\tau_a = a_0 + \xi + a_1 + \xi + \cdots$ where $\xi$ is the order-type of the integers. Consider arbitrary sequences $a, b$ such that $a \ne b$. Let us consider their order-types under our mapping, $\tau_a$ and $\tau_b$. Let us assume for the sake of contradiction there exists an isomorphism between $\tau_a$ and $\tau_b$. It holds that each of the inital elements of the $a_n$ and $b_n$ segments of $\tau_a$ and $\tau_b$ respectively have no immediate predecessor and the final elements of these sequences have no immediate successor. As these segments are well-ordered, it must hold that the isomorphism between $\tau_a$ and $\tau_b$ maps the first element of each inital segment of $a_n$ to the first element of each initial segment of $b_n$, and the same for the last elements of these initial sequences. There must exist some $m$ such that $a_m \ne b_m$. It follows that our isomorphism induces an isomorphism between the linear orders $a_m$ and $b_m$ resulting in contradiction. Therefore $\tau_a$ is not isomorphic to $\tau_b$ meaning $\tau_a \ne \tau_b$. Thus our mapping is injective, which implies that the cardinality of the countable order-types of linearly ordered sets is at least $\abs{\omega^\omega} = \abs{\R}$.
+    \end{answer}
+\end{exer}
+
+\begin{exer}
+    Prove that the set of all algebraic numbers is countable.
+    \begin{answer}
+        The set of all algebraic numbers is equivalent union of roots of a polynomial over all integer polynomials. The set of all integer polynomials is in bijection with the set of all finite integer sequences, which is countable. Each polynomial has at most its degree number of roots. Thus the algebraic numbers is equal to a countable union of finite sets, which is countable.
+    \end{answer}
+\end{exer}
+
+\begin{exer}
+    Show that if $S$ is a countable set of reals, then $\abs{\R \setminus S} = \abs{\R}$.
+    \begin{answer}
+        Consider arbitrary set $A$ and $B$ such that $\abs{A} = \aleph_n$, $\abs{B} = \aleph_m$, and $m < n$. We have that $\abs{A \setminus B}  \le \abs{A}$. Let us assume for the sake of contradiction that $\abs{A \setminus B} < \abs{A}$. Then we have $\abs{(A \setminus B) \cup B} = \max(\abs{A \setminus B}, \abs{B}) < \abs{A}$, resulting in contradiction. Therefore we have $\abs{A \setminus B} = \abs{A}$. As $\abs{\R} > \aleph_0$ and $\abs{S} = \aleph_0$ it follows that $\abs{\R \setminus S} = \abs{\R}$.
+    \end{answer}
+\end{exer}
+
+\begin{exer}
+    Show that the set of all irrational numbers has cardinality $\abs{\R}$ and he set of all transcendental numbers has cardinality $\abs{\R}$.
+    \begin{answer}
+        The set of rationals and the set of transcendental numbers are both countable. Thus both sets are equal to $\R \setminus S$ for a countable $S$, which is of cardinality $\abs{\R}$.
+    \end{answer}
+\end{exer}
+
+\newpage
+
+\begin{exer}
+    Show that the set of all open sets of reals has cardinality $\abs{\R}$.
+    \begin{answer}
+        Let us construct a mapping between an open set of reals to a subset rational intervals. Every element in our open set has some neighborhood about it contained in that open set. There is then some rational interval contained in that open set containing our point. We can map our open set to this set of rational intervals, whose union equals our open set. Such a mapping is injective by construction. Thus the cardinality of the set of open sets in $\R$ is less than or equal to the cardinality of the powerset of the set of rational intervals, which is $\abs{2^{\aleph_0}} = \abs{\R}$. We can also map every real number $r \in \R$ to the open set $(-\infty, r)$, which is injective meaning the cardinality of $\R$ is less than or equal to the cardinality of the set of all open sets of $\R$. Therefore the set of all open sets of $\R$ has cardinality $\abs{\R}$.
+    \end{answer}
+\end{exer}
+
+\begin{exer}
+    Show that the Cantor set is perfect.
+    \begin{answer}
+        The Cantor set can be constructed by removing the open middle thirds of $[0, 1]$ iteratively. It holds that the endpoints of the intervals always remain in the Cantor set. The endpoints then can form a sequence converging to any point in the Cantor set. Therefore every element in the Cantor set is not isolated, meaning it is perfect. 
+    \end{answer}
+\end{exer}
+
+\begin{exer}
+    Show that given a perfect set $P$ and an open interval $(a, b)$ such that $P \cap (a, b) \ne \mtset$, we have $\abs{P \cap (a, b)} = \abs{\R}$.
+    \begin{answer}
+        There must exist some $x \in P \cap (a, b)$. Let $(a', b')$ be an interval containing $x$ such that $a < a' < b' < b$. Let $C = \overline{P \cap (a', b')}$. It holds that $C \subseteq P \cap (a, b)$. Consider an arbitrary $c \in C$. If $c \not\in P \cap (a', b')$ then it necesarily has some sequence converging to it. Otherwise it is contained in $P \cap (a', b')$. We have that there exists a sequence in $P \cap (a', b')$ converging to $c$. As $(a', b')$ is open and $c \in (a', b')$ it holds that such a sequence is eventually contained in $(a', b')$. Thus we have that some sequence in $A \cap (a', b')$ approaches $c$. Therefore $c$ is not an isolated point. Thus no element of $C$ contains no isolated points, meaning it is a perfect set and thus has cardinality $\abs{\R}$. It follows that $\abs{P \cap (a, b)}$ has cardinality $\abs{\R}$.
+    \end{answer}
+\end{exer}
+
+\begin{exer}
+    Show that if $P_2 \not\subset P_1$ are perfect sets, then $\abs{P_2 \setminus P_1} = \abs{\R}$.
+    \begin{answer}
+        There must exist some $p \in P_2$ such that $P \not\in P_1$. As $P_1$ is closed, there must be no sequence in $P_1$ converging to $l$. Let $l = \sup P_2 \cap \{x \in \R \, | \, x < p\}$ and $r = \inf P_2 \cap \{x \in \R \, | \, x > p\}$. It follows that $(P_2 \setminus P_1) \cap (l, r) = P_2 \cap (l, r)$, which has cardinality $\abs{\R}$.
+    \end{answer}
+\end{exer}
+
+\begin{exer}
+    Show that if $P$ is perfect then $P^* = P$.
+    \begin{answer}
+        If $P$ is a perfect then we have it is closed and has no isolation points. As it is closed, we have every condensation point of $P$ is contained in $P$. As there is no isolated point, every point in $P$ must have a sequence converging to it. Thus every open  set containing such a point must be nonempty, and thus uncountable, meaning it is a condensation point. Therefore $P = P^*$.
+    \end{answer}
+\end{exer}
+
+\begin{exer}
+    Show that if $F$ is closed and $P \subseteq F$ is perfect then $P \subseteq F^*$.
+    \begin{answer}
+        Consider an arbitrary $p \in P$. It holds that $p$ is a condensation point of $p$, and thus a condensation point of $F$. Therefore $p \in F^*$, so $P \subseteq F^*$.
+    \end{answer}
+\end{exer}
+
+\begin{exer}
+    Show that if $F$ is an uncountable closed set and $P$ is the perfect set given by Cantor-Bendixson (constructed by iteratively removing all isolated points) then $F^* = P$.
+    \begin{answer}
+        Consider an arbitrary $x \in F^*$. Consider an arbitrary step in our Cantor-Bendixson iterative process. We have that at most countably many points have been removed from $F$. Therefore if there are uncountably many points in each neighborhood of $x$, then there will still be uncountably many points at this step in our iterative process. Therefore $x$ will still be a condensation point, and thus not be removed in our iterative process. Therefore $x$ is never removed in our iterative process, meaning $x \in P^*$. Thus $F^* \subseteq P$. As $P \subseteq F^*$ it follows that $F^* = P$.
+    \end{answer}
+\end{exer}
+
+\newpage
+
+\begin{exer}
+    Show that if $F$ is an uncountable closed set then $F = F^* \cup (F \setminus F^*)$. is the unique partition of $F$ into a perfect set and an at most countable set.
+    \begin{answer}
+        By Cantor-Bendixson we have that $F^*$ is perfect and $F \setminus F^*$ is countable. Consider an arbitrary perfect set $P$ contained in $F$. We have that $P \subseteq F^*$. If $P \neq F^*$ it follows that $F^* \setminus P$ is uncountable. Thus if $F \setminus P$ is countable, then $P = F^*$, meaning such a partition of $F$ is unique.
+    \end{answer}
+\end{exer}
+
+\begin{exer}
+    Show that $\Q$ is not the intersection of a countable collection of open sets.
+    \begin{answer}
+        Let $D_1, D_2, \cdots, D_n, \cdots$ for $n \in \N$ be a countable collection of open sets that contain the rationals. It holds that $D_n$ is thus dense for all $n \in \N$. Consider an enumeration of the rationals. Let us construct a sequence of intervals $I_n$. Let $I_0$ be any closed interval in $D_0$ not containing our first rational. Let $I_{n + 1}$ be a closed subset of $I_{n}$ and $D_n$ which does not contain the $(n + 1)$-th rational in our enumeration. Such intervals exist as $D_n$ is open and dense. The infinite intersection of $I_{n}$ is then a non-rational that is contained in the infinite intersection of $D_n$. Therefore no countable intersection of open sets is equal to the rationals. 
+    \end{answer}
+\end{exer}
+
+\begin{exer}
+    Show that if $B$ is Borel and $f$ is a continuous function then $f^{-1}[B]$ is Borel.
+    \begin{answer}
+        Let $S$ be the set of borel sets whose pre-image under $f$ is borel. The pre-image of any open set under $f$ is open, and thus borel, meaning $S$ contains all the open sets. The pre-image of a countable union of sets in $S$ is equal to the countable union of their pre-images, which is a countable union of Borel sets and thus Borel. The pre-image of the complement of a set in $S$ is equal to the complement of the pre-image of such a set, which is thus Borel. Therefore $S$ is a $\sigma$-algebra. The collection of Borel sets is a subset of all $\sigma$-algebra's containing every open set, and thus such a collection is a subset of $S$. We have that $S$ is a subset of the set of all Borel sets by construction. Therefore $S$ is equal to the collection of Borel sets, so every Borel set is Borel under the pre-image of $f$.
+    \end{answer}
+\end{exer}
+
+\begin{exer}
+    Let $f: \R \to \R$. Show that the set of all $x$ at which $f$ is continuous is a $G_\delta$ set.
+    \begin{answer}
+        Let us construct the sequence of sets $(A_n)$. Let $A_0 = \R$ and let $A_n$ be the set of all $p \in \R$ for which there exists some $\delta_p$ such that $\forall x, y \in B_{\delta_p}(p)$ we have $\abs{f(x) - f(y)} < \frac{1}{n}$. Consider an arbitrary $a \in A_n$ for any $n \in \N$. Consider an arbitrary point $b \in B_{\delta_a}(a)$. As $B_{\delta_a}(a)$ is open, there exists some $\delta_b$ such that $B_{\delta_b}(b)$ is contained in $B_{\delta_a}(a)$. It follows that $b \in A_n$. Therefore $(A_n)$ is a countable collection of open sets. Its intersection is thus a $G_\delta$ set. By construction we have that this infinite intersection is a subset of the continuity points of $f$. Let $x$ be an arbitrary continuity point of $f$. Then for all $n \in \N$ we have there exists some $\delta$ such that $\forall y \in B_{\delta}(x)$ we have $\abs{f(x) - f(y)} < \frac{1}{2n}$. Then, for an arbitrary $a, b$ in $B_{\delta}(x)$ we have $\abs{f(x) - f(y)} \le \abs{f(x) - f(a)} + \abs{f(b) - f(x)} < \frac{1}{n}$. Thus every continuity point is contained in our constructed $G_\delta$. Thus we have that this infinite intersection and the set of continuity points of $f$ are equal, meaning such a set is a $G_\delta$ set.
+    \end{answer}
+\end{exer}
+
+\begin{exer}
+    Show that 
+    \begin{enumerate}[(i)]
+        \item $\mathcal{N} \times \mathcal{N}$ is homeomorphic to $\mathcal{N}$.
+        \item $\mathcal{N}^\omega$ is homeomorphic to $\mathcal{N}$.
+    \end{enumerate}
+    \begin{answer}
+        I have no clue what the topologies are for these spaces.
+    \end{answer}
+\end{exer}
+
+\newpage
+
+\begin{exer}
+    Show that tree $T_F$ in theorem 4.21 has no maximal node, meaning there is no $s \in T_F$ such that $t \not\supset s$ for all $t \in T_F$, and that the map $F \mapsto T_F$ is a bijection between closed sets in $\mathcal{N}$ and sequential trees without maximal nodes.
+    \begin{answer}
+        Let $F$ be an arbitrary closed set in Baire space and consider an arbitrary $s \in T_F$. It holds that $s = f\restriction_{n}$ for some $f \in F$. Then we have $f\restriction_{n + 1} \in T_F$ and $f\restriction_{n + 1} \supsetneq s$. Therefore $T_F$ has no maximal node. It thus holds that the map $F \to T_F$ between closed sets in Baire space and sequential trees without maximal nodes is well-defined. 
+        
+        Let us consider two arbitrary distinct closed sets $A, B$ in Baire space. Without loss of generality there must be some set $f \in A$ such that $f \not\in B$. There must exist some $n$ such that $f\restriction_{n}$ is not equal to the restriction of any set in $B$ to $n$ (as otherwise there would be a sequence in $B$ approaching $f$ which would imply $f \in B$). Then we have $f\restriction_n$ is contained in $T_A$ but not $T_B$. Therefore our mapping is injective.
+
+        Consider an arbitrary sequential tree $T$ with no maximal node. We have that $[T]$, the set of all infinite paths through $T$, is closed. Then under our mapping we have $[T]$ maps to $T_{[T]}$. It holds that $T_{[T]} \subseteq T$. Consider an arbitrary $t \in T$. Let us construct a sequence $(a_n)$ where $a_n = t\restriction_{n}$ for all $n$ less than the length of $t$. For $n$ greater than the length of $t$ let $a_n$ be the least sequence of length $n$ which is a superset of $a_{n  - 1}$ (whose existence is gauranteed as $T$ has no maximal element). Then the union over this sequence is an infinite path through $T$. Then $t$ is some restriction of this infinite path, meaning $t \in T_{[T]}$. Therefore $T_{[T]} = T$, so our mapping is surjective. Thus we have $F \mapsto T_F$ is a bijection between closed sets in $\mathcal{N}$ and sequential trees without maximal nodes.
+    \end{answer}
+\end{exer}
+
+\begin{exer}
+    Show that every perfect Polish space has a closed subset homeomorphic to the Cantor space.
+    \begin{answer}
+        Consider an arbitrary polish space $P$. We have that $P$ is homeomorphic to to some seperable complete metric space $R$. It holds that $R$ is isomorphic to $\R$. Consider the the homeomorphism between $P$ and $R$ restricted to the subset of $R$ isomorphic to the Cantor set in $R$. As the Cantor set is closed, the subset of $R$ isomorphic to the Cantor set is closed. Then the image of a closed set under a homeomorphism is closed. Thus this restriction is a closed subset of $P$ homeomorphic to a set isomorphic to Cantor space.
+    \end{answer}
+\end{exer}
+
+\begin{exer}
+    Show that every Polish space is homeomorphic to a $G_\delta$ subspace of the Hilbert cube.
+\end{exer}
+
+\section{Extra Exercises}
+
+\begin{exer}
+    Prove a set $X$ is infinite iff there exists an injection from $\omega \to X$.
+
+    \begin{answer}
+        Let us assume that $X$ is an infinite set. Let us define an injection $f: \omega \to X$ inductively. $X$ must not be empty so there exists some $x \in X$. Let $f(0) = x$. It holds that $f\restriction_{\{0\}}$ is injective. Consider an arbitrary $n > 0$. We assume that have $f \restriction_{\omega_{< n}}$ is injective. It must hold that such a restriction is not surjective, as otherwise $X$ would not be infinite. Thus there exists an $x \in X \setminus f \restriction_{\omega_{< n}}$. Let $f(n) = x$. Let us consider an arbitrary $x, y \in \omega$ such that $x \ne y$. Without loss of generality let us say $x > y$. We have by construction $f(x) \not\in f\restriction_{\omega_{< x}}$. Therefore $f(x) \ne f(y)$. Thus our constructed $f$ is injective.
+        \\[.1cm]
+        Let us assume there exists an injection $f: \omega \to X$. Let us show that there exists no injection from $\omega \to n$ for any $n \in \omega$. We have that no function, and thus no injection, exists from $\omega$ to $0$. Let us assume that there exists no injection from $\omega$ to $n$. Let us consider $n + 1$. Consider an arbitrary function $f: \omega \to n + 1$. If $n + 1 \not\in \im(f)$ then $f$ is not injective by hypothesis. Otherwise, let us say $f(x) = n + 1$. If $f(y) = n + 1$  for any $x \ne y$ then $f$ is not injective. Otherwise, let us consider when $x$ is the unique element mapping to $n + 1$. We can construct a bijection $h$ from $\omega \setminus \{x\}$ to $\omega$. We then have $f \circ h^{-1}$ is a function from $\omega$ to $n$. Thus it is not injective. As $h^{-1}$ is a bijection, it must hold that $f$ is not injective. By induction we have there is no injection from $\omega$ to any natural. It follows that there exists no injection from $X$ to any $n \in \omega$, meaning $X$ is infinite. 
+    \end{answer}
+\end{exer}
+
+\begin{exer}
+    $X$ is Dedekind finite if and only if every injection from $X$ to itself is a bijection.
+    \begin{answer}
+        Let us assume there exists a  non-bijective injection from $X$ to itself. This injection is a bijection between $X$ and some proper subset of $X$. Therefore $X$ is D-infinite. The contrapositive gives us that if $X$ is D-finite then every injection from $X$ to itself is a bijection.
+
+        Let us assume $X$ is D-infinite. Then there exists a bijection between $X$ and some proper subset of $X$. This function is then a non-bijective injection from $X$ to itself. The contrapositive gives us that if every injection from $X$ to itself is a bijection then $X$ is D-finite.
+    \end{answer}
+\end{exer}
+
+\begin{exer}
+    Suppose there exists an infinite D-finite set. Then there are sets $X$ and $Y$ with surjections both ways but no bijection. Hint: construct natural sequence to contradict something.
+\end{exer}
+
+\begin{exer}
+    
+\end{exer}
+
+\end{document}

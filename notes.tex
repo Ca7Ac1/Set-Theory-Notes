@@ -1,0 +1,1179 @@
+\documentclass{article}
+\usepackage[utf8]{inputenc}
+
+\usepackage[a4paper, total={6in, 10in}]{geometry}
+
+\usepackage[english]{babel}
+
+\usepackage{amssymb}
+\usepackage{amsmath}
+\usepackage{amsthm}
+\usepackage{amsfonts}
+\usepackage{enumerate}
+\usepackage{mathtools}
+\usepackage{wasysym}
+
+\usepackage[boxed]{algorithm}
+\usepackage[noend]{algpseudocode}
+
+\usepackage{tikz}
+\usetikzlibrary{decorations.pathreplacing}
+
+\usepackage{graphicx}
+\graphicspath{ {../images/} }
+
+\usepackage{hyperref}
+\hypersetup{
+    colorlinks,
+    citecolor=black,
+    filecolor=black,
+    linkcolor=black,
+    urlcolor=black
+}
+
+\usepackage{mdframed}
+
+\theoremstyle{definition}
+\newtheorem{ex}{Example}[section]
+\newtheorem{thm}{Theorem}[section]
+\newtheorem{crly}[thm]{Corollary}
+\newtheorem{defn}[thm]{Definition}
+\newtheorem{axm}[thm]{Axiom}
+\newtheorem{lmma}[thm]{Lemma}
+
+\newcommand{\powset}[1]{\mathcal{P}(#1)}
+\newcommand{\N}{\mathbb{N}}
+\newcommand{\Z}{\mathbb{Z}}
+\newcommand{\Q}{\mathbb{Q}}
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\C}{\mathbb{C}}
+
+\newcommand\longdiv[2]{%
+\ensuremath{\strut#1$\kern.25em\smash{\raise.3ex\hbox{$\big)$}}$\mkern-8mu
+        \overline{\enspace\strut#2}}}
+
+\newcommand*{\mtset}{\ensuremath{\varnothing}}
+
+\DeclareMathOperator{\almu}{almu}
+\DeclareMathOperator{\gemu}{gemu}
+\DeclareMathOperator{\im}{im}
+\DeclareMathOperator{\GL}{GL}
+\DeclareMathOperator{\nullity}{nullity}
+\DeclareMathOperator{\rank}{rank}
+\DeclareMathOperator{\spanvec}{span}
+\DeclareMathOperator{\tr}{tr}
+\DeclareMathOperator{\inv}{inv}
+\DeclareMathOperator{\err}{err}
+\DeclareMathOperator{\rowsp}{rowsp}
+\DeclareMathOperator{\colsp}{colsp}
+\DeclareMathOperator{\Hom}{Hom}
+\DeclareMathOperator{\End}{End}
+\DeclareMathOperator{\Par}{Par}
+\DeclareMathOperator{\ran}{ran}
+\DeclareMathOperator{\dom}{dom}
+\DeclareMathOperator{\Ord}{Ord}
+\DeclareMathOperator{\cf}{cf}
+
+\newcommand{\ip}[1]{\left\langle #1 \right\rangle} % inner product
+\newcommand{\norm}[1]{\left\Vert #1 \right\Vert} % norm of a vector
+\newcommand{\abs}[1]{\lvert#1\rvert}
+\newcommand{\qint}[1]{\left[ #1 \right]_q}
+\newcommand{\qbinom}[2]{\begin{bmatrix} #1 \\ #2 \end{bmatrix}_q}
+
+\newlength{\defparindent}
+\setlength{\defparindent}{\parindent}
+
+\newenvironment{answer}
+    {\begin{mdframed}[backgroundcolor=gray!15, linewidth=0pt] \setlength{\parindent}{\defparindent}}
+    {\end{mdframed}}
+
+\title{Set Theory Notes}
+\author{Ayan Chowdhury}
+\date{}
+
+\begin{document}
+
+\maketitle
+
+\tableofcontents
+
+\newpage
+
+\section{Axiomatic Set Theory}
+
+\begin{axm}[Zermelo-Fraenkel Axioms]
+    \hfill
+    \begin{enumerate}[I]
+        \item Axiom of Extensionality: If $X$ and $Y$ have the same elements, then $X = Y$.
+
+        \item Axiom of Pairing: For any $a$ and $b$ there exists a set $\{a, b\}$ that contains exactly $a$ and $b$.
+
+        \item Axiom Schema of Seperation: If $\varphi$ is a property (with parameter $p$), then for any $X$ and $p$, there exists a set $Y = \{u \in X \, | \, \varphi(u, p)\}$ that contains all those $u \in X$ that have the property $\varphi$.
+        
+        \item Axiom of Union: For any $X$ there exists a set $Y = \bigcup X$, the union of all elements of $X$.
+
+        \item Axiom of Power Set: For any $X$ there exists a set $Y = \powset{X}$, the set of all subsets of $X$.
+
+        \item Axiom of Infinity: There exists an infinite set.
+
+        \item Axiom Schema of Replacement: If $F$ is a class function, then for any $X$ there exists a set $Y = F[X] = \{F(x) \, | \, x \in X\}$.
+
+        \item Axiom of Regularity: Every nonempty set has an $\in$-minimal element.
+
+        \item Axiom of Choice: Every family of nonempty sets has a choice function.
+    \end{enumerate}
+\end{axm}
+
+\begin{defn}[$T$-finite]
+    A set $S$ is $T$-finite if every non-empty $X \subseteq \powset{S}$ has a a $\subset$-maximal element.
+\end{defn}
+
+\section{Ordinal Numbers}
+
+\begin{defn}[well ordering]
+    A linearly ordered set $(P, <)$ is well-ordered if every nonempty subset of $P$ has a least element.
+\end{defn}
+
+\begin{lmma}
+    If $(W, <)$ is a well-ordered set, and $f: W \to W$ is an increasing function, then $f(x) \ge x$ for each $x \in W$.
+\end{lmma}
+
+\begin{proof}
+    Assume for the sake of contradiction that $X = \{x \in W \, | \, f(x) < x\}$ is non-empty. As $W$ is well-ordered we have that such a set has a least element, $z$. As $f(z) < z$, we have $f(f(z)) < f(z)$, meaning $f(f(z)) \in X$, resulting in contradiction.
+\end{proof}
+
+\begin{crly}
+    The only isomorphism of a well-ordered set onto itself is the identity.
+\end{crly}
+
+\begin{crly}
+    If two well-ordered sets $W_1$ and $W_2$ are isomorphic then the isomorphism of $W_1$ onto $W_2$ is unique.
+\end{crly}
+
+\begin{proof}
+    Consider arbitrary isomorphisms, $f_1, f_2$, from $W_1$ to $W_2$. Assume for the sake of contradiction that $X = \{w \in W_1 \, | \, f_1(x) \ne f_2(x) \}$ is nonempty. Let $x$ be the least element of $X$. Without loss of generality let us say $f_1(x) < f_2(x)$. Then we have $f_{2}^{-1}(f_1(x)) < x$. We have $f_{2}(f_{2}^{-1}(f_1(x))) = f_1(x)$ and $f_1(f_{2}^{-1}(f_1(x))) < f_1(x)$. Therefore $f_{2}^{-1}(f_1(x)) \in X$, resulting in contradiction. 
+    % Consider the set $\{w \in W_2 \, | \, f_1(x) < w \le f_2(x) \}$. We have that such a set is nonempty, meaning it has a least element $z$. We have that $f_1(x) < z$, meaning $x < f_{1}^{-1}(z)$. Similarly, $z \le f_2(x)$, meaning $f_{2}^{-1}(z) \le x$. Therefore $f_{2}^{-1}(z) \le f_1^{-1}(z)$. 
+\end{proof}
+
+\begin{defn}[Initial Segment]
+    If $W$ is a well-ordered set and $u \in W$, then $\{x \in W \, | \, x < u\}$ is an initial segment of $W$ given by $u$. We denote such an initial segment $W(u)$.
+\end{defn}
+
+\begin{lmma}
+    No well-ordered set is isomorphic to an initial segment of itself. 
+\end{lmma}
+
+\begin{proof}
+    If $\ran(f) = \{x \, | \, x < u\}$ then $f(u) < u$, contradicting 2.2.
+\end{proof}
+
+\newpage
+
+\begin{thm}
+    If $W_1$ and $W_2$ are well-ordered sets, then exactly one of the following three cases holds:
+    \begin{itemize}
+        \item $W_1$ is isomorphic to $W_2$.
+        \item $W_1$ is isomorphic to an initial segment of $W_2$.
+        \item $W_2$ is isomorphic to an initial segment of $W_1$.
+    \end{itemize}
+    \begin{proof}
+        Consider the function 
+        \[
+            f = \{(x, y)  \in W_1 \times W_2 \, | \, W_1(x) \text{ is isomorphic to } W_2(y) \}    
+        \]
+    \end{proof}
+    Consider an arbitrary $x_1,  x_2 \in W_1$. If $W_2(y_1)$ and $W_2(y_2)$ are isomorphic to $W_1(x_1)$, then we have $W_2(y_1)$ is isomorphic to $W_2(y_2)$. If $y_1 \ne y_2$ this would imply different initial segments are isomorphic, contradicting 2.6. Therefore $y_1 = y_2$, meaning $f$ is a function. Similarly, if $f(x_1) = f(x_2)$ then $W_1(x_1)$ is isomorphic to $W_2(x_2)$, implying that $x_1 = x_2$. Therefore $f$ is injective. 
+
+    Let us say $x_1 < x_2$ and $(x_2, h(x_2)) \in f$, where $h$ denotes an isomorphism from $W_1(x_2)$ to $W_2(y)$ for some $y \in W_2$. It holds that $h \restriction_{W_1(x_1)}$ is an isomorphism from $W_1(x_1)$ to $W_2(h(x_1))$. Therefore $f(x_1)$ exists. As $h$ is increasing we have $h(x_1) < h(x_2)$ implying $f(x_1) < f(x_2)$. Thus $f$ is increasing.
+
+    If $\dom(f) = W_1$ and $\ran(f) = W_2$ then $W_1$ is isomorphic to $W_2$. If $\ran(f) \ne W_2$ then $W_1$ is isomorphic to $W_2(u)$ where $u$ is the least element of $W_2 \setminus \ran(f)$. This is because $\ran(f)$ will be equal to $W_2(u)$ and $\dom(f) = W_1$ necesarily, as otherwise $(w, u) \in f$ where $w$ is the least element of $W_1 \setminus \dom(f)$. If $\dom(f) \ne W_1$ then $W_1(u)$ is isomorphic to $W_2$, where $u$ is the least element of $W_1 \setminus \dom(f)$. This is because $\dom(f)$ will be equal to $W_1(u)$ and $\ran(f) = W_2$ necesarily, as otherwise $(u, w) \in f$ where $w$ is the least element of $W_2 \setminus \ran(f)$. By 2.6 these cases must be mutually exclusive.
+\end{thm}
+
+\begin{defn}[Transitive]
+    A set $T$ is transitive if every element of $T$ is a subset of $T$.
+\end{defn}
+
+\begin{defn}[Ordinal]
+    A set is an ordinal number if it is transitive and well-ordered by $\in$. We denote $\Ord$ as the class of all ordinals. We define $<$ where $\alpha < \beta$ if and only if $\alpha \in \beta$.
+\end{defn}
+
+\begin{lmma}
+    \hfill
+    \begin{enumerate}[(i)]
+        \item $0 = \mtset$ is an ordinal
+        \item If $\alpha$ is an ordinal and $\beta \in \alpha$ then $\beta$ is an ordinal.
+        \item If $\alpha \ne \beta$ and $\alpha \subsetneq \beta$ then $\alpha \in \beta$.
+        \item If $\alpha, \beta$ are ordinals then either $\alpha \subseteq \beta$ or $\beta \subseteq \alpha$.
+    \end{enumerate}
+\end{lmma}
+
+\begin{proof}
+    We have (i) and (ii) follow from the definition of an ordinal. 
+
+    If $\alpha \subsetneq \beta$, consider the least element of the set $\beta \setminus \alpha$, denoted by $\gamma$. Consider the initial segment $\beta(\gamma)$. By construction we have $\beta(\gamma) \subseteq \alpha$. If $a \in \alpha$ were go be greater than $\gamma$, then $\gamma$ would be contained in $a$ and thus in $\alpha$ by transitivity, resulting in contradiction. Therefore $a < \gamma$. Thus $\alpha = \{\xi \in \beta \, | \, \xi < \gamma\}$. By the definition of $<$ we then have $\alpha \subseteq \gamma$. As $\gamma \in \beta$ we have $\gamma \subseteq \beta$. Therefore, $\forall x \in \gamma$ we have $x \in \beta$, meaning $x \in \alpha$. Therefore $\gamma \subseteq \alpha$. Thus $\alpha = \gamma$, meaning $\alpha \in \beta$.
+
+    It holds that $\alpha \cap \beta = \gamma$ is an ordinal. Assume for the sake of contradiction that $\gamma \ne \alpha$ and $\gamma \ne \beta$. As $\gamma \subseteq \alpha$ and $\gamma \subseteq \beta$ we have $\gamma \in \alpha$ and $\gamma \in \beta$. Therefore $\gamma \in \gamma$, resulting in contradiction. Thus $\gamma = \alpha$ or $\gamma = \beta$, meaning either $\alpha \subseteq \beta$ or $\beta \subseteq \alpha$.
+\end{proof}
+
+\newpage
+
+\begin{crly}
+    \hfill
+    \begin{itemize}
+        \item $<$ is a linear ordering of the class $\Ord$.
+        \item For each $\alpha$ we have $\alpha =  \{\beta \, | \, \beta < \alpha\}$.
+        \item If $C$ is a nonempty class of ordinals, then $\cap C$ is an ordinal, $\cap C \in C$ and $\cap C = \inf C$.
+        \item If $X$ is a nonempty set of ordinals, then $\cup X$ is an ordinal, and $\cup X = \sup X$.
+        \item For every $\alpha$ we have $\alpha \cup \{\alpha\}$ is an ordinal and $\alpha \cup \{\alpha\}  = \inf \{\beta \, | \, \beta > \alpha\}$. 
+    \end{itemize}
+\end{crly}
+
+\begin{proof}
+    Trivially we have $<$ is irreflexive, asymmetric, and transitive. By 2.10 we have ordinals are either equal or have one contain the other. Therefore every ordinal is comparable with $<$.
+
+    By definition $\{\beta \, | \, \beta < \alpha\} \subseteq \alpha$. By 2.10 every $\beta \in \alpha$ is an ordinal, thus $\alpha \subseteq \{\beta \, | \, \beta < \alpha\}$.
+
+    We have that $\cap C \subseteq c$ for all $c \in C$. Thus either $\cap C = c$ or $\cap C \in c$. It must hold that $\cap C = c$ for some $c$, as otherwise we would have $\cap C \in \cap C$, resulting in contradiction. Therefore $\cap C \in C$, which also gives us that $\cap C$ is an ordinal. By definition $\cap C \le c$ for all $c \in C$, and as $\cap C \in C$, we have that $\cap C = \inf C$.
+
+    For an arbitrary $x \in \cup X$ we have that $x \in c$ for some $c \in X$. It follows that $x \subseteq c \subseteq \cup X$, meaning $\cup X$ is transitive. Consider arbitrary $a, b \in \cup X$. By 2.10 we have either $a = b$, $a \in b$ or $b \in  a$, meaning $a$ and $b$ are $<$-comparable. Thus $\cup X$ is linearly ordered. Consider any non-empty $p \in \powset{\cup X}$. We have that $p$ is non-empty, meaning $\exists c \in p$. Then $c \cap p$ has a minimal element, which will then be a minimal element of $p$. Thus $\cup X$ is well-ordered. Therefore $\cup X$ is an ordinal. We have for all $x \in X$, $x \subseteq \cup X$, meaning $x \in \cup X$. Therefore $x < \cup X$. Similarly, for any $x < \cup X$ we have $x \in \cup X$. Thus $x$ is contained in some set in $X$, meaning $x$ is not an upper bound of $\cup X$. Therefore $\cup X = \sup X$.
+
+    For any $a \in \alpha \cup \{\alpha\}$ we have either $a \in \alpha$ or $a = \alpha$. If $a \in \alpha$ then $a \subseteq \alpha \subseteq \alpha \cup \{\alpha\}$. If $a = \alpha$ then $a \subseteq \alpha \cup \{\alpha\}$. Thus $\alpha \cup \{\alpha\}$ is transitive. $\alpha \cup \{\alpha\}$ is well-ordered as $\alpha$ is well-ordered, and every element in $\alpha$ is less than $\alpha$ by definition. Therefore $\alpha \cup \{\alpha\}$ is an ordinal. We have $\alpha < \alpha \cup \{\alpha\}$. Consider an arbitrary $\beta$ such that $\alpha < \beta$. We have $\alpha \in \beta$ and $\alpha \subseteq \beta$. Therefore $\alpha \cup \{\alpha\} \subseteq \beta$ meaning $\alpha \cup \{\alpha\} \in \beta$ or $\alpha \cup \{\alpha\} = \beta$. Thus $\alpha \cup \{\alpha\} \le \beta$ so $\alpha \cup \{\alpha\} = \inf \{\beta \, | \, \beta > \alpha\}$.
+\end{proof}
+
+\begin{defn}[Successor]
+    Given an ordinal $\alpha$ we say $\alpha + 1 := \alpha \cup \{\alpha\}$ is the successor of $\alpha$.
+\end{defn}
+
+\begin{thm}
+    Every well-ordered wet is isomorphic to a unique ordinal number.
+\end{thm}
+
+\begin{proof}
+    Consider an arbitrary well-ordered set $W$. Consider an $\alpha$ and $\beta$ that $W$ is isomorphic to. If $\alpha \ne \beta$ we have without loss of generality that $\alpha \in \beta$ by 2.10. It holds that $\alpha = \beta(\alpha)$, which would contradict 2.7. Thus if a well-ordered set is isomorphic to a ordinal, it is unique.
+
+    Define the function $F(x) = \alpha \in \Ord$ if $W(x)$ is isomorphic to $\alpha$. We have shown that each $\alpha$ is unique, meaning our function is well-defined. Similarly, 2.7 gives us that $F$ is injective and increasing. Given any $x \in \dom(F)$ we have if $y < x$ then $y \in \dom(F)$ as as restriction of the isomorphism from $W(x)$ to $F(x)$ will be an isomorphism from $W(y)$ to $F(y)$. Assume for the sake of contradiction that $\{w \in W \, | \, w \not\in \dom(F) \}$ is non-empty. There thus exists a least element $y$. Consider the set $\{F(x) \, | \, x \in W(y)\}$. By 2.11 we have the union of this set is an ordinal $\gamma$. Then $F\restriction_{W(y)}$ is isomorphic to $\gamma$. This is a contradiction, meaning $\dom(F) = W$. We then have that $F$ is an isomorphism from $W$ to $F[W]$. By 2.10 and 2.11 we have that $F[W]$ is well-ordered. Consider an arbitrary $\alpha \in F[W]$. For all $\beta \in \alpha$ we have $h^{-1}\restriction_{\beta}$ (where $h$ denotes the isomorphism between $\alpha$ and and some initial segment of $W$) is an isomorphism between $beta$ and an initial segment of $W$. Therefore $\beta \in F[W]$, meaning $F[W]$ is transitive. Thus $F[W]$ is an ordinal, so $W$ is isomorphic to a unique ordinal.
+\end{proof}
+
+\begin{defn}[Limit Ordinal]
+    An ordinal $\alpha$ which is not a successor is called a limit ordinal. We have that $\alpha = \sup \{\beta \, | \, \beta < \alpha\} = \cup \alpha$. By convention $0$ is a limit ordinal and $\sup \mtset = 0$.
+\end{defn}
+
+\begin{defn}[Natural Numbers]
+    We denote the least non-zero limit ordinal $\omega$ (or $\N$). The ordinals less than $\omega$ are called finite ordinals, or natural numbers.
+\end{defn}
+
+\newpage
+
+\begin{thm}[Transfinite Induction]
+    Let $C$ be a class of ordinals and assume that 
+    \begin{enumerate}[(i)]
+        \item $0 \in C$
+        \item If $\alpha \in C$ then $\alpha + 1 \in C$
+        \item If $\alpha$ is a nonzero limit ordinal and $\beta \in C$ for all $\beta < \alpha$ then $\alpha \in C$.
+    \end{enumerate}
+    Then $C$ is the class of all ordinals.
+\end{thm}
+
+\begin{proof}
+    Assume for the sake of contradiction that $C$ is not the class of all ordinals. Let $\alpha$ be the least ordinal not in $C$. If $\alpha = 0$ we would contradict (i). If $\alpha$ is a successor ordinal we would contradict (ii). If $\alpha$ is a limit ordinal we would contradict (iii). Therefore $C = \Ord$.
+\end{proof}
+
+\begin{defn}
+    A transfinite sequence is a function whose domain is an ordinal. We say a sequence with domain $\alpha \in \Ord$ is an $\alpha$-sequence or a sequence of length $\alpha$. We also denote $s \frown x$ as $s$ with $x$ appended to it.
+\end{defn}
+
+\begin{thm}[Transfinite Recursion]
+    Let $G$ be a function (on the proper class of transfinite sequences). Then  
+    \begin{align*}
+        F(\alpha) = x \iff & \text{there is a sequence $\langle a_\xi \, | \, \xi < \alpha \rangle$ such that: }    
+        \\
+        & \text{(i)} \, \, (\forall \xi < \alpha) \, \alpha_\xi = G(\langle \alpha_\eta \, | \, \eta < \xi \rangle)
+        \\
+        & \text{(ii)} \, \,  x = G(\langle \alpha_\xi \, | \, \xi < \alpha \rangle)
+    \end{align*}
+    defines a unique function (proper class) on $\Ord$ such that 
+    \[
+        F(\alpha) = G(F \restriction_\alpha)    
+    \]
+    equivalently we have if $a_\alpha = F(\alpha)$ then 
+    \[
+        a_\alpha = G(\langle a_\xi \, | \, \xi < \alpha \rangle)    
+    \]
+\end{thm}
+
+\begin{crly}
+    Let $X$ be a set and $\theta$ an ordinal number. For every function $G$ on the set of all transfinite sequences in $X$ of length $< \theta$ such that $\ran(G) \subseteq X$ there exists a unique $\theta$-sequence $\langle a_\alpha \, | \, \alpha < \theta \rangle$ in $X$ such that $a_\alpha = G(\langle a_\xi \, | \, \xi < \alpha \rangle)$ for every $\alpha < \theta$.
+\end{crly}
+
+\begin{proof}
+    For every $\alpha$, consider arbitrary $\alpha$-sequences $a$ and $b$ which satisfy (i). We have $a_0 = b_0 = G(0)$. $\forall \beta$, if $a_\gamma = b_\gamma$ for all $\gamma < \beta$ then we have $a_\beta = G(\langle a_\eta \, | \, \eta < \beta \rangle) = G(\langle b_\eta \, | \, \eta < \beta \rangle) = b_\beta$. Thus by transfinite induction we have $a = b$. It follows that $F(\alpha)$ is unique by (ii), so $F$ is a function.
+
+    For $\alpha = 0$ we have that $0$ vacuously satisfies (i), meaning $0 \in \dom(F)$. We also have $F(0) = G(F\restriction_0)$. If for all $\beta$ we have $\gamma < \beta \to \gamma \in \dom(F) \land F(\gamma) = G(F\restriction_\gamma)$ then we have $F\restriction_\beta$ is a $\beta$-sequence which satisfies (i). Therefore and thus $\beta \in \dom(F)$ and $F(\beta) = G(F\restriction_\beta)$. Therefore $\dom(F) = \theta$ (or $\Ord$) and $F(\alpha) = G(F\restriction_\alpha)$ by transfinite induction.
+
+    Let $F'$ be an arbitrary function satisfying $F'(\alpha) = G(F' \restriction_\alpha)$. We have that $F(0) = F'(0) = G(0)$. If for all $\beta$ we have that $\gamma < \beta \to F(\gamma) = F'(\gamma)$ then $F(\beta) = G(F\restriction_\beta) = (F'\restriction_\beta) = F'(\beta)$. Therefore $F = F'$ by transfinite induction.
+\end{proof}
+
+\begin{defn}[Limit of a Transfinite Sequence]
+    Let $\alpha > 0$ be a limit ordinal and let $\langle \gamma_\xi \, | \, \xi < \alpha \rangle$ be a nondecreasing sequence of ordinals (meaning $\xi < \eta$ implies $\gamma_xi \le \gamma_\eta)$. We define the limit of the sequence by 
+    \[
+        \lim_{\xi \to \alpha} \gamma_\xi = \sup\{\xi_\eta \, | \, \eta < \alpha\}    
+    \]
+\end{defn}
+
+\begin{defn}[Normal Sequence]
+    A sequence of ordinals is normal if it is increasing and continuous, meaning for every limit ordinal $\alpha$ we have $\gamma_\alpha = \lim_{\xi \to \alpha} \gamma_\xi$.
+\end{defn}
+
+\newpage
+
+\begin{defn}[Addition]
+    For all ordinal numbers $\alpha$
+    \begin{enumerate}[(i)]
+        \item $\alpha + 0 = \alpha$
+        \item $\alpha + (\beta + 1) = (\alpha + \beta) + 1$ for all $\beta$
+        \item $\alpha + \beta = \lim_{\xi \to \beta}(\alpha + \xi)$ for all limit $\beta > 0$
+    \end{enumerate}
+\end{defn}
+
+\begin{defn}[Multiplication]
+    For all ordinal numbers $\alpha$
+    \begin{enumerate}[(i)]
+        \item $\alpha \cdot 0 = 0$
+        \item $\alpha \cdot (\beta + 1) = (\alpha \cdot \beta) + \alpha$ for all $\beta$
+        \item $\alpha \cdot \beta = \lim_{\xi \to \beta} \alpha \cdot \xi$ for all limit $\beta > 0$.
+    \end{enumerate}
+\end{defn}
+
+\begin{defn}[Exponentiation]
+    For all ordinal numbers $\alpha$
+    \begin{enumerate}[(i)]
+        \item $\alpha^0 = 1$
+        \item $\alpha^{\beta + 1} = \alpha^\beta \cdot \alpha$ for all $\beta$
+        \item $\alpha^\beta = \lim_{\xi \to \beta} a^\xi$ for all limit $\beta > 0$.
+    \end{enumerate}
+\end{defn}
+
+\begin{crly}
+    Addition, multiplication, and exponentiation are normal functions in their second variable.
+\end{crly}
+
+\begin{lmma}
+    For all ordinals $\alpha$, $\beta$, and $\gamma$
+    \begin{itemize}
+        \item $\alpha + (\beta + \gamma) = (\alpha + \beta) + \gamma$.
+        \item $\alpha \cdot (\beta \cdot \gamma) = (\alpha \cdot \beta) \cdot \gamma$.
+    \end{itemize}
+\end{lmma}
+
+\begin{proof}
+    Let us first consider $\alpha + (\beta + \gamma) = (\alpha + \beta) + \gamma$. In the case $\gamma = 0$ we have $\alpha + (\beta + \gamma) = \alpha + \beta = (\alpha + \beta) + \gamma$. Let us assume that $\gamma = \xi + 1$ and $\alpha + (\beta + \xi) = (\alpha + \beta) + \xi$. Then we have 
+    \[
+        \alpha + (\beta + \gamma) = 
+        \alpha + (\beta + (\xi + 1)) = \alpha + ((\beta + \xi) + 1) =
+    \]
+    \[
+        (\alpha + (\beta + \xi)) + 1
+        = 
+        (\alpha + \beta) + \xi + 1
+        =
+        (\alpha + \beta) + \gamma
+    \]
+    In the case that $\gamma$ is a nonzero limit ordinal, and $\alpha + (\beta + \xi) = (\alpha + \beta) + \xi$ holds for all $\xi < \gamma$ we have that $\bigcup_{\xi \in \gamma} (\alpha + (\beta + \xi)) = \bigcup_{\xi \in \gamma} ((\alpha + \beta) + \xi) = (\alpha + \beta) + \gamma$. We can show that $\beta + \gamma$ is a nonzero limit ordinal. Then we have $\alpha + (\beta + \gamma) = \bigcup_{\nu \in (\beta + \gamma)} (\alpha + \nu) = \bigcup_{\xi \in \gamma} (\alpha + (\beta + \xi)) = (\alpha + \beta) + \gamma$. Thus by transfinite induction we have addition is associative.  
+\end{proof}
+
+\begin{defn}[Sum of Linear Orders]
+    Let $(A, <_A)$ and $(B, <_B)$ be disjoint linearly ordered sets. The sum of these linear orders is the set $A \cup B$ with the ordering defined as: $x < y$ if and only if $x <_A y$ or $x <_B y$ or $x \in A$ and $y \in B$.
+\end{defn}
+
+\begin{defn}[Product of Linear Orders]
+    Let $(A, <)$ and $(B, <)$ be linearly ordered sets. The product of these linear orders is the set $A \times B$ with the ordering: $(a_1, b_1) < (a_2, b_2)$ if and only if either $b_1 < b_2$ or $b_1 = b_2$ and $a_1 < a_2$.
+\end{defn}
+
+\begin{lmma}
+    For all ordinals $\alpha$ and $\beta$, $\alpha + \beta$ and $\alpha \cdot \beta$ are isomorphic to the sum and product of $\alpha$ and $\beta$ respectively.
+\end{lmma}
+
+\begin{lmma}
+    \hfill
+    \begin{enumerate}[(i)]
+        \item If $\beta < \gamma$ then $\alpha + \beta < \alpha + \gamma$
+        \item If $\alpha < \beta$ then there exists a unique $\delta$ such that $\alpha + \delta = \beta$.
+        \item If $\beta < \gamma$ and $\alpha > 0$ then $\alpha \cdot \beta < \alpha \cdot \gamma$
+        \item If $\alpha > 0$ and $\gamma$ is arbitrary, then there exist a unique $\beta$ and a unique $\rho < \alpha$ such that $\gamma = \alpha \cdot \beta + \rho$.
+        \item If $\beta < \gamma$ and $\alpha > 1$, then $\alpha^\beta < \alpha^\gamma$.
+    \end{enumerate}
+\end{lmma}
+
+\newpage
+
+\begin{thm}[Cantor's Normal Form Theorem]
+    Every ordinal $\alpha > 0$ can be represented unniquely in the form 
+    \[
+        \alpha = \omega^{\beta_1} \cdot k_1 + \cdots + \omega^{\beta_n} \cdot k_n    
+    \]
+    where $n \ge 1$, $\alpha \ge \beta_1 > \cdots > \beta_n$ and $k_1, \cdots, k_n$ are nonzero natural numbers. 
+\end{thm}
+
+\begin{proof}
+    In the case $\alpha = 1$ we have $\alpha = \omega^0 \cdot 1$. Assume that for all $\beta < \alpha$ a Cantor Normal Form representation exists. Consider the least ordinal $\xi$ such that $\omega^\xi > \alpha$. Such an ordinal must exist as $\cdots$. $\xi$ must not be a limit ordinal, as otherwise we would have $\alpha \in \bigcup_{\gamma \in \xi} \omega^\gamma$, meaning $\alpha \in \omega^\gamma$ for some $\gamma < \xi$, resulting in contradiction. As $\xi$ is not a limit ordinal, it must be a successor ordinal. Therefore $\xi = \beta + 1$. It follows $\omega^\beta \le \alpha$, and $\beta$ is the largest ordinal which satisfies this. By 2.30 we have there exists a unique $\delta$ and $\rho < \omega^\beta$ such that $\alpha = \omega^\beta \cdot \delta + \rho$. It must hold that $\delta < \omega$, as otherwise $\omega^\xi \le \alpha$. We have that $\rho < \omega^\beta \le \alpha$, meaning $\rho$ can be uniquely expressed in Cantor's Normal Form. Thus this sum, which is equal to $\alpha$, can be expressed in Cantor's Normal Form.
+
+    We have that for $\alpha = 1$, the unique representation is $\omega^0 \cdot 1$. If $\alpha$ is a successor ordinal then $\alpha = \beta + 1$. Let us assume that $\beta$ has a unique Cantor's Normal Form. Consider an arbitrary Cantor's Normal Form representation of $\alpha$. As $\alpha$ is a successor, it must be the case that such a form is a successor. Therefore, this representation must have a $\omega^0 \cdot k$ with $k > 0$ term. This representation with $k - 1$ will then be a Cantor's Normal Form representation of $\beta$, meaning it must be unique. Taking a successor maintains this uniqueness. Therefore this representation of $\alpha$ is unique. Let us consider the case that $\alpha$ is a nonzero limit ordinal. Assume all $\beta < \alpha$ have a unique Cantor Normal Form.
+\end{proof}
+
+\begin{defn}[Well-Founded Relation]
+    A relation $E$ on a set $P$ is well-founded if every nonempty $X \subseteq P$ has an $E$-minimal element, meaning $\exists a \in X$ such that $\forall x \in X$ we have $\neg(x E a)$. 
+\end{defn}
+
+\begin{thm}[Height]
+    Let $E$ be a well-founded relation on a set $P$. There exists a unique function $\rho$ from $P$ to the ordinals such that for all $x \in P$
+    \[
+        \rho(x) = \sup\{ \rho(y) + 1 \, | \, y \, E \, x \}    
+    \]
+    The range of $\rho$ is an intial segment of the ordinals, and thus an ordinal. The height of $E$ is defined to be $\ran(\rho)$.
+\end{thm}
+
+\begin{proof}
+    Let us define a transfinite sequence $P$ by transfinite recursion: 
+    \[
+        P_0 = \mtset
+        \quad\quad 
+        P_{\alpha + 1} = \{x \in P \, | \, \forall y \, (y \, E \, x  \to y \in P_\alpha)\} 
+        \quad\quad
+        P_\alpha = \bigcup_{\xi < \alpha} P_\xi \text{ if $\alpha$ is a limit ordinal}
+    \]
+    The axiom of replacement gives us that the function mapping each element of $P$ to the first $\gamma$ such that $P_\gamma$ contains that element exists. We can take the union of that set to get an upper bound on when elements are added to our sequence. We can take the least such element $\theta$. We have that $\theta$ satisfies $P_{\theta + 1} = P_{\theta}$. 
+    
+    Let us show that $P_\alpha \supseteq P_\gamma$ for all $\gamma < \alpha$. We have that $P_0$ and $P_\alpha$ for when $\alpha$ is a limit ordinal satisfy this property by definition. Let us consider when $\alpha = \beta + 1$. Fix an $x \in P_{\gamma}$ for $\gamma < \alpha$. Consider an arbitrary $y$ such that $y \, E \, x$. As $x \in P_\gamma$ there must be some $\xi < \beta$ such that $x \in P_{\xi + 1}$ (as elements are only added to successor ordinals). Thus $y \, E \, x \to y \in P_{\xi}$. By hypothesis we have $P_{\xi} \subseteq P_{\beta}$, meaning $y \in P_{\beta}$. Therefore $x \in P_{\beta + 1} = P_\alpha$. Thus $P_\beta \subseteq P_\alpha$. By transfinite induction we have $P_\gamma \subseteq P_\alpha$ for all $\gamma < \alpha$.    
+
+    Let us assume for the sake of contradiction that $P_\theta \ne P$. By definition $P_\theta \subseteq P$. Let us then consider a minimal $x \in P$ (with respect to $E$) that is not in $P_\theta$. As $x$ is $E$-minimal we have if $y \, E \, x$ then $y \in P_\theta$. Therefore $x \in P_{\theta + 1}$, which results in contradiction. $P_\theta$ must then equal $P$.
+
+    Let us define $\rho(x)$ as the least $\alpha$ such that $x \in P_{\alpha + 1}$. We have that $\forall y \in P \, (y \, E \, x \to y \in P_\alpha)$. Thus $\rho(y) + 1 \le \rho(x)$ for all $y \, E \, x$. Consider an upper bound of $\{ \rho(y) + 1 \, | \, y \, E \, x \}$, denoted $\beta$. We have for all $y \, E \, x$, $y \in P_{\rho(y) + 1}$, meaning $y \in P_{\beta}$. Thus $P_{\beta + 1}$ must contain $x$. Therefore $\beta + 1 \ge \alpha + 1$ and equivalently, $\beta \ge \rho(x)$, so we have $\rho(x) = \sup \{ \rho(y) + 1 \, | \, y \, E \, x \}$.
+\end{proof}
+
+\begin{defn}[Indecomposable]
+    A limit ordinal $\gamma > 0$ is indecomposable if there exists no $\alpha < \gamma$ and $\beta < \gamma$ such that $\alpha + \beta = \gamma$.
+\end{defn}
+
+\section{Cardinal Numbers}
+
+\begin{defn}[Cardinality]
+    Two sets, $X$ and $Y$, have the same cardinality, denoted by $\abs{X} = \abs{Y}$ if there exists a bijection between $X$ and $Y$.
+\end{defn}
+
+\begin{crly}
+    Cardinality forms an equivalence relation over the class of all sets. We can order such equivalence classes by $\le$, where $\abs{X} \le \abs{Y}$ if there exists an injection from $X$ to $Y$. It holds that such an operator forms a linear ordering over the equivalencce class of cardinals.
+\end{crly}
+
+\begin{thm}[Cantor]
+    For every set $X$, $\abs{X} < \abs{\powset{X}}$.
+\end{thm}
+
+\begin{proof}
+    Lef $f$ be a function from $X$ into $\powset{X}$. Consider the set $Y = \{x \in X \, | \, x \not\in f(x) \}$. Consider an arbitrary $x \in X$. If $x \in f(x)$ then $x \not\in Y$. If $x \not\in f(x)$ then $x \in Y$. Therefore $f(x) \ne Y$. Thus $Y$ is not in the range of $f$. Therefore $f$ is not a bijection, meaning $\abs{X} \ne \abs{\powset{X}}$. The map $f: X \to \powset{X}$ where $f(x) = \{x\}$ is an injection, meaning $\abs{X} < \abs{\powset{X}}$.
+\end{proof}
+
+\begin{thm}[Cantor-Schr{\"o}der-Bernstein]
+    If $\abs{A} \le \abs{B}$ and $\abs{B} \le \abs{A}$, then $\abs{A} = \abs{B}$.
+\end{thm}
+
+\begin{proof}
+    Consider injections $f_1: A \to B$ and $f_2: B \to A$. It holds that $\abs{A} = \abs{f_1[A]}$ and $\abs{B} = \abs{f_2[B]}$.
+    % Let $B' = f_2[B]$ and $A_1 = f_2[f_1[A]]$. We have $A_1 \subseteq B' \subseteq A$ and $\abs{A_1} = \abs{A}$. Therefore $\abs{A_1} \le \abs{B} \le \abs{A}$, and there exists some bijection between $A$ and $A_1$, denoted $f$. 
+    Let us define by induction for each $n \in \N$:
+    \begin{align*}
+        A_0 = A \quad & \quad A_{n + 1} = f_2[f_1[A_n]]
+        \\
+        B_0 = f_2[B] \quad & \quad B_{n + 1} = f_2[f_1[B_n]]
+    \end{align*}
+    Let $g: A \to B$ be defined as:
+    \[
+        g(x) =
+        \begin{cases*}
+            f_1(x) & \text{ if $x \in A_n \setminus B_n$ for some $n$}
+            \\
+            f_{2}^{-1}(x) & \text{ otherwise}
+        \end{cases*}    
+    \]
+    If $x \not\in A_0 \setminus B_0$, it must hold that $x \in f_2[B]$. Therefore $f_{2}^{-1}(x)$ is well-defined so $g$ is well-defined.
+    
+    Consider an arbitrary $a_1, a_2 \in A$ such that $g(a_1) = g(a_2)$. If $a_1 \in A_{n_1} \setminus B_{n_1}$ and $a_2 \in A_{n_2} \setminus B_{n_2}$ for some $n_1$ and $n_2$ (or $\not\in$) then $a_1 = a_2$ by the injectivity of $f_1$ (or the injectivity of $f_{2}^{-1})$. Let us assume for the sake of contradiction that, without loss of generality, $a_1 \in A_n \setminus B_n$ for some $n$ and $a_2 \not\in A_n \setminus B_n$ for any $n$. Then we have $f_{1}(a_1) = f_{2}^{-1}(a_2)$. Thus we have $f_2(f_1(a_1)) = a_2$. However, this implies $a_2 \in A_{n + 1} \setminus B_{n + 1}$, resulting in contradiction. Therefore we have that $g$ is injective.
+
+    Consider an arbitrary $b \in B$. If $f_{2}(b) \not\in A_n \setminus B_n$ for any $n$, then $g(f_{2}(b)) = f_{2}^{-1}(f_{2}(b)) = b$. Otherwise, we have $f_{2}(b) \in A_n \setminus B_n$ for some $n$. Consider $f_{1}^{-1}(b)$. We have $f_2(f_1(f_{1}^{-1}(b))) = f_2(b)$. Therefore $f_2(f_1(f_{1}^{-1}(b))) \in A_{n + 1} \setminus B_{n + 1}$. Then we have $g(f_{1}^{-1}(b)) = f_1(f_{1}^{-1}(b)) = b$. We thus have that $g$ is surjective, meaning $g$ forms a bijection between $A$ and $B$. 
+\end{proof}
+
+\begin{defn}[Cardinal Arithmetic]
+    If $\kappa = \abs{A}$ and $\lambda = \abs{B}$ for disjoint $A$ and $B$ then we define 
+    \[
+        \kappa + \lambda = \abs{A \cup B}
+        \quad\quad\quad
+        \kappa \cdot \lambda = \abs{A \times B} 
+        \quad\quad\quad
+        \kappa^\lambda = \abs{A^B}    
+    \]
+\end{defn}
+
+\begin{crly}
+    Cardinal Arithmetic is independent of choice of $A$ and $B$. 
+\end{crly}
+
+\begin{lmma}
+    If $\abs{A} = \kappa$ then $\abs{\powset{A}} = 2^\kappa$.
+\end{lmma}
+
+\begin{proof}
+    For every $X \subseteq A$, let $\chi_X$ be the function 
+    \[
+        \chi_X(x) = 
+        \begin{cases*}
+            1 & \text{ if $x \in X$}
+            \\
+            0 & \text{ if $x \in A \setminus X$}
+        \end{cases*}    
+    \]
+    The mapping $f: X \to \chi_X$ is a bijection between $\powset{A}$ and $2^A$.
+\end{proof}
+
+\begin{lmma}
+    \hfill
+    \begin{itemize}
+        \item $+$ and $\cdot$ are associative, commutative, and distributive
+        \item $(\kappa \cdot \lambda)^\mu = \kappa^\mu \cdot \lambda^\mu$ 
+        \item $\kappa^{\lambda + \mu} = \kappa^\lambda \cdot \kappa^\mu$
+        \item $(\kappa^\lambda)^\mu = \kappa^{\lambda \cdot \mu}$
+        \item If $\kappa \le \lambda$ then $\kappa^\mu \le \lambda^\mu$
+        \item If $0 < \lambda \le \mu$ then $\kappa^\lambda \le \kappa^\mu$
+        \item $\kappa^0 = 1$, $1^\kappa = 1$, and $0^\kappa = 0$ if $\kappa > 0$.
+    \end{itemize}
+\end{lmma}
+
+\newpage
+
+\begin{defn}[Cardinal Number]
+    An ordinal $\alpha$ is called a cardinal if $\abs{\alpha} \ne \abs{\beta}$ for all $\beta < \alpha$. Natural numbers are called finite cardinals, and infinite ordinals that are cardinals are called alpehs.
+\end{defn}
+
+\begin{lmma}
+    \hfill
+    \begin{enumerate}[(i)]
+        \item For every $\alpha$ there is a cardinal number greater than $\alpha$.
+        \item If $X$ is a set of cardinals then $\sup X$ is a cardinal.
+    \end{enumerate}
+\end{lmma}
+
+\begin{proof}
+    Consider an arbitrary set $X$. We have that the set of all well-orderings of subsets of $X$ exist, following from the axiom of power set, union, and seperation. Any injection of an ordinal into some well-ordered subset of $X$ will be an isomorphism. Such a ordinal is thus unique. By replacement, we have there exists a set $S$ of ordinals which are isomorphic to these well-orderings. If an ordinal injects into $X$, then it is isomorphic to the well-ordering of some subset of $X$ induced by that injection. Thus it will be in $S$. Therefore any strict upper bound on $S$ will be an ordinal which does not have an injection into $X$. The cardinality of this upper bound will be a cardinal greater than $\abs{X}$.
+
+    Let $\alpha = \sup X$, where $X$ is a set of cardinals. Let us assume for the sake of contradiction there exists an injection $f$ from $\alpha$ to some $\beta < \alpha$. There must exist some $\kappa \in X$  such that $\beta < \kappa \le \alpha$. However, the $f$ composed with the injection from $\kappa$ to $\alpha$ will be an injection from $\kappa$ to $\beta$, resulting in contradiction.
+\end{proof}
+
+\begin{defn}
+    We define the increasing enumeration of all alephs:
+    \[
+        \aleph_0 = \omega \quad\quad\quad
+        \aleph_{\alpha + 1} = \aleph_{\alpha}^+
+        \quad\quad\quad
+        \aleph_{\alpha} = \sup\{\aleph_{\beta} \, | \, \beta < \alpha \} \text{ for limit $\alpha$}    
+    \]
+\end{defn}
+
+\begin{defn}
+    The canonical well-ordering of $\Ord^2$ is 
+    \begin{align*}
+        (\alpha, \beta) < (\gamma, \delta) \iff & \text{either } \max\{\alpha, \beta\} < \max\{\gamma, \delta\}
+        \\
+        & \text{or } \max\{\alpha, \beta\} = \max\{\gamma, \delta\} \text{ and } \alpha < \gamma
+        \\
+        & \text{or } \max\{\alpha, \beta\} = \max\{\gamma, \delta\}, \alpha = \gamma, \text{ and } \beta < \delta
+    \end{align*}
+\end{defn}
+
+\begin{crly}
+    For each $\alpha \in \Ord$, we have $\alpha \times \alpha$ is the initial segment given by $(0, \alpha)$.
+\end{crly}
+
+\begin{thm}
+    The canonical well-ordering of $\Ord^2$ is isomorphic to $\Ord$.
+\end{thm}
+
+\begin{proof}
+    Let us define $\Gamma(\alpha, \beta)$ to be equal to the order-type of the initial-segment of $\Ord^2$ given by $(\alpha, \beta)$. By construction, such a function is increasing and injective. 
+    
+    We have $0 \in \ran(\Gamma)$. Consider an arbitrary ordinal, $\gamma$, and let us assume that for all $\xi < \gamma$ we have $\xi \in \ran(\Gamma)$. Consider the least pair $(\alpha, \beta)$ such that $(\alpha, \beta) > \Gamma^{-1}(\xi)$ for all $\xi < \gamma$. We can construct a mapping $f: \{(a, b) \in \Ord^2 \, | \, (a, b) < (\alpha, \beta) \} \to \gamma$ where $f(x, y) = \Gamma(x, y)$. Such an $f$ is injective and increasing. For any $\xi \in \gamma$ we have $\xi \in \ran(\Gamma)$. By our construction of $(\alpha, \beta)$, we also have that $\Gamma^{-1}(\xi) < (\alpha, \beta)$. Therefore $\Gamma^{-1}(\xi) \in \dom(f)$. Then we have $f(\Gamma^{-1}(\xi)) = \Gamma(\Gamma^{-1}(\xi)) = \xi$. Therefore $f$ forms an isomorphism, so $\gamma \in \ran(\Gamma)$. By transfinite induction, we have $\Gamma$ is surjective. Thus $\Gamma$ forms an isomorphism between $\Ord$ and $\Ord^2$.
+\end{proof}
+
+\begin{thm}
+    $\aleph_\alpha \cdot \aleph_\alpha = \aleph_\alpha$.
+\end{thm}
+
+\begin{proof}
+    Consider the canonical isomorphism from $\Ord^2$ to $\Ord$, $\Gamma$. We have that for any ordinal $\alpha$, $\alpha \times \alpha$ is an initial segment of $\Ord^2$. Therefore, $\gamma = \Gamma[\alpha \times \alpha]$ is an ordinal. It follows that $\Gamma \restriction_{\alpha \times \alpha}$ is an isomorphism between $\alpha \times \alpha$ and $\gamma$.
+    
+    Let us show that for any $\alpha \in \Ord$ we have $\Gamma[\aleph_\alpha \times \aleph_\alpha] = \aleph_\alpha$. We know that this is true for $\alpha = 0$. Let us assume for the sake of contradiction this does not hold for some $\alpha > 0$. Let $\alpha$ be the least such ordinal for which this doesn't hold. We have $f(x) = \Gamma[x \times x]$ is an increasing function. Therefore $f(\aleph_\alpha) > \aleph_\alpha$. Thus there must exist $\beta, \gamma < \aleph_\alpha$ such that $\Gamma(\beta, \gamma) = \aleph_\alpha$. As $\aleph_\alpha$ is a limit ordinal, there must exist $\delta < \aleph_\alpha$ such that $\beta, \gamma < \delta$. It then holds that $\Gamma[\delta \times \delta] \supseteq \aleph_\alpha$. Thus we have $\abs{\delta} \cdot \abs{\delta} = \abs{\delta \times \delta} \ge \aleph_\alpha$. However, by the minimality of $\alpha$, we have $\abs{\delta} \cdot \abs{\delta} = \abs{\delta} < \aleph_\alpha$, resulting in contradiction. Therefore $\Gamma[\aleph_\alpha \times \aleph_\alpha] = \aleph_\alpha$ for all $\alpha \in \Ord$.
+\end{proof}
+
+\newpage
+
+\begin{defn}[Cofinal]
+    For nonzero limit ordinals $\alpha$ and $\beta$, a $\beta$-sequence, $\langle a_\xi \, | \, \xi < \beta \rangle$, is cofinal in $\alpha$ if it is increasing and $\lim_{\xi \to \beta} \alpha_\xi = \alpha$. Similarly, $A \subseteq \alpha$ is cofinal in $\alpha$ if $\sup A = \alpha$. 
+\end{defn}
+
+\begin{defn}[Cofinality]
+    If $\alpha$ is an infinite limt ordinal, the cofinality of $\alpha$ is 
+    \[
+        \cf \alpha = \text{ the least limit ordinal $\beta$ such that there is increasing $\beta$-sequence cofinal in $\alpha$}
+    \]
+\end{defn}
+
+\begin{crly}
+    $\cf \alpha$ is a limit ordinal and less than or equal to $\alpha$.
+\end{crly}
+
+\begin{crly}
+    Let $\alpha > 0$ be a limit ordinal. If $A \subseteq \alpha$ and $\sup A = \alpha$, then the order type of $A$ is at least $\cf \alpha$. 
+\end{crly}
+
+\begin{lmma}
+    \[
+        \cf(\cf \alpha) = \cf \alpha    
+    \]
+\end{lmma}
+
+\begin{proof}
+    There exists some $(\cf \alpha)$-sequence, $\langle \gamma_\nu \, | \, \nu < \cf \alpha \rangle$ which approaches $\alpha$. Similarly, there exists some $(\cf (\cf \alpha))$-sequence, $\langle \delta_\nu \, | \, \nu < \cf (\cf \alpha) \rangle$ which approaches $\cf \alpha$. We have $\cf \alpha \ge \cf (\cf \alpha)$. We also have that $\lim_{\nu \to \cf (\cf \alpha)} \gamma_{\delta_\nu}$ approaches $\alpha$, meaning $\cf (\cf \alpha) \ge \cf \alpha$. Therefore $\cf (\cf \alpha) = \cf \alpha$.
+\end{proof}
+
+\begin{lmma}
+    If $\beta_0 \le \beta_1 \le \cdots \le \beta_\xi \le \cdots$ for $\xi < \gamma$ is a nondecreasing $\gamma$-sequence of ordinals in $\alpha$ and $\lim_{\xi \to \gamma} \beta_\xi = \alpha$, then $\cf \gamma = \cf \alpha$.
+\end{lmma}
+
+\begin{proof}
+    There must exist some $(\cf \gamma)$-sequence, $\langle \xi_\nu \, | \, \nu < \cf \gamma \rangle$, which approaches $\gamma$. It holds that $\lim_{\nu \to \cf \gamma} \beta_{\xi_\nu} = \alpha$. There must exist an increasing subsequence of $\beta_{\xi_\nu}$ of length less than or equal to $\cf \gamma$ with the same limit. Thus we have $\cf \alpha \le \cf \gamma$.
+
+    Let us construct a $\alpha$-sequence $\langle \alpha_\nu \, | \, \nu < \alpha \rangle$. For each $\nu$, let $\alpha_\nu$ be the least ordinal $\xi$ such that $\beta_\xi \ge \nu$. Such an ordinal must exist, as $\lim_{\xi \to \gamma} \beta_\xi = \alpha$. We have that such a sequence approaches $\gamma$. There must exist some $(\cf \alpha)$-sequence, $\langle \xi_\nu \, | \, \nu < \cf \alpha \rangle$. It holds that $\lim_{\nu \to \cf \alpha} \alpha_{\xi_\nu} = \gamma$. There must exist some strictly-increasing subsequence with the same limit. Thus $\cf \gamma \le \cf \alpha$, so $\cf \alpha = \cf \gamma$.
+\end{proof}
+
+\begin{defn}
+    A infinite cardinal $\aleph_\alpha$ is regular if $\cf \omega_\alpha = \omega_\alpha$. It is singular otherwise.
+\end{defn}
+
+\begin{thm}
+    For every limit ordinal $\alpha$, $\cf \alpha$ is a regular cardinal. 
+\end{thm}
+
+\begin{proof}
+    Let $\langle \alpha_\xi \, | \, \xi < \cf \alpha \rangle$ be a $(\cf \alpha)$-sequence that is cofinal with $\alpha$. We have $\cf \alpha \ge \abs{\cf \alpha}$ as ordinals. Let $f$ be a bijection between $\abs{\cf \alpha}$ and $\alpha$. Let us define the $\abs{\cf \alpha}$-sequence $\{\beta_\xi \, | \, \xi < \abs{\cf \alpha}\}$ where $\beta_\xi = \alpha_{f(\xi)}$. The union over this sequence will then be $\alpha$. We can take some increasing subsequence that preserves this union. We have the limit of this increasing subsequence of length $\le \abs{\cf \alpha}$ is then $\alpha$. Therefore $\cf \alpha \le \abs{\cf \alpha}$. Thus $\cf \alpha = \abs{\cf \alpha}$. We also have $\cf \abs{\cf \alpha} = \cf \cf \alpha = \cf \alpha = \abs{\cf \alpha}$, meaning $\cf \alpha$ is a regular cardinal.
+\end{proof}
+
+\begin{defn}
+    Let $\kappa$ be a limit ordinal. A subset $X \subseteq \kappa$ is bounded if $\sup X < \kappa$ and unbounded if $\sup X = \kappa$.
+\end{defn}
+
+\begin{lmma}
+    Let $\kappa$ be an aleph.
+    \begin{enumerate}[(i)]
+        \item If $X \subseteq \kappa$ and $\abs{X} < \cf \kappa$ then $X$ is bounded.
+        \item If $\lambda < \cf \kappa$ and $f: \lambda \to \kappa$ then the range of $f$ is bounded.
+    \end{enumerate}
+\end{lmma}
+
+\begin{proof}
+    If $X$ is unbounded, meaning $\sup X = \kappa$, then by 3.19 the order type of $X$ is at least $\cf \kappa$. Therefore $\abs{X} \ge \abs{\cf \kappa} = \cf \kappa$. The contrapositive gives us that if $\abs{X} < \cf \kappa$ then $X$ is bounded. Then we have that for any $f: \lambda \to \kappa$, $\abs{\ran(f)} \le \lambda < \cf \kappa$. Therefore we have $\ran(f)$ is bounded. 
+\end{proof}
+
+\begin{lmma}
+    An infinite cardinal $\kappa$ is singular if and only if there exists a cardinal $\lambda < \kappa$ and a family $\{S_xi \, | \, \xi < \lambda\}$ of subsets of $\kappa$ such that $\abs{S_\xi} < \kappa$ for each $\xi < \lambda$ and $\kappa = \bigcup_{\xi < \kappa} S_\xi$. The least cardinal $\lambda$ that satisfies the condition is $\cf \kappa$.
+\end{lmma}
+
+\newpage
+
+\begin{thm}
+    If $\kappa$ is an infinite cardinal, then $\kappa < \kappa^{\cf \kappa}$.
+\end{thm}
+
+\begin{proof}
+    Let $F$ be an arbitrary function from $\kappa$ to $k^{\cf \kappa}$. There must exist some $(\cf \kappa)$-sequence, $\langle \alpha_\xi \, | \, \xi < \cf \kappa \rangle$ such that $\lim_{\xi \to \cf \kappa} \alpha_\xi = \kappa$. Let us define a function, $f: \cf \kappa \to \kappa$ where $f(\xi)$ is the least $\gamma$ such that $\gamma \ne F_\alpha(\xi)$ for all $\alpha < \alpha_\xi$. We have that $\abs{\{F_\alpha(\xi) \, | \, \alpha < \alpha_\xi\}} \le \abs{\alpha_\xi} < \kappa$ so such a $\gamma$ must exist. We have that for any $\beta \in \kappa$, there exists a greater $\alpha_\xi$, and by construction $F_\beta(\xi) \ne f(\xi)$. Therefore $f \not\in \ran(F)$, so $F$ is not a bijection. Thus we have that $\kappa < \kappa^{\cf \kappa}$.
+\end{proof}
+
+\begin{defn}[Weakly Inaccessible]
+    A uncountable cardinal $\kappa$ is weakly inaccessible if it is a limit cardinal and is regular. 
+\end{defn}
+
+\begin{defn}[Projection]
+    A set $B$ is a projection of a set $A$ if there is surjection mapping $A$ onto $B$. 
+\end{defn}
+
+\begin{defn}[Dedekind-Finite]
+    A set $S$ is Dedekind-finite (D-finite) if there is no bijection from $S$ to a proper subset of itself. $S$ is Dedekind-infinite otherwise.
+\end{defn}
+
+\section{Real Numbers }
+
+\begin{thm}
+    The set of all real numbers is uncountable.
+\end{thm}
+
+\begin{proof}
+    Let $c_n$ for $n \in \N$ be an enumeration of the $\R$. Let us define sequences $a_n$ and $b_n$. Let $a_0 = c_0$ and let $b_0$ be $c_k$ for the least $k$ such that $a_0 < c_k$. Let $a_{n + 1}$ be equal to $c_k$ for the least $k$ such that $a_n < c_n < b_n$ and similarly let $b_{n + 1}$ be equal to $c_k$ for the least $k$ such that $a_{n + 1} < c_k < b_{n + 1}$. By the density of the reals, such sequences exist. We have that $a_n$ is bounded by $b_0$, so there exists a supremum of $a_n$. Consider an arbitrary $c_m$. If $c_m \le a_0$ or $c_m \ge b_0$ then $c_m \ne \sup a_n$. Otherwise, let us consider the set $\{n \in \N \, | \, a_n < c_m < b_n\}$. It holds that $m$ is an upper bound for this set, as if $a_m < c_m < b_m$ then $a_{m + 1} = c_m$. We have that a maximum then exists for this set, and it follows that $c_m$ will be contained in either $a_n$ or $b_n$. Then the next element of $a_n$ will be greater than $c_m$, meaning $\sup a_n > c_m$. Thus $\sup a_n \not\in a_n$, meaning such an enumeration is not a bijection. Therefore no bijection exists between the naturals and the real numbers.
+\end{proof}
+
+\begin{thm}
+    The cardinality of the reals is $2^{\aleph_0}$.
+\end{thm}
+
+\begin{proof}
+    Every real number is equal to the limit of some rational sequence. Therefore $\abs{\R} \le \abs{\powset{\Q}} = 2^{\aleph_0}$. We also have that the cantor set, denoted $C$, which is the set of all reals of the form $\sum_{n = 1}^\infty \frac{a_n}{3^n}$ where $a_n = 0$ or $2$ is in bijection with the set of all $\omega$-sequences of $0$'s and $2$'s. Therefore $\abs{\R} \ge \abs{C} \ge 2^{\aleph_0}$. It follows from Cantor-Schr{\"o}der-Bernstein that $\abs{\R} = 2^{\aleph_0}$.
+\end{proof}
+
+\begin{defn}
+    A linear ordering $(P, <)$ is dense if for all $a < b$ there exists a $c$ such that $a < c < b$. A set $D \subseteq P$ is a dense subset if for all $a < b$ in $P$ there exists a $d \in D$ such that $a < d < b$.
+\end{defn}
+
+\begin{thm}
+    Any two countable unbounded dense linear ordered sets are isomorphic.
+\end{thm}
+
+\begin{proof}
+    Let $P_1 = \{a_n \, | \, n \in \N\}$ and $P_2 = \{b_n \, | \, n \in \N\}$ be enumerations of countable unbounded dense linearly ordered sets. Let us define a function $f: a_n \to b_n$ recursively. Let $f(a_0) = b_0$ and let $f(a_{n + 1}) = b_k$ for the least $k$ such that $f$ is order-preserving. Such a $k$ must exist as only finitely many $n$ have been exhausted, so there is a maximum of the set $\{f(a_m) \, | \, m < n + 1 \, \land \, a_m < a_{n + 1}\}$ and a minimum of the set a maximum of the set $\{f(a_m) \, | \, m < n + 1 \, \land \, a_m > a_{n + 1}\}$ (or one of the sets is empty). Then, as $P_2$ enumerates over a dense unbounnded set, there must be some element between this maximum and minimum (or strictly above or below the maximum/minimum if one of the given sets is empty). We have that $f$ is defined for all $a_n$, and thus $\dom(f)$ is the countable unbounded dense linearly ordered set $P_1$ enumerates over. By construction $f$ is increasing and injective. We have that $b_0 \in \ran(f)$. Let us assume $b_i \in \ran(f)$ for all $i < m$.  Let us define $n$ as the maximum of the finite set $\{n \in \N \, | \, f(n) = b_i \text{ for } i < m\}$. If $f(a_j) = b_m$ for some $j \le n$ we have $b_m \in \ran(f)$. Otherwise, consider the sets $\{a_j \, | j \le n \, \land \, f(a_j) < b_m\}$ and  $\{a_j \, | \, j \le n \, \land \, f(a_j) > b_m\}$. The union of such sets will be all $a_j$ such that $j \le n$. Such sets are finite and thus attain their maximum and minimum respectively (or one of the sets is empty). Then as as $P_1$ enumerates over a unbounded dense set, it must hold that some $a_j$ is between this maximum and minimum (or strictly above or below the maximum/minimum if one of the given sets is empty). As all $a_j$ for $j \le n$ are contained in the union of these sets, any value strictly between their maximum and minimum necesarily will satisfy $j > n$. Then by our definition of $f$ we have $f(a_j) = b_m$ for the least such $j$ in which this holds. By induction we have $\ran(f)$ is equal to the set $P_2$ enumerates over, meaning $f$ is surjective. Thus we have that $f$ is an isomorphism between such sets.
+\end{proof}
+
+\begin{thm}
+    $(\R, <)$ is the unique complete linear ordering that has a countable dense subset isomorphic to $(\Q, <)$.
+\end{thm}
+
+\begin{proof}
+    Consider arbitrary complete dense unbounded linearly ordered sets $C$ and $C'$ which contain a countable dense subset isomorphic to $(\Q, <)$. Let such subsets be denoted by $P$ and $P'$. By 4.4 we have there is an isomorphism, $f: P \to P'$. Let us define $f^*: C \to C'$ where 
+    \[
+        f^*(x) = \sup(f[\{p \in P \, | \, p < x\}])    
+    \]
+    We have that for all $x \in C$ there exists some $p_1, p_2 \in P$ such that $p_1 > x$ and $p_2 < x$. Then $f(p_1)$ is an upper bound for $f[\{p \in P \, | \, p < x\}]$ and $f(p_2) \in f[\{p \in P \, | \, p < x\}]$ so $\sup(f[\{p \in P \, | \, p < x\}])$ exists. It follows that $f^*$ is well-defined. Consider arbitrary $a, b \in C$ such that $a < b$. Then there exists a $p \in P$ such that $a < p < b$. Then $f(p)$ is a strict upper bound for $f^*(a)$ while $f(p)$ is a strict lower bound for $f^*(b)$. Therefore $f^*(a) < f^*(b)$ so $f^*$ is injective and increasing. Let us consider an arbitrary $c' \in C'$. Consider the set $L = \{p' \in P' \, | \, p' < c'\}$. By construction we have $\sup(f^{-1}[L])$ maps to $c'$ under $f^*$ so $f^*$ is surjective. Thus $f^*$ is an isomorphism between $C$ and $C'$. Thus all such sets are equivalent (and thus equivalent to $(\R, <)$) under isomorphism.
+\end{proof}
+
+\begin{thm}
+    Let $(P, <)$ be a dense unbounded linearly ordered set. Then  there is a complete unbounded linearly ordered set $(C, \prec)$ such that $P \subseteq C$, $<$ and $\prec$ agree on $P$, and $P$ is dense in $C$.
+\end{thm}
+
+\begin{proof}
+    Define a Dedekind cut in $P$ to be a pair $(A, B)$ of disjoint nonempty subsets of $P$ such that $A \cup B = P$, $a < b$ for all $a \in A$ and $b \in B$, and $A$ does not have a greatest element. By the axioms of power set and seperation we have that the set $C$ of all Dedekind cuts in $P$ exists. Let us define $(A_1, B_1) \preceq (A_2, B_2)$ if $A_1 \subseteq A_2$. It follows from the properties of $\subseteq$ that $\preceq$ is a partial order. Given any such $A_1$ and $A_2$ we have that either $A_1$ contains an upper bound for $A_2$ or doesn't. If it does, it must hold that $A_1$ contains every element of $P$ less than  that upper bound, so $A_2 \subseteq A_1$. If it doesn't, each element of $A_1$ must be less than some element of $A_2$, and thus contained in $A_2$. Therefore $A_1 \subseteq A_2$. Thus $\preceq$ is a linear ordering. 
+    
+    For any Dedekind cut, $(A, B)$, $B$ must be non-empty. As $P$ is unbounded, there must must then exist some $b \in B$ which is not a lower bound of $b$. Then we have $(\{a \in P \, | \, a < b\}, \{a \in P \, | \, a > b\})$ is a Dedekind cut greater than $(A, B)$. For each $p \in P$ we have $(A_p, B_p) = (\{a \in P \, | \, a < p\}, \{a \in P \, | \, a > p\})$ defines a dedekind cut. It follows that $P$ is isomorphic to $\{(A_p, B_p) \, | \, p \in P \}$, $C$ contains a copy of $P$ and $<$ and $\prec$ agree over this copy. For any $(A_1, B_1) \prec (A_2, B_2)$ we have that $A_1 \subsetneq A_2$. Therefore there must exist a $p \in P$ such that $p \in A_2$ and $p \not\in A_1$. It follows that $p \in B_1$ so $(A_1, B_1) \prec (A_p, B_p)$ and $p$ is not the greatest element of $A_2$ so $(A_p, B_p) \prec (A_2, B_2)$. We then have $(A_1, B_1) \prec (A_p, B_p) \prec (A_2, B_2)$. Therefore $(C, \prec)$ is a linearly ordered set with a copy of $P$ which agrees in order and is dense in $C$. 
+
+    Consider an arbitrary bounded above set $X \subsetneq C$. Define 
+    \[
+        (A, B) = (\bigcup \{a \, | \, \exists b \, [(a, b) \in X]\}, \bigcap \{b \, | \, \exists a \, [(a, b) \in X]\})
+    \]
+    We have that $A$ is a union of nonempty sets, and thus nonempty. There must exist some upper bound $(U_A, U_B)$ of $x$. We have that $U_B$ is nonempty. Thus there exists some $u \in U_B$. Consider an arbitrary $b \in \{b \, | \, \exists a \, [(a, b) \in X]\}$. We have the existence of some $a$ such that $(a, b) \in X$. Then by construction we have $a \subseteq U_A$, so $u \not\in A$. Therefore $u \in b$. Thus $u \in B$. Therefore $B$ is nonempty. For any arbitrary $a \in A$ and $b \in B$ we have the existence of $(A', B') \in X$ such that $a \in A'$. Then by construction we have that $b \in B'$. Therefore $a < b$. We also have that $A$ is the union of sets with no greatest element, and thus has no greatest element. Therefore $(A, B)$ is a Dedekind cut. By construction all Dedekind cuts in $X$ are less than $(A, B)$ and $(A, B)$ is less than or equal to any upper bound of $X$. Therefore $(A, B)$ is the supremum of $X$, meaning that $C$ is complete.
+\end{proof}
+
+\newpage
+
+\begin{defn}[Perfect Set]
+    A nonempty closed set is perfect if it contains no isolated points.
+\end{defn}
+
+\begin{thm}
+    Every perfect set of $\R$ has cardinality $\abs{\R}$.
+\end{thm}
+
+\begin{proof}
+    Consider an arbitrary perfect set $P \subseteq \R$. Let $S$ be the set of all finite sequences in $\{0, 1\}$. Let us construct sets $I_s$ for all $s \in S$ by well-founded recursion. Let $I_\mtset = \overline{B_1(p) \cap P}$ for some $p \in P$. We have that any point in $B_1(p) \cap P$ is not isolated as $B_1(p)$ is open and $P$ is perfect. Any point in $\overline{B_1(p) \cap P}  \setminus B_1(p) \cap P$ is the limit of some sequence in $\setminus B_1(p) \cap P$ and thus contained in $P$ and not an isolated point. Therefore $I_\mtset$ is a subset of $P$, and perfect. Consider an arbitrary $s \in S$ of length $n$. Let $l$ and $u$ be disjoint points in $I_s$ such that $l < u$ (such points must exist as $I_s$ is perfect). There exists an $r \in \R_{< \frac{1}{n + 1}}$ such that $\overline{B_r(l)}  \cap \overline{B_r(u)} = \mtset$. Let $I_{s \frown 0} = \overline{B_r(l) \cap I_s}$ and $I_{s \frown 1} = \overline{B_r(u) \cap I_s}$. It follows that $I_{s \frown 0}$ and $I_{s \frown 0}$ are disjoint, implying that all $I_{s'}$ where $s' \in S$ is of length $n + 1$ are disjoint. We also have that $I_{s \frown 0} \subseteq I_s$ and $I_{s \frown 1} \subseteq I_{s}$, meaning both are also subsets of $P$. Both $I_{s \frown 0}$ and $I_{s \frown 1}$ are perfect. By construction, both of these sets also have diameter less than $\frac{1}{n + 1}$.
+
+    Let us then construct a function $F: 2^{\aleph_0} \to P$. Consider an arbitrary $f \in 2^{\aleph_0}$. It must hold that $\bigcap_{n < \omega} I_{f\restriction_{n}}$ is equal to $\{p\}$ for some $p \in P$. This is because the infinite intersection of nonempty nested closed sets in $\R$ is nonempty, but the element in this set must be unique as it is contained in a sequence of sets with diameter approaching $0$. Let $F$ map $f$ to $p$. If $f_1, f_2 \in 2^{\aleph_0}$ are not equal, they must differ in some index $n$. We have that $f_1\restriction_{n + 1}, f_2\restriction_{n + 1} \in S$ and $f_1\restriction_{n + 1} \ne f_2\restriction_{n + 1}$, so $I_{f_1\restriction_{n + 1}}$ and $I_{f_2\restriction_{n + 1}}$ are disjoint, meaning $\bigcap_{n < \omega} I_{f_1\restriction_{n}} \ne \bigcap_{n < \omega} I_{f_2\restriction_{n}}$, so $F(f_1) \ne F(f_2)$. Therefore $F$ is injective, so $\abs{P} \ge 2^{\aleph_0} = \abs{R}$. As $P \subseteq \R$ we have $\abs{P} = \abs{\R}$.
+\end{proof}
+
+\begin{thm}[Cantor-Bendixson]
+    If $F \subseteq \R$ is an uncountable closed, then $F = P \cup S$ where $P$ is perfect and $S$ is at most countable.
+\end{thm}
+
+\begin{proof}
+    For every $A \subseteq \R$ define $A'$ to be equal to the set of all limit points of $A$. Let us recursively define the $\aleph_2$-sequence $F_n$, where $F_0 = F$, $F_{\alpha + 1} = F_{\alpha}'$, and $F_{\alpha} = \bigcap_{\beta < \alpha} F_{\beta}$ for limit $\alpha$. As $F$ is closed, it holds that $F_\alpha$ is closed and $F_\alpha \supseteq F_{\beta}$ for all $\alpha < \beta < \aleph_2$. Define $S = F \setminus \im(F_{\aleph_1})$. Let us construct a function $g: S \to \omega$. Let $h$ be a enumeration of all rational intervals of $\R$. For all $x \in S$ we have that $x \in F_\alpha$ and $x \not\in F_{\alpha + 1}$ for some $\alpha$. Thus $x$ is an isolated point of $F_\alpha$, meaning some rational interval about $x$ is disjoint from $F_\alpha \setminus \{x\}$. Let $g(x)$ then be the least $k$ such that $h(k)$ contains $x$ and is disjoint from $F_\alpha \setminus \{x\}$. We have that such a rational set is  not equal to all rational sets not containing $x$. We also have that such a rational set is disjoint from $F_\beta$ for all $\beta > \alpha$, and thus not equal to any rational set containing an element from any such $F_\beta$. Thus $g$ is an injection. 
+
+    It follows that $S$ is at most countable. Therefore $\{\alpha < \aleph_1 \, | \, F_\alpha \ne F_{\alpha + 1} \}$ is countable, meaning there must exist some $\beta < \aleph_1$ such that $F_{\gamma} = F_{\gamma + 1}$, or equivalently $F_\gamma$ is perfect. By construction, it holds that $F_\gamma = F_\delta$ for all $\aleph_2 > \delta \ge \gamma$. Thus $S = F \setminus F_{\aleph_1} = F \setminus F_\gamma$. It follows that $F = F_\gamma \cup (F \setminus F_\gamma)$, the union of a perfect set and an at most countable set.
+\end{proof}
+
+\begin{crly}
+    If $F$ is a closed set, then  either $\abs{F} \le \aleph_0$ or $\abs{F} = 2^{\aleph_0}$. 
+\end{crly}
+
+\begin{defn}[Nowhere Dense]
+    A set of reals is nowhere dense if its closure has empty interior.
+\end{defn}
+
+\begin{thm}[Baire Category Theorem]
+    If $D_0$, $D_1$, $\cdots$, $D_n$, $\cdots$ for $n \in \N$, are dense open sets of reals then the intersection $D = \bigcap_{n \in \omega} D_n$ is dense in $\R$.
+\end{thm}
+
+\begin{proof}
+    Consider arbitrary dense open sets of reals $A$ and $B$. It holds that $A \cap B$ is open. Consider an $l, r \in \R$ such that $l < r$. As $A$ is dense, there is some $a \in A$ such that $l < r$. As $A$ is open, there is some neighborhood about $a$ such that $A$ contains that neighborhood. Let $a' \in A$ be some point in that neighborhood such that $l < a' < r$. Without loss of generality, let us say $a' < a$. As $B$ is dense, there is some $b \in B$ such that $a' < b < a$. It then holds that $b \in A$. Therefore $b \in A \cap B$, so there exists some element of $A \cap B$ that is between $l$ and $r$. Therefore $A \cap B$ is dense. By induction it follows that $\bigcap_{n = 0}^{m} D_n$ is dense and open for all $m \in \omega$.
+
+    Let $\langle J_k \, | \, k \in \omega \rangle$ be an enumeration of the rational intervals. Consider an arbitrary $l, r \in \R$ such that $l < r$. Let us define a sequence of intervals $\{I_n \, | \, n \in \N\}$ recursively. Let $I_0 = (l, r)$. Let $I_{n + 1} = J_k = (q_k, r_k)$ where $k \in \N$ is the least $k$ such that the closed interval $[q_k, r_k]$ is included in $I_n \cap D_n$. As $D_n$ is dense, it must have a non-empty intersection with $I_n$. As $D_n$ is open, there must be some open-neighborhood about some point in this intersection, which then contains some smaller closed rational interval. Thus such a $k$ does exist. It follows that $\overline{I_{n + 1}}$ is a nonempty bounded closed interval contained within $\overline{I_n}$ and $D_n$. By the nested interval property we have that there exists some $x \in \bigcap_{n = 1}^\infty \overline{I_n}$. By construction we have $x \in D$ and $l < x < r$. Therefore $D$ is dense.
+\end{proof}
+
+\newpage
+
+\begin{defn}[Algebra of Sets]
+    An algebra of sets is a collection $\mathcal{S}$ of subsets of a given set $S$ such that
+    \begin{enumerate}[(i)]
+        \item $S \in \mathcal{S}$
+        \item if $X \in \mathcal{S}$ and $Y \in \mathcal{S}$ then $X \cup Y \in \mathcal{S}$
+        \item If $X \in \mathcal{S}$ then $S \setminus X \in \mathcal{S}$.
+    \end{enumerate}
+\end{defn}
+
+\begin{crly}
+    An algebra of sets is closed under intersections.
+\end{crly}
+
+\begin{defn}[$\sigma$-algebra]
+    A $\sigma$-algebra is a algebra of sets that is also closed under countable unions (and thus countable intersections).
+\end{defn}
+
+\begin{crly}
+    For any collection $\mathcal{X}$ of subsets of $S$, there is a smallest algebra (and respecitvely $\sigma$-algebra) $\mathcal{S}$ such that $\mathcal{S} \supseteq \mathcal{X}$.
+\end{crly}
+
+\begin{defn}[Borel Sets]
+    A set of reals $B$ is Borel if it belongs to the smallest $\sigma$-algebra $\mathcal{B}$ of sets of reals that contains all open sets.
+\end{defn}
+
+\begin{defn}
+    The intersections of countably many open sets are called $G_\delta$ sets, and the unions of countably many closed sets are called $F_\sigma$ sets.
+\end{defn}
+
+\begin{defn}[Baire Space]
+    The Baire space is the space $\mathcal{N} = \omega^\omega$ of all infinite sequences of natural numbers with the topology: For every finite sequence $s = \langle a_k \, | \, k < n \rangle$ let 
+    \[
+        O(s) = \{f \in \mathcal{N} \, | \, s \subseteq f \} = \{\langle c_k \, | \, k \in \N \rangle \, | \, (\forall k < n) c_k = a_k\}
+    \]
+    Let all such sets form a basis for the topology of $\mathcal{N}$.
+\end{defn}
+
+\begin{defn}[Sequential Tree]
+    A sequential tree is a set $T$ of finite sequences of natural numbers that satisfies 
+    \[
+        \text{if } t \in T \text{ and } s = t\restriction_n \text{ for some $n$, then } s \in T    
+    \]
+\end{defn}
+
+\begin{thm}
+    Given a sequential tree $T$, the set
+    \[
+        [T] = \{f \in \mathcal{N} \, | \, f\restriction_{n} \in T \text{ for all } n \in \N\}    
+    \]
+    is closed and every closed set is equal to $[T]$ for some tree $T$.
+\end{thm}
+
+\begin{proof}
+    Consider an arbitrary $f \in \mathcal{N}$ such that $f \not\in [T]$. By construction there exists some $n \in \N$ such that $s = f\restriction_n$ is not in $T$. Then we have $O(s) = \{f \in \mathcal{N} \, | \, s \subset f\}$ is an open set disjoint from $[T]$ containing $f$. A union of such open sets over all $f \in \mathcal{N} \setminus [T]$ will be an open set that is the complement of $[T]$, meaning $[T]$ is closed.
+
+    Consider an arbitrary closed set $F \subseteq \mathcal{N}$. Let $T_F$ be the set of all finite sequences $s$ such that $s \subset f$ for some $f \in F$. It holds that such a set is a tree. Consider an arbitrary $f \in F$. By construction, for all $n \in \N$ we have $f \restriction_{n} \in T_f$. Therefore $f \in [T_f]$. Consider an arbitrary $f \in [T_f]$. There must then exist a sequence $\langle f_n \in F \, | \, n \in \N \rangle$ such that $f_n$ and $f$ agree on their first $n$ elements. Such a sequence converges to $f$, implying $f \in F$. Therefore $F = [T_f]$.
+\end{proof}
+
+\begin{defn}
+    A nonempty sequential tree $T$ is perfect if for every $t \in T$ there exist $s_1$ and $s_2$ such that $s_1 \subset t$, $s_2 \subset t$, and $s_1$ and $s_2$ are $\subset$-incomparable
+\end{defn}
+
+\begin{lmma}
+    A closed set $F \subseteq \mathcal{N}$ is perfect if and only if the tree $T_F$ is a perfect tree.
+\end{lmma}
+
+\begin{crly}
+    The Baire-Category Theorem (4.12) and Cantor-Bendixsom Theorem (4.9) hold over Baire space.
+\end{crly}
+
+\begin{defn}[Polish Spaces]
+    A Polish space is a topological space that is homeoemorphic to a seperable complete metric space. 
+\end{defn}
+
+\begin{defn}[Algebraic Numbers]
+    A real number is algebraic if it is a root of a polynomial whose coefficients are integers. Otherwise it is transcendental.
+\end{defn}
+
+\begin{defn}[Condensation Point]
+    Given a set $A$ of reals, $a \in \R$ is a condensation point of $A$ if every neighborhood of $a$ contains uncountably many elements of $A$. We denote $A^*$ as the set of all condensation points of $A$.
+\end{defn}
+
+\newpage
+
+\section{The Axiom of Choice and Cardinal Arithmetic}
+
+\begin{axm}[Axiom of Choice]
+    Every family of nonempty sets has a choice function.
+\end{axm}
+
+\begin{thm}[Zermelo's Well-Ordering Theorem]
+    Every set can be well-ordered.
+\end{thm}
+
+\begin{proof}
+    Let $A$ be an arbitrary set. Let $f$ be a choice function for the family $S$ of all nonempty subsets of $A$. Let us construct the transfinite sequence $a$. For every ordinal $\alpha$ let
+    \[
+        a_\alpha = f(A \setminus \{a_\xi \, | \, \xi < \alpha\})    
+    \] 
+    if $\{a_\xi \, | \, \xi < \alpha\}$ is nonempty. Then our sequence induces a well-ordering of $A$.
+\end{proof}
+
+\begin{lmma}
+    If every set is well-orderable, then the axiom of choice holds.
+\end{lmma}
+
+\begin{proof}
+    For any family of sets $S$, consider some  well-ordering of $\bigcup S$. Then let $f(X)$ for each $X \in S$ be the least element of $X$. Such an $f$ is a choice function over $S$.
+\end{proof}
+
+\begin{crly}
+    If there is a surjection from $A$ onto $B$ then $\abs{B} \le \abs{A}$.
+\end{crly}
+
+\begin{lmma}
+    $\abs{\bigcup S} \le \abs{S} \cdot \sup\{\abs{X} \, | \, X \in S\}$.
+\end{lmma}
+
+\begin{proof}
+    By the axiom of choice we can enumerate over $S$ and then enumerate over each set in our enumeration. We can then map each element to the least pair of ordinals that it maps to in our enumeration, and such a mapping would be injective. Therefore $\abs{\bigcup S} \le \abs{S \times \sup\{\abs{X} \, | \, X \in S\}}$.
+\end{proof}
+
+\begin{crly}
+    Every successor cardinal is regular.
+\end{crly}
+
+\begin{defn}
+    Given a partial order $(P,<)$, we say $C \subseteq P$ is a chain in $P$ if $<$ linearly orders $C$.
+\end{defn}
+
+\begin{thm}[Zorn's Lemma]
+    If $(P, <)$ is a nonempty partially ordered set such that every chain in $P$ has an upper bound, then $P$ has a maximal element.
+\end{thm}
+
+\begin{proof}
+    By the axiom of choice there exists a choice function $f$ for nonempty subsets of $P$. By transfinite recursion let us construct the sequence $a$ such that $a_\alpha$ is equal to the the set of all elements greater than all $a_\xi$ for $\xi < \alpha$ mapped under $f$ if such a set is nonempty. The image of this function is then a chain, which then has an upper bound. Such an upper bound by construction is a maximal element of $P$.
+\end{proof}
+
+\begin{axm}[The Countable Axiom of Choice]
+    Every countable family of nonempty sets has a choice function.
+\end{axm}
+
+\begin{axm}[The Principle of Dependent Choice]
+    If $E$ is a binary relation on a nonempty set $A$, and if for every $a \in A$ there exists $b \in A$ such that $b \, E \, a$, then there exists a sequence $\langle a_n \in A \, | \, n \in \N \rangle$ such that:
+    \[
+        a_{n + 1} \, E \, a_n \, \forall \, n \in \N    
+    \]
+\end{axm}
+
+\begin{lmma}
+    A relation $E$ on $P$ is well-founded if and only if there is no infinite sequence $\langle a_n \, | \, n \in \N \rangle$ in $P$ such that $a_{n + 1} \, E \, a_n$ for all $n \in \N$.
+\end{lmma}
+
+\begin{proof}
+    If there exists a sequence $\langle a_n \in A \, | \, n \in \N\rangle$ such that $a_{n + 1} \, E \, a_n$ for all $n \in \N$ then no element in the image of $a$ has is minimal. Therefore $E$ is not well-founded. The contrapositive gives us that if $E$ is well-founded then such a sequence does not exist.
+
+    If $E$ is not well-founded then there must exist some nonempty set $A \subseteq P$ with no $E$-minimal element. By the principle of dependent choice, there then exists a sequence $a$ such that $a_{n + 1} \, E \, a_n$ for all $n \in \N$. The contrapositive gives us that if no such sequence exists then $E$ is well-founded.
+\end{proof}
+
+\begin{crly}
+    A linear ordering $<$ of a set $P$ is a well-ordering of $P$ if and only if there is no infinite descecnding sequence in $A$.
+\end{crly}
+
+\begin{lmma}
+    If $2 \le \kappa \le \lambda$ and $\lambda$ is infinite then $\kappa^\lambda = 2^\lambda$.
+\end{lmma}
+
+\begin{proof}
+    \[
+        2^\lambda \le \kappa^\lambda \le (2^\kappa)^\lambda = 2^{\kappa \cdot \lambda} = 2^{\lambda}
+    \]
+\end{proof}
+
+\begin{defn}
+    If $\lambda$ is a cardinal and $\abs{A} \ge \lambda$ let 
+    \[
+        [A]^\lambda = \{X \subseteq A \, | \, \abs{X} = \lambda\}
+    \]
+\end{defn}
+
+\begin{lmma}
+    If $[A] = \kappa \ge \lambda$ then the set $[A]^\lambda$ has cardinality $\kappa^\lambda$.
+\end{lmma}
+
+\begin{proof}
+    Every function from $\lambda$ to $A$ is a subset of $\lambda \times A$ of cardinality $\abs{\lambda}$, so $\kappa^\lambda \le \abs{[\lambda \times A]^\lambda}= \abs{[A]^\lambda}$. We can also construct the function $F: [A]^\lambda \to A^\lambda$ where $F(X)$ for some $X \subseteq A$ where $\abs{X} = \lambda$ is any function $f$ on $\lambda$ with range $X$. It holds that $F$ is injective, so $\abs{[A]^\lambda} \le \abs{\kappa^\lambda}$. Thus $\abs{[A]^\lambda} = \abs{\kappa^\lambda}$
+\end{proof}
+
+\begin{defn}
+    If $\lambda$ is a limit cardinal let 
+    \[
+        \kappa^{< \lambda} = \sup \{\kappa^\mu \, | \, \mu \text{ is a cardinal and } \mu < \lambda\}
+    \]
+\end{defn}
+
+\begin{defn}
+    If $\kappa$ is an infinite cardinal and $\abs{A} \ge \kappa$ then let
+    \[
+        [A]^{< \kappa} = P_\kappa(A) = \{X \subseteq A \, | \, \abs{X} < \kappa \}
+    \]
+\end{defn}
+
+\begin{defn}
+    Let $\{\kappa_i \, | \, i \in I\}$ be an indexed set of cardinal numbers. We define 
+    \[
+        \sum_{i \in I} \kappa_i = \abs{\bigcup_{i \in I} X_i}
+    \]
+    where $\{X_i \, | \, i \in I\}$ is a disjoint family of sets such that $\abs{X_i} = \kappa_i$ for each $i \in I$.
+\end{defn}
+
+\begin{lmma}
+    If $\lambda$ is an infinite cardinal and $\kappa_i > 0$ for each $i < \lambda$ then
+    \[
+        \sum_{i < \lambda} \kappa_i = \lambda \cdot \sup_{i < \lambda} \kappa_i
+    \]
+\end{lmma}
+
+\begin{proof}
+    Denote $\kappa = \sup_{i < \lambda} \kappa_i$ and $\sigma = \sum_{i < \lambda} \kappa_i$. As $\kappa_i < \lambda$ for all $i$ we have that $\sigma \le \lambda \cdot \kappa$. We also have that $\lambda = \sum_{1} \le \sigma$ and $\kappa \le \sigma$. Therefore $\sigma \ge \lambda \cdot \kappa$ so $\sigma = \lambda \cdot \kappa$.
+\end{proof}
+
+\begin{defn}
+    Let $\{X_i \, | \, i \in I\}$ be an indexed family of sets. We define 
+    \[
+        \prod_{i \in I} X_i = \{f \, | \, \text{$f$ is a function on $I$ and $f(i) \in X_i$ for each $i \in I$}\}
+    \]
+    and for an indexed set of cardinals $\{\kappa_i \, | \, i \in I\}$ we define $\prod_{i \in I} \kappa_i = \abs{\prod_{i \in I} \kappa_i}$.
+\end{defn}
+
+\begin{lmma}
+    If $\lambda$ is an infinite cardinal and $\langle \kappa_i \, | \, i < \lambda \rangle$ is a nondecreasing sequence of nonzero cardinals then 
+    \[
+        \prod_{i < \lambda} \kappa_i = (\sup_{i < \lambda} \kappa_i)^\lambda
+    \]
+\end{lmma}
+
+\begin{proof}
+    As each $\kappa_i$ injects into $\sup_{i < \lambda} \kappa_i$ we have that $\prod_{i < \lambda} \kappa_i \le (\sup_{i < \lambda} \kappa_i)^\lambda$. Now let us consider $\kappa^\lambda$. We have that $\Gamma[\lambda \times \lambda] = \lambda$ as $\lambda$ is an infinite cardinal (where $\Gamma$ is our canonical mapping from $\Ord \times \Ord$ to $\Ord$). Then we have $\lambda = \bigcup_{j < \lambda} A_j$ where $A_j = \{\Gamma(i \times j) \, | \,i < \lambda\}$. Thus $\lambda$ is a union of $\lambda$ sets of cardinality $\lambda$. It follows that $\prod_{i \in A_j} \kappa_i \ge \sup_{i \in A_j} \kappa_i = \sup_{i < \lambda} \kappa_i$. Then we have 
+    \[
+        \prod_{i < \lambda} \kappa_i = \prod_{j < \lambda} (\prod_{i \in A_j} \kappa_i) \ge \prod_{j < \lambda} (\sup_{i < \lambda} \kappa_i) = (\sup_{i < \lambda} \kappa_i)^\lambda
+    \]
+\end{proof}
+
+\newpage
+
+\begin{thm}[K\"{o}nig]
+    If $\kappa_i < \lambda_i$ for every $i \in I$ then 
+    \[
+        \sum_{i \in I} \kappa_i < \prod_{i \in I} \lambda_i
+    \]
+\end{thm}
+
+\begin{proof}
+    We have that the sum over all $\kappa_i$ is equal in cardinality to the sum over all $\kappa_j$ such that $\kappa_j \ne \mtset$. This sum is then less than the sum over all $\lambda_j$, which must all then be greater than or equal to $2$ and thus less than or equal to $\prod \lambda_j$. As each $\lambda_i$ must be at least $1$ we have this product is less than or equal to $\prod_{i \in I} \lambda_i$. Therefore $\sum_{i \in I} \kappa_i \le \prod_{i \in I} \lambda_i$.
+    
+    Let us consider an arbitrary function $F$ from $\sum_{i \in I} \kappa_i$ to $\prod_{i \in I} \lambda_i$. Denote $\sum_{i \in I} \kappa_i = \abs{\bigcup_{i \in I} Z_i}$ and $\prod_{i \in I} \lambda_i = \prod_{i \in I} T_i$. Let $S_i = \{f(i) \, | \, f \in F[Z_i]\}$. As $\abs{F[Z_i]} = \abs{Z_i} = \kappa_i < \lambda_i = \abs{T_i}$ we have $S_i \subsetneq T_i$. It follows from the axiom of choice that there exists a function $f \in \prod_{i \in I} T_i$ such that $f(i) \not\in S_i$. It follows that $f \not\in F[Z_i]$ for any $i \in I$ and thus $f \not\in \im(F)$, so $F$ is not surjective. Therefore $\sum_{i \in I} \kappa_i < \prod_{i \in I} \lambda_i$.
+\end{proof}
+
+\begin{crly}
+    $\kappa < 2^\kappa$ for all cardinals $\kappa$.
+\end{crly}
+
+\begin{crly}
+    $\cf(2^{\aleph_\alpha}) > \aleph_\alpha$
+\end{crly}
+
+\begin{crly}
+    $\cf(\aleph_{\alpha}^{\aleph_\beta}) > \aleph_\beta$
+\end{crly}
+
+\begin{crly}
+    $\kappa^{\cf \kappa} > \kappa$ for every infinite cardinal $\kappa$.
+\end{crly}
+
+\begin{axm}[GCH]
+    The Generalized Continuum Hypothesis  states $2^{\aleph_\alpha} = \aleph_{\alpha + 1}$ for all ordinals $\alpha$.
+\end{axm}
+
+\begin{thm}
+    If the GCH holds then given infinite cardinals $\kappa$ and $\lambda$ we have:
+    \begin{itemize}
+        \item If $\kappa \le \lambda$ then $\kappa^\lambda = \lambda^+$
+        \item If $\cf \kappa \le \lambda < \kappa$ then $\kappa^\lambda = \kappa^+$
+        \item If $\lambda < \cf \kappa$ then $\kappa^\lambda = \kappa$.
+    \end{itemize}
+\end{thm}
+
+\begin{proof}
+    By 5.13 we have that if $\kappa \le \lambda$ then $\kappa^\lambda = 2^\lambda$. Then by GCH we have $\kappa^\lambda = \lambda^+$.
+
+    Let us assume that $\cf \kappa \le \lambda < \kappa$. We have that $\kappa^\lambda \le (2^\kappa)^\lambda = 2^\kappa = \kappa^+$. By 5.15 we have that $\kappa^\lambda$ is equal in cardinality to the set of all subsets of $\kappa$ of cardinality $\lambda$. Therefore $\kappa^\lambda \ge \sum_{i < 2^{\kappa}} \lambda = 2^{\kappa} \cdot \lambda = 2^{\kappa}$. Thus 
+\end{proof}
+
+\newpage
+
+\section{Things to look at}
+
+\begin{itemize}
+    % \item Understanding parameters better
+    % \item 1.2 using regularity
+    % \item Any way to not use contradiction for proofs (ex: transfinite induction)
+    % \item Alternative transfinite induction (just $<$ ignoring if limit or successor ordinal)
+    % \item Proof of transfinite recursion, specifically proving existence.
+    % \item I'm almost positive this is wrong: \href{https://proofwiki.org/wiki/Limit_Ordinals_Preserved_Under_Ordinal_Addition}{proof addition with limit ordinal is limit ordinal} (there should be a $+$ after the $w$ on the second to last step)
+    % \item How to think of proof for associativity (couldn't think of it on my own)
+    % \item Lemma 2.29 makes no sense
+    % \item Is it not easier to prove 2.30 (i), (iii), and (v) by induction on $\alpha$?
+    % \item 2.30 (ii) I think might make sense viewing it from the perspective of 2.29, but I would like to clarify it. In general it seems like online the idea of ``embedding'' things makes these ordinal proofs easier, and I want to understand how its formalized.
+    % \item For 2.30 (v) how do you show that such a greatest ordinal exists. We have a least ordinal which doesn't satisfy the constraint, but then do we need to do casework on if its a successor or limit ordinal? Is there a way around this?
+    % \item How to proof a greatest $\xi$ exists for Cantor's Normal Form?
+    % \item How to prove Cantor's Normal Form is unique?
+    % \item 2.33 is like collapsing a well-founded relation into a well-ordering
+    % \item Can you do exercise 2.3 without contradiction.
+    % \item Exercise 2.4 (ii) $\to$ (i) doesn't really make sense I think.
+    % \item Cantor normal form greatest by induction. Sketch of proof I thought of: Induct on $\alpha$. We say for each $\alpha$, there is a unique cantor's normal form, and that the greatest term in the cantor's normal form must be the largest $\beta$ such that $\omega^\beta \le x$. Then in our inductive step, if we chose any $\beta$ other than the largest possible one we can probably show that that the larger $\beta$ will be a factor of the ordinal we are left with after ``subtracting'' $\omega^\beta$.
+    % % \item Lemma 2.29, consider distinct copies of ordinals.
+    % \item I like my proof of exercise 2.6.
+    % \item Exercise 2.7 unsettles me.
+    % \item For exercise 2.10 in the case of the successor the first part might not be a strict equality but the second and third must be a strict inequality (I think).
+    % \item Confirmation for 2.11
+    % \item Is there a way to avoid Cantor's normal form for 2.13. Also I'm sure my logic for that problem is circular and bad.
+    % \item Look over exercise 2.15.
+    % \item I don't like this books notation for the proof of Cantor-Bernstein. I think that its equivalent to taking $f_2[f_1[A \setminus f_2[B]]]$ over and over again.
+    % \item Look over lemma 3.10
+    % \item What is the point of the $\omega_\alpha$ notation over $\aleph$?
+    % \item For canonical well-ordering of $\Ord^2$ i'm assuming that the conditions have precedence from top to bottom, as otherwise there could be different elements which are both less than eachother.
+    % \item Look at theorem 3.14 and 15
+    % \item I'm pretty sure 3.15 does not hold for arbitrary limit ordinals, but I can't think of a counter-example (maybe $\omega + \omega$ is a counter-example but I would like to confirm).
+    % \item I don't immediately see how (3.14) (in the book) follows.
+    % \item I can already tell cofinality is going to break my brain.
+    % \item I might want to walk through lemma 3.7 (in the book)
+    \item \href{https://arxiv.org/abs/2211.03976}{https://arxiv.org/abs/2211.03976}
+    % \item Look over 3.23
+    % \item I feel like 3.10 in the book is just the definition.
+    % \item What is the intended way to do exercises 3.1, 3.2, 3.3, 3.4
+    % \item Question about 3.4 and AOC.
+    % \item Want to go over exercise 3.5 (specifically the successor case, which I think is harder than the limit case here).
+    % \item Couldn't figure out exercise 3.6. (Thought this link was useful though: \href{https://math.stackexchange.com/questions/2077641/order-type-of-omega-alpha-omega-in-well-ordering-of-finite-sequences-o}{link}).
+    % \item Exercise 3.7 requires AOC which the book hasn't really covered yet.
+    % \item In reference to exercise 3.9: does $\abs{\powset{B}} \le \abs{\powset{A}}$ imply $\abs{B} \le \abs{A}$? I feel as though its not impossible that $B > A$ but their powersets somehow are equal in cardinality. Otherwise I think this needs AOC to prove, as if it didn't we would get if $B$ is a projection fo $A$ then we have $\abs{\powset{B}} \le \abs{\powset{A}}$ implying $\abs{B} \le \abs{A}$ without choice.
+    % \item Want to make sure exercise 3.12 is valid (I didn't initially think to use theorem 3.21 for smaller sequences, but I think it still works which is neat).
+    % \item I like 3.13. Although the Axiom of Choice has not yet been presented, so I don't think I can fully appreciate the question, I like the idea of how you can get around having to make some unique choice for a countable number of things by instead using a canonical isomorphism.
+    % \item Looking at the exercise you gave me, is the injection from $\omega \to X$ I define just a choice function, and it exists only because of the Axiom of Choice (or I'm guessing countable choice). I believe when I say there exists an $x$, and I map to it, I can't do that infinitely many times without choice.
+    % \item I think exercise 3.14 is my favorite problem so far. I also want to make sure that it holds without the use of choice.
+    % \item Want to make sure my proofs for 3.15 are valid (they might be a lot longer than they have to be).
+    % \item I like the proof of the uncountability of $\R$ that is given.
+    % \item For theorem 3.3, I'm assuming that the set should be unbounded below and above.
+    % \item I think theorem 4.3 (ii) in the book should specify that the set is a field (or is unbounded). Otherwise, I think you can have a counter example like $[-\sqrt{2}, \sqrt{2}]$ which is not isomorphic to $\R$, but is a complete linear order that has a countable dense subset isomorphic to $\Q$. Besides that I really like the proofs for this theorem.
+    % \item I wasn't sure about the details for theorem 4.5 in the book but I think \href{https://math.stackexchange.com/questions/201922/proof-that-a-perfect-set-is-uncountable/202054#202054}{this} link covered it well 
+    \item For theorem 4.9 what are examples of closed sets not becoming perfect after $\omega$ steps of removing isolated points?
+    \item I'm assuming the reason the book enumerates all rational sequences a bunch, even when it seems like you don't need to, is to avoid using AoC (for example in the Baire Category Theorem). Also I'd like to go over my proof of the Baire Category Theorem.
+    % \item Should non-empty have the dash or not?
+    % \item ``We assume that the reader is familiar with the basic theory of Lebesgue
+    % measure''. Does having the picture of sideways rectangles in my head count as familiarity with the basic theory of Lebesgue measure?
+    \item \href{https://en.wikipedia.org/wiki/Omega-categorical_theory#Examples}{omega-categorical theory}
+    \item Is there a nice constructive way to do exercise 4.4
+    \item Want to confirm exercise 4.8, 4.9, 4.10 are fine.
+    \item I feel like 4.15 is very intuitive, but the proof was not obvious to me.
+    \item I feel like the constructions for a lot of the chapter 4 exercises (for example exercise 4.16) hard to think of, and I'm not sure how to come up with them on my own.
+    \item Need help with 4.17
+    \item Want to make sure 4.18 is right (and if the way I avoided using choice is correct)
+    \item Want to make sure 4.19 is sufficient.
+    \item Need help with 4.20. I don't see in the hint why $d(x, x_n) \le \frac{1}{n}$.
+    \item How to do thm 5.28
+\end{itemize}
+
+\end{document}
