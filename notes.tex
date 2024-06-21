@@ -1100,8 +1100,27 @@
 \begin{proof}
     By 5.13 we have that if $\kappa \le \lambda$ then $\kappa^\lambda = 2^\lambda$. Then by GCH we have $\kappa^\lambda = \lambda^+$.
 
-    Let us assume that $\cf \kappa \le \lambda < \kappa$. We have that $\kappa^\lambda \le (2^\kappa)^\lambda = 2^\kappa = \kappa^+$. By 5.15 we have that $\kappa^\lambda$ is equal in cardinality to the set of all subsets of $\kappa$ of cardinality $\lambda$. Therefore $\kappa^\lambda \ge \sum_{i < 2^{\kappa}} \lambda = 2^{\kappa} \cdot \lambda = 2^{\kappa}$. Thus 
+    Let us assume that $\cf \kappa \le \lambda < \kappa$. We have that $\kappa^\lambda \le (2^\kappa)^\lambda = 2^\kappa$. By 5.26 we also have that $\kappa^{\lambda} \ge \kappa^{\cf \kappa} > \kappa$, so $\kappa^\lambda \ge 2^\kappa$. Thus $\kappa^\lambda = 2^\kappa = \kappa^+$.
+
+    Let us assume that $\lambda < \cf \kappa$. Consider the union of $\alpha^\lambda$ for all $\alpha < \kappa$. We have that this is a subset of $\kappa^\lambda$. As $\lambda < \cf \kappa$, we have by 3.25 that the image of every function in $\alpha^\lambda$ is bounded by some element of $\kappa$, so every element of $\kappa^\lambda$ is contained in our union of all $\alpha^\lambda$. Then we have $\alpha^\lambda \le 2^{\alpha \cdot \lambda} \le \kappa$. Therefore $\kappa \le \kappa^\lambda \le \kappa \times \kappa = \kappa$, so $\kappa^\lambda = \kappa$.
 \end{proof}
+
+\begin{defn}[Beth Function]
+    \[
+        \beth_0 = \aleph_0 \quad\quad \beth_{\alpha + 1} = 2^{\beth_\alpha}
+    \]
+    \[
+        \beth_{\alpha} = \sup\{ \beth_\beta \, | \, \beta < \alpha \} \, \text{ if $\alpha$ is a limit ordinal }
+    \]
+\end{defn}
+
+\begin{crly}
+    GCH is equivalent to $\beta_{\alpha} = \aleph_\alpha$ for all $\alpha \in \Ord$.
+\end{crly}
+
+\begin{thm}
+    If $\kappa < \lambda$ then $2^\kappa \le 2^\lambda$.
+\end{thm}
 
 \newpage
 
@@ -1164,16 +1183,17 @@
     % \item Should non-empty have the dash or not?
     % \item ``We assume that the reader is familiar with the basic theory of Lebesgue
     % measure''. Does having the picture of sideways rectangles in my head count as familiarity with the basic theory of Lebesgue measure?
-    \item \href{https://en.wikipedia.org/wiki/Omega-categorical_theory#Examples}{omega-categorical theory}
-    \item Is there a nice constructive way to do exercise 4.4
-    \item Want to confirm exercise 4.8, 4.9, 4.10 are fine.
-    \item I feel like 4.15 is very intuitive, but the proof was not obvious to me.
-    \item I feel like the constructions for a lot of the chapter 4 exercises (for example exercise 4.16) hard to think of, and I'm not sure how to come up with them on my own.
-    \item Need help with 4.17
-    \item Want to make sure 4.18 is right (and if the way I avoided using choice is correct)
-    \item Want to make sure 4.19 is sufficient.
-    \item Need help with 4.20. I don't see in the hint why $d(x, x_n) \le \frac{1}{n}$.
-    \item How to do thm 5.28
+    % \item \href{https://en.wikipedia.org/wiki/Omega-categorical_theory#Examples}{omega-categorical theory}
+    % \item Is there a nice constructive way to do exercise 4.4
+    % \item Want to confirm exercise 4.8, 4.9, 4.10 are fine.
+    % \item I feel like 4.15 is very intuitive, but the proof was not obvious to me.
+    % \item I feel like the constructions for a lot of the chapter 4 exercises (for example exercise 4.16) hard to think of, and I'm not sure how to come up with them on my own.
+    % \item Need help with 4.17
+    % \item Want to make sure 4.18 is right (and if the way I avoided using choice is correct)
+    % \item Want to make sure 4.19 is sufficient.
+    % \item Need help with 4.20. I don't see in the hint why $d(x, x_n) \le \frac{1}{n}$.
+    % \item How to do thm 5.28
+    \item Intuition behind 5.12 without Konig.
 \end{itemize}
 
 \end{document}

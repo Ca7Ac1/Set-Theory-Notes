@@ -904,7 +904,7 @@
         \item $\mathcal{N}^\omega$ is homeomorphic to $\mathcal{N}$.
     \end{enumerate}
     \begin{answer}
-        I have no clue what the topologies are for these spaces.
+        Consider the map from $\mathcal{N} \times \mathcal{N}$ mapping each pair of sequences to the interweaving of these sequences (the sequence whose odd indices are the first sequence and the even indices are the second sequence). It holds that such a function is a bijection. An arbitrary element of the basis of open sets of $\mathcal{N} \times \mathcal{N}$ will be the set of all pairs of sequences such that set of all the first sequences share their first $n \in \N$ elements, and the set of all the second sequences share their first $m \in \N$ elements. This will map to the set of all sequences sharing their first $m + n$ elements, which is open in $\mathcal{N}$. Similarly, an element of the basis of the open sets of $\mathcal{N}$ will be all the sequences with the same first $n \in \N$ elements, which will map to pairs of sequences sharing $\lceil n \rceil$ and $\lfloor n \rfloor$ elements respectively, which is open in $\mathcal{N} \times \mathcal{N}$. Thus such a mapping is a homeomorphism. Similarly, the canonical bijection from $\mathcal{N}^\omega$ to $\mathcal{N}$ (being the map that forms sequences along the diagonals of our sequence of sequences) will be a homeomorphism.
     \end{answer}
 \end{exer}
 
@@ -924,12 +924,17 @@
 \begin{exer}
     Show that every perfect Polish space has a closed subset homeomorphic to the Cantor space.
     \begin{answer}
-        Consider an arbitrary polish space $P$. We have that $P$ is homeomorphic to to some seperable complete metric space $R$. It holds that $R$ is isomorphic to $\R$. Consider the the homeomorphism between $P$ and $R$ restricted to the subset of $R$ isomorphic to the Cantor set in $R$. As the Cantor set is closed, the subset of $R$ isomorphic to the Cantor set is closed. Then the image of a closed set under a homeomorphism is closed. Thus this restriction is a closed subset of $P$ homeomorphic to a set isomorphic to Cantor space.
+        Consider an arbitrary polish space $P$. By 4.8 we can construct sets $I_s$ for all finite sequences in $\{0, 1\}$ and a function $F: 2^{\aleph_0} \to P$ mapping each infinite binary string $f$ to the unique element in the infinite intersection of $I_{f\restriction_{n}}$ for all $n \in \N$. Consider an arbitrary convergent sequence of elements in $\im(F)$. We can construct the binary sequence $f$ recursively, where $f_{n + 1}$ will be $0$ if all but finitely many points in our sequence are in $f_{n} \frown 0$, and $1$ otherwise. It follows that $F(f)$ will be the point our sequence converges to. Thus our image is closed, so $F$ induces a bijection between the Cantor set and a closed subset of $P$.
+
+        Consider an arbitrary sequence in the Cantor set which converges to some point $c$. As our sets $I_s$ have diameter proportional to $\frac{1}{2^n}$ where $n$ is the length of $s$ we have that our sequence mapped under $F$ will eventually be arbitrary close to $F(c)$. Thus our sequence mapped under $F$ converges to $F(c)$. Let us consider an arbitrary sequence in $\im(F)$ converging to some point $p$. By construction this sequence under $F^{-1}$ will be a sequence of binary sequences which are eventually equal to $F^{-1}(p)$ for all $n$. Thus this sequence under our inverse mapping maps to $F^{-1}(p)$. Therefore $F$ is continuous and its inverse is continuous, so $F$ defines a homeomorphism between a closed subset of $P$ and Cantor space. 
     \end{answer}
 \end{exer}
 
 \begin{exer}
     Show that every Polish space is homeomorphic to a $G_\delta$ subspace of the Hilbert cube.
+    \begin{answer}
+        Fix a homeomorphism between our arbitrary Polish space and a complete seperable metric space whose metric is normalized to be less than $1$. Fix a countable enumeration of this space. Then let our map from our space to the Hilbert cube map each element to the sequence of distances from each point in our $\omega$ enumeration. Given the metric on the Hilbert cube, it follows that our function is a homeomorphism between our Polish space and the functions image.
+    \end{answer}
 \end{exer}
 
 \section{Extra Exercises}
