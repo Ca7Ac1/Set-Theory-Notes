@@ -937,6 +937,43 @@
     \end{answer}
 \end{exer}
 
+\newpage
+
+\section{The Axiom of Choice and Cardinal Arithmetic}
+
+\begin{exer}
+    Prove that there exists a set of reals of cardinality $2^{\aleph_0}$ without a perfect subset.
+    \begin{answer}
+        We have that there are $2^{\aleph_0}$ perfect subsets of $\R$. Thus there exists an enumeration $\langle P_\alpha \, | \, \alpha < 2^{\aleph_0} \rangle$ of all perfect sets of reals. Let us recursively define $2^{\aleph_0}$-sequences $\langle a_\mu \, | \, \mu < 2^{\aleph_0} \rangle$ and $\langle b_\mu \, | \, \mu < 2^{\aleph_0} \rangle$. Pick $a_\mu$ such that $a_\mu \not\in \{a_\xi \, | \, \xi < \mu\} \cup \{b_\xi \, | \, \xi < \mu\}$ and pick $b_\mu$ such that $b_\mu \in P_\mu \setminus \{ a_\xi \, | \, \xi \le \mu \}$. By construction $\im(a)$ is a set with cardinality $2^{\aleph_0}$. Consider an arbitrary perfecet set $P_\alpha$. We have by construction $b_\alpha \in P_\alpha$. Then for all ordinals $\xi \le \alpha$ we have by construction $a_\xi \ne b_\alpha$. Similarly, for all $\nu > \mu$ we have $a_\nu \not\in \{b_\xi \, | \, \xi < \mu\}$, meaning $a_\nu \ne b_\alpha$. Therefore $b_\alpha \not\in \im(a)$ so $P_\alpha$ is not a subset of $\im(a)$. Therefore $\im(a)$ is a set with cardinality of the continuum and no perfect subset.
+    \end{answer}
+\end{exer}
+
+\begin{exer}
+    Show that if $X$ is infinite then the set of all finite subsets of $X$ has cardinality $\abs{X}$.
+    \begin{answer}
+        Let $P_n$ be the set of all subsets of $X$ of cardinality $n$. Then the set of all finite subsets of $X$ is equal to $\bigcup_{n \in \N} P_n$. The set of all $n$ element subsets of $X$ has cardinality $\abs{X}$. Thus $\abs{\bigcup_{n \in \N} P_n} = \sum_{n \in \N} \abs{X}$. Then as $\abs{X} \ge \aleph_0$, the cardinality of all finite subsets of $X$ is $\abs{X}$.
+    \end{answer}
+\end{exer}
+
+\begin{exer}
+    Let $(P, <)$ be a linear ordering and let $\kappa$ be a cardinal. Show that if every initial segment of $P$ has cardinality $< \kappa$ then $\abs{P} \le \kappa$.
+    \begin{answer}
+        Consider some increasing unbounded sequence of $P$. Such a sequence can be recursively constructed. Arbitrary choose the first element. For any ordinal $\alpha$, if all $\beta < \alpha$ have been defined for our sequence and there is an element larger than all such elements then map $\alpha$ to some such upper bound. It must hold that such a sequence is of length less than or equal to $\kappa$, as otherwise the $\kappa$-th element would be an initial segment with cardinality greater than or equal to $\kappa$. Then we have that $P$ is the union of $\le \kappa$ sets of size $< \kappa$, so $\abs{P} \le \kappa$. 
+    \end{answer}
+\end{exer}
+
+\begin{exer}
+    Show that if $A$ can be well-ordered then $P(A)$ can be linearly ordered.
+    \begin{answer}
+        For $X, Y \in \powset{A}$ let $X < Y$ if the least element that contained in exactly one of either $X$ or $Y$ is contained in $X$. It follows that such an ordering is asymmetric, irreflexive, and connected. Consider sets $X, Y, Z$ such that $X < Y$ and $Y < Z$. Consider the least element, $a$, contained in exactly one of either $X$ or $Z$. Let us assume for the sake of contradiction that $a \in Z$. Then $a \not\in X$ and any element in $X$ or $Z$ that is less than $a$ must be in both $X$ and $Z$. 
+        \begin{itemize}
+            \item Let us consider the case of $a \in Y$. As $X < Y$ the least element of $X \setminus Y \cup Y \setminus X$ must be in $X$. As $a \in Y \setminus X$ we have that such an element must be less than $a$. Therefore such an element must be in $Z$. Any element of $Y$ smaller than such an element must be in $X$ and thus in $Z$. Therefore $Z < Y$, resulting in contradiction.
+            \item Let us consider the case of $a \not\in Y$. As $Y < Z$ the least element of $Z \setminus Y \cup Y \setminus Z$ must be in $Y$. As $a \in Z \setminus Y$ we have that such an element must be less than $a$. Such an element is not in $Z$ and thus not in $X$. Any smaller element of $X$ must be in $Z$, and thus also in $Y$. Therefore $Y < X$, resulting in contradiction.
+        \end{itemize}
+        Thus, it must be the case that $a \in X$, which implies $X < Z$. Therefore our ordering is transitive, meaning it defines a linear order over $\powset{A}$.
+    \end{answer}
+\end{exer}
+
 \section{Extra Exercises}
 
 \begin{exer}
@@ -963,7 +1000,14 @@
 \end{exer}
 
 \begin{exer}
-    
+    Prove that the following are equivalent (\href{https://dept.math.lsa.umich.edu/~ablass/bases-AC.pdf}{hint}):
+    \begin{itemize}
+        \item The Axiom of Choice
+        \item Zorn's Lemma
+        \item Every vector space has a basis
+        \item Every surjection has a right inverse
+        \item The well-ordering theorem 
+    \end{itemize}
 \end{exer}
 
 \end{document}

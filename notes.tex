@@ -1091,8 +1091,8 @@
 \begin{thm}
     If the GCH holds then given infinite cardinals $\kappa$ and $\lambda$ we have:
     \begin{itemize}
-        \item If $\kappa \le \lambda$ then $\kappa^\lambda = \lambda^+$
-        \item If $\cf \kappa \le \lambda < \kappa$ then $\kappa^\lambda = \kappa^+$
+        \item If $\kappa \le \lambda$ then $\kappa^\lambda = \lambda^+$.
+        \item If $\cf \kappa \le \lambda < \kappa$ then $\kappa^\lambda = \kappa^+$.
         \item If $\lambda < \cf \kappa$ then $\kappa^\lambda = \kappa$.
     \end{itemize}
 \end{thm}
@@ -1119,8 +1119,99 @@
 \end{crly}
 
 \begin{thm}
-    If $\kappa < \lambda$ then $2^\kappa \le 2^\lambda$.
+    If $\kappa$ is a limit\footnote{This holds even for successor cardinals.} cardinal then $2^\kappa = (2^{<\kappa})^{\cf \kappa}$. 
 \end{thm}
+
+\begin{proof}
+    Let $\kappa = \sum_{i < \cf \kappa} \kappa_i$ where $\kappa_i < \kappa$ for each $i$. We have 
+    \[
+        2^{\kappa} = 2^{\sum_{i < \cf \kappa} \kappa_i} = \prod_{i < \cf \kappa} 2^{\kappa_i} \le \prod_{i < \cf \kappa} 2^{< \kappa} = (2^{< \kappa})^{\cf \kappa} \le 2^{\kappa}
+    \]
+\end{proof}
+
+\begin{crly}
+    If $\kappa$ is a singular cardinal and if the continuum function is eventually constant below $\kappa$ with value $\lambda$ then $2^\kappa = \lambda$.
+\end{crly}
+
+\begin{proof}
+    There must exist some cardinal $\mu$ such that $\cf \kappa \le \mu < \kappa$ and $2^{< \kappa} = \lambda = 2^{\mu}$. Then we have 
+    \[
+        2^{\kappa} = (2^{< \kappa})^{\cf \kappa} = (2^{\mu})^{\cf \kappa} = 2^\mu
+    \]
+\end{proof}
+
+\newpage
+
+\begin{defn}[Gimel function]
+    \[
+        \gimel(\kappa) = \kappa^{\cf \kappa}
+    \]
+\end{defn}
+
+\begin{thm}
+    If $\kappa$ is a regular cardinal then $2^\kappa = \gimel(\kappa)$. 
+\end{thm}
+
+\begin{proof}
+    As $\kappa$ is a regular cardinal we have that $\cf \kappa = \kappa$. Then by 5.13 we have 
+    \[
+        2^\kappa = \kappa^\kappa = \kappa^{\cf \kappa} = \gimel(\kappa)
+    \]
+\end{proof}
+
+\begin{thm}
+    If $\kappa$ is a limit cardinal and the limit of the continuum function below $\kappa$ is not eventually constant then $2^{\kappa} = \gimel(\lambda)$ where $\lambda = 2^{< \kappa}$.
+\end{thm}
+
+\begin{proof}
+    As the continuum function below $\kappa$ is not eventually constant we have that $\lambda$ is the limit of the $\kappa$ sequence $2^{\alpha}$ for $\alpha < \kappa$. Then by 3.21 we have $\cf \kappa = \cf \lambda$. By 5.31 it follows that 
+    \[
+        2^\kappa = (2^{< \kappa})^{\cf \kappa} = \lambda^{\cf \lambda} = \gimel(\lambda)
+    \]
+\end{proof}
+
+\begin{thm}
+    If $\kappa$ is a regular cardinal and $\lambda < \kappa$ then $\kappa^\lambda = \sum_{\alpha < \kappa} \abs{\alpha}^\lambda$. 
+\end{thm}
+
+\begin{proof}
+    As $\lambda < \kappa$ and $\cf \kappa = \kappa$ it must hold that the image of every function from $\lambda$ to $\kappa$ is bounded. Therefore $\kappa^\lambda$ is the sum of $\abs{\alpha}^\lambda$ for all $\alpha < \kappa$.
+\end{proof}
+
+\begin{lmma}
+    If $\kappa$ is a limit cardinal and $\lambda \ge \cf \kappa$ then 
+    \[
+        \kappa^\lambda = (\lim_{\alpha \to \kappa} \alpha^\lambda)^{\cf \kappa}
+    \]
+\end{lmma}
+
+\begin{proof}
+    As $\kappa$ is a limit cardinal we have that $\kappa = \sum_{i < \cf \kappa} \kappa_i$ where $\kappa_i < \kappa$. Then we have 
+    \[
+        \kappa^\lambda \le (\prod_{i < \cf \kappa} \kappa_i)^\lambda = \prod_{i < \cf \kappa} \kappa_{i}^\lambda \le \prod_{i < \cf \kappa} (\lim_{\alpha \to \kappa} \alpha^\lambda) = (\lim_{\alpha \to \kappa} \alpha^\lambda)^{\cf \kappa} \le (\kappa^\lambda)^{\cf \kappa} = \kappa^\lambda
+    \]
+\end{proof}
+
+\begin{thm}
+    Let $\lambda$ be an infinite cardinal. Then for all infinite cardinals $\kappa$ the value of $\kappa^\lambda$ is computed inductively as:
+    \begin{enumerate}[(i)]
+        \item If $\kappa \le \lambda$ then $\kappa^\lambda = 2^\lambda$.
+        \item If there exists some $\mu < \kappa$ such that $\mu^\lambda \ge \kappa$ then $\kappa^\lambda = \mu^\lambda$. 
+        \item If $\kappa > \lambda$ and $\mu^\lambda < \kappa$ for all $\mu < \kappa$ then:
+        \begin{enumerate}[(a)]
+            \item If $\cf \kappa > \lambda$ then $\kappa^\lambda = \kappa$.
+            \item If $\cf \kappa \le \lambda$ then $\kappa^\lambda = \kappa^{\cf \kappa}$.
+        \end{enumerate}
+    \end{enumerate}
+\end{thm}
+
+\begin{proof}
+    If $\kappa \le \lambda$ then by 5.31 we have $\kappa^\lambda = 2^\lambda$. If there exists some $\mu < \kappa$ such that $\mu^\lambda \ge \kappa$ then $\mu^\lambda \le \kappa^\lambda \le (\mu^{\lambda})^\lambda = \mu^{\lambda}$. Let us consider when $\kappa > \lambda$ and $\mu^\lambda < \kappa$ for all $\mu < \kappa$. If $\kappa = \beta + 1$ then by 5.36 we have $\kappa^{\lambda} = \beta^\lambda \cdot \kappa = \kappa$. Otherwise we have that $\kappa$ is a limit cardinal. Then if $\cf \kappa > \lambda$ we have the image of every function from $\lambda$ to $\kappa$ is bounded so $\kappa^\lambda = \lim_{\alpha \to \kappa} \alpha^\lambda = \kappa$. If $\cf \kappa \le \lambda$ then by 5.37 we have $\kappa^\lambda = \kappa^{\cf \kappa}$.
+\end{proof}
+
+\begin{defn}[SCH]
+    The Singular Cardinal Hypothesis is the statement: For every singular cardinal $\kappa$, if $2^{\cf \kappa} < \kappa$ then $\kappa^{\cf \kappa} = \kappa^+$.
+\end{defn}
 
 \newpage
 
@@ -1194,6 +1285,8 @@
     % \item Need help with 4.20. I don't see in the hint why $d(x, x_n) \le \frac{1}{n}$.
     % \item How to do thm 5.28
     \item Intuition behind 5.12 without Konig.
+    \item I want to confirm why 5.16 doesn't work for non-limit cardinals.
+    \item Is there a not ugly way to do exercise 5.4 (specifically showing transitivity)
 \end{itemize}
 
 \end{document}
