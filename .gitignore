@@ -1,0 +1,12 @@
+# Vscode
+.vscode
+
+# LaTeX
+*.aux
+*.gz
+*.fdb_latexmk
+*.fls
+*.log
+*.out
+*.toc
+
