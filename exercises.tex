@@ -974,6 +974,44 @@
     \end{answer}
 \end{exer}
 
+\begin{exer}
+    Prove the Axiom of Choice from Zorn's Lemma.
+    \begin{answer}
+        Consider an arbitrary family of nonempty sets $S$. Consider the set 
+        \[
+            P = \{f \, | \, \text{$f$ is a choice function on some $Z \subseteq S$} \}
+        \]
+        It holds that $(P, \subseteq)$ is a partial order. Consider an arbitrary chain in this partial order. The union over this chain is then an upper bound for this chain. Therefore, Zorn's lemma gives us that there exists a maximal element, $f$. If there exists some $X \in S$ such that $X \not\in \dom(f)$ then $f \cup \{(X, x)\}$ for any $x \in X$ is a strictly greater than $f$. As $f$ is maximal, it must then hold that every element is in the domain of $f$, so $f$ is a choice function defined on all of $S$.  
+    \end{answer}
+\end{exer}
+
+\newpage
+
+\begin{exer}
+    Show that the Countable Axiom of Choice implies that every infinite set has a countable subset.
+    \begin{answer}
+        If $A$ is infinite, then it must hold that there is an injection from every $n \in N$ to $A$. Let $A_n$ be the set of all injections from $n$ to $A$. We then have a choice function $F$ on the set of all such $A_n$. Let us then recursively construct a function $f$ from $\N$ to $A$. Let $f(0)$ be an arbitrary element of $A$. For $n \in \N$ let $f(n + 1)$ be the least element in the sequence $F(n + 1)$ that is not equal to $f(m)$ for all $m \le n$. Such an element must exist as no bijection exists between a sequence of length $n$ and a sequence of length $n + 1$. We have by construction that the image of $f$ is a countable subset of $A$.
+    \end{answer}  
+\end{exer}
+
+\begin{exer}
+    Use Dependent Choice to prove the Countable Axiom of Choice.
+    \begin{answer}
+        Let $S_n$ be an arbitrary countable family of nonempty sets. By induction we have that for all $n \in \N$ there exists a choice function on $\{S_m \, | \, m \le n \}$. Denote $A$ as the set of all choice functions on $\{S_m \, | \, m \le n \}$ for all $n \in \N$ and let $E$ be the binary relation $\supsetneq$. Consider an arbitrary $a \in A$. We have that $a$ must have $n$ elements for some $n \in \N$. Let $x \in S_{n + 1}$ be arbitrary. We have that $a \cup \{(S_{n + 1}, x)\} \, E \, a$. Then, by dependent choice there exists a sequence $\langle a_n \in A \, | \, n \in \N \rangle$ such that $a_{n + 1} \, E \, a_n$ for all $n \in \N$. The union over this sequence is then a choice function on $S_n$.
+    \end{answer}
+\end{exer}
+
+\begin{exer}[The Miler-Rado Paradox]
+    Show that for every ordinal $\alpha < \kappa^+$ there are sets $X_n \subseteq \alpha$ ($n \in \N$) such that $\alpha = \bigcup_n X_n$, and for each $n$ the order-type of $X_n$ is less than or equal to $\kappa^n$.
+    \begin{answer}
+        Let us induct on $\alpha$. We have that $0 = \bigcup_{n \in \N} 0$, and $0 \le \kappa^n$ for all $\kappa$ such that $0 < \kappa^+$. 
+        
+        Let us assume that for $\alpha$ we have that if $\alpha < \kappa^+$ then $\alpha = \bigcup_n X_n$ where $X_n$ is of order type less than or equal to $\kappa^n$. Let us consider $\alpha + 1$. Fix an arbitrary $\kappa$ such that $\alpha + 1 < \kappa^+$. We have that $\alpha < \kappa^+$. Therefore $\alpha = \bigcup_n X_n$ where $X_n$ is of order-type less than or equal to $\kappa^n$. Then let us define sets $Y_n$ where $Y_0 = 0$, $Y_1 = \alpha$ and $Y_{n + 2} = X_n$ for $n \in \N$. Then we have $\alpha + 1 = \bigcup_n Y_n$ and $Y_n$ is of order-type less than or equal to $\kappa^n$ for all $n \in \N$.
+
+        Consider a non-zero limit ordinal $\alpha$. Let us assume that for all $\beta < \alpha$ we have that if $\beta < \kappa^+$ then $\beta = \bigcup_n X_n$ where $X_n$ is of order type less than or equal to $\kappa^n$. Let $a_n$ be an increasing $(\cf \alpha)$-sequence which approaches $\alpha$. Note that $\cf \alpha \le \kappa$. Let $f$ be a function mapping each element of this sequence to a natural sequence $X_n$ such that the union over $X_n$ is equal to that element and each $X_n$ is of order-type less than or equal to $\kappa^n$. Then let us define sets $X_n$ for $n \in \N$ where $X_0 = 0$ and $X_{n + 1} = \bigcup_{\gamma \in \cf \alpha} (f(a_\gamma)_n)$. It holds that the union over $X_n$ is then equal to $\alpha$. The order-type of each $X_n$ is then bounded by $\sum_{\gamma \in \cf \alpha} \kappa^n$. It holds that this order-type is less than $\kappa^{n + 1}$. 
+    \end{answer}
+\end{exer}
+
 \section{Extra Exercises}
 
 \begin{exer}
