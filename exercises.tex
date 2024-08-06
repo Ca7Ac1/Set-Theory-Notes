@@ -73,6 +73,8 @@
 \DeclareMathOperator{\dom}{dom}
 \DeclareMathOperator{\Ord}{Ord}
 \DeclareMathOperator{\cf}{cf}
+\DeclareMathOperator{\TC}{TC}
+\DeclareMathOperator{\ext}{ext}
 
 \newcommand{\ip}[1]{\left\langle #1 \right\rangle} % inner product
 \newcommand{\norm}[1]{\left\Vert #1 \right\Vert} % norm of a vector
@@ -963,12 +965,12 @@
 \end{exer}
 
 \begin{exer}
-    Show that if $A$ can be well-ordered then $P(A)$ can be linearly ordered.
+    Show that if $A$ can be well-ordered then $\powset{A}$ can be linearly ordered.
     \begin{answer}
         For $X, Y \in \powset{A}$ let $X < Y$ if the least element that contained in exactly one of either $X$ or $Y$ is contained in $X$. It follows that such an ordering is asymmetric, irreflexive, and connected. Consider sets $X, Y, Z$ such that $X < Y$ and $Y < Z$. Consider the least element, $a$, contained in exactly one of either $X$ or $Z$. Let us assume for the sake of contradiction that $a \in Z$. Then $a \not\in X$ and any element in $X$ or $Z$ that is less than $a$ must be in both $X$ and $Z$. 
         \begin{itemize}
-            \item Let us consider the case of $a \in Y$. As $X < Y$ the least element of $X \setminus Y \cup Y \setminus X$ must be in $X$. As $a \in Y \setminus X$ we have that such an element must be less than $a$. Therefore such an element must be in $Z$. Any element of $Y$ smaller than such an element must be in $X$ and thus in $Z$. Therefore $Z < Y$, resulting in contradiction.
-            \item Let us consider the case of $a \not\in Y$. As $Y < Z$ the least element of $Z \setminus Y \cup Y \setminus Z$ must be in $Y$. As $a \in Z \setminus Y$ we have that such an element must be less than $a$. Such an element is not in $Z$ and thus not in $X$. Any smaller element of $X$ must be in $Z$, and thus also in $Y$. Therefore $Y < X$, resulting in contradiction.
+            \item Let us consider the case of $a \in Y$. As $X < Y$ the least element of $(X \setminus Y) \cup (Y \setminus X)$ must be in $X$. As $a \in Y \setminus X$ we have that such an element must be less than $a$. Therefore such an element must be in $Z$. Any element of $Y$ smaller than such an element must be in $X$ and thus in $Z$. Therefore $Z < Y$, resulting in contradiction.
+            \item Let us consider the case of $a \not\in Y$. As $Y < Z$ the least element of $(Z \setminus Y) \cup (Y \setminus Z)$ must be in $Y$. As $a \in Z \setminus Y$ we have that such an element must be less than $a$. Such an element is not in $Z$ and thus not in $X$. Any smaller element of $X$ must be in $Z$, and thus also in $Y$. Therefore $Y < X$, resulting in contradiction.
         \end{itemize}
         Thus, it must be the case that $a \in X$, which implies $X < Z$. Therefore our ordering is transitive, meaning it defines a linear order over $\powset{A}$.
     \end{answer}
@@ -1012,6 +1014,337 @@
     \end{answer}
 \end{exer}
 
+\begin{exer}
+    Show that if $\{ X_i \, | \, i \in I \}$ and $\{ Y_i \, | \, i \in I \}$ are two disjoint families such that $\abs{X_i} = \abs{Y_i}$ for each $i \in I$ then $\abs{\bigcup_{i \in I} X_i} = \abs{\bigcup_{i \in I} Y_i}$.
+    \begin{answer}
+        By the axiom of choice we have that there is a choice function on the family of bijections between each $X_i$ and $Y_i$. As our family $\{ X_i \, | \, i \in I \}$ is disjoint we have that for all $x \in \bigcup_{i \in I} X_i$ there is a unique $X_i$ containing it. Map each such $x$ under the bijection given by our choice function on $X_i$. It follows that such a mapping forms a bijection between $\bigcup_{i \in I} X_i$ and $\bigcup_{i \in I} Y_i$.    
+    \end{answer}
+\end{exer}
+
+\begin{exer}
+    Show that if $\{ X_i \, | \, i \in I \}$ and $\{ Y_i \, | \, i \in I \}$ are two disjoint families such that $\abs{X_i} = \abs{Y_i}$ for each $i \in I$ then $\abs{\prod_{i \in I} X_i} = \abs{\prod_{i \in I} Y_i}$.
+    \begin{answer}
+        By the axiom of choice we have that there is a choice function on the family of bijections between each $X_i$ and $Y_i$. Let us map each element $x \in \prod_{i \in I} X_i$ to some element $y \in \prod_{i \in I} Y_i$ such that for all $i \in I$ we have that $y_i$ is equal to $x_i$ under the bijection that is induced by our choice function and the unique $X_i$ containing $x$. It follows that such a mapping forms a bijection between $\prod_{i \in I} X_i$ and $\prod_{i \in I} Y_i$.
+    \end{answer}
+\end{exer}
+
+\newpage
+
+\begin{exer}
+    Show that $\prod_{0 < n < \omega} n = 2^{\aleph_0}$.
+    \begin{answer}
+        % Taking an infinite binary sequence and prepending it with two $0$'s gives us an injection from $2^{\aleph_0}$ to $\prod_{n \in \omega} n$. We can also take an infinite sequence where each element is bounded by its index and represent each element in binary, appending $0$'s until there are enough digits to represent every number up to the index. Such a mapping is an injection from $prod_{n \in \omega} n$ to $2^{\aleph_0}$. Thus such sets are equal as cardinals.
+
+        By 5.21 we have that $\prod_{n \in \omega} n = (\sup_{n \in \omega} n)^{\aleph_0} = \omega^{\aleph_0}$. Then by 5.13 we have that $\omega^{\aleph_0} 2^{\aleph_0}$. 
+    \end{answer}
+\end{exer}
+
+\begin{exer}
+    Show that $\prod_{n \in \omega} \aleph_n = \aleph_{\omega}^{\aleph_0}$.
+    \begin{answer}
+        By 5.21 we have that $\prod_{n \in \omega} \aleph_n = (\sup_{n \in \omega} \aleph_n)^{\aleph_0} = \aleph_{\omega}^{\aleph_0}$.
+    \end{answer}
+\end{exer}
+
+\begin{exer}
+    Show that $\prod_{\alpha < \omega + \omega} \aleph_\alpha = \aleph_{\omega + \omega}^{\aleph_0}$.
+    \begin{answer}
+        Fix a bijection $f$ from $\omega$ to $\omega + \omega$. Then with 5.21 we have $\prod_{\alpha < \omega + \omega} \aleph_\alpha = \prod_{\alpha < \omega} \aleph_{f(\alpha)} = \aleph_{\omega + \omega}^{\aleph_0}$.
+    \end{answer}
+\end{exer}
+
+\begin{exer}
+    Prove that if GCH holds then 
+    \begin{enumerate}[(i)]
+        \item $2^{< \kappa} = \kappa$ for all $\kappa$.
+        \begin{answer}
+            In the case $\kappa = \lambda^+$ we have $2^{< \kappa} = 2^{\lambda} = \kappa$. In the case $\kappa$ is a limit cardinal we have by GCH that $2^\lambda < \kappa$ for all $\lambda < \kappa$. Thus $2^{< \kappa} = \bigcup_{\lambda < \kappa} 2^{\lambda} = \bigcup_{\lambda < \kappa} \lambda = \kappa$.
+        \end{answer}
+
+        \item $\kappa^{< \kappa} = \kappa$ for all regular $\kappa$.
+        \begin{answer}
+            If $\kappa$ is regular then $\cf \kappa = \kappa$. Then by 5.28 we have $\kappa^{< \kappa} = \bigcup_{\lambda < \cf \kappa} \kappa^{\lambda} = \sum_{\cf \kappa} \kappa = \kappa$ 
+        \end{answer}
+    \end{enumerate}
+\end{exer}
+
+\begin{exer}
+    Show that if $\beta$ is such that $2^{\aleph_\alpha} = \aleph_{\alpha + \beta}$ for every $\alpha$ then $\beta < \omega$.
+    \begin{answer}
+        Let us assume for the sake of contradiction that $\beta \ge \omega$. Let $\alpha$ be the least ordinal such that $\alpha + \beta > \beta$. It holds that $0 < \alpha \le \beta$ and $\alpha$ is a limit ordinal. Let $\kappa = \aleph_{\alpha + \alpha}$. As $a_\gamma = \aleph_{\alpha + \gamma}$ is a $\alpha$ sequence which approaches $\kappa$ we have that $\cf \kappa \le \alpha < \kappa$, so $\kappa$ is singular. We have by assumption that if $\xi < \alpha$ then $\xi + \beta = \beta$ and for every $\gamma$, $2^{\aleph_\gamma} = \aleph_{\gamma + \beta}$. Thus $2^{\aleph_{\alpha + \xi}} = \aleph_{\alpha + \xi + \beta} = \aleph_{\alpha + \beta}$. Therefore the continuum function below the singular cardinal $\kappa$ is eventually constant, so by 5.32 $2^{\kappa} = \aleph_{\alpha + \beta}$. However, we have $2^{\kappa} = 2^{\aleph_{\alpha + \alpha}} = \aleph{\alpha + \alpha + \beta} > \aleph_{\alpha + \beta}$, resulting in contradiction. Therefore $\beta < \omega$.
+    \end{answer}
+\end{exer}
+
+\begin{exer}
+    Show $\prod_{\alpha < \omega_1 + \omega} \aleph_\alpha = \aleph_{\omega_1 + \omega}^{\aleph_1}$.
+    % \begin{answer}
+    %     \[
+    %         \aleph_{\omega_1 + \omega}^{\aleph_1}
+    %         =
+    %         (\bigcup_{n < \omega} \aleph_{\omega_1 + n})^{\aleph_1}
+    %         \le 
+    %         (\prod_{n < \omega} \aleph_{\omega_1 + n})^{\aleph_1}
+    %         =
+    %         \prod_{n < \omega} \aleph_{\omega_1 + n}^{\aleph_1}
+    %     \]
+    % \end{answer}
+\end{exer}
+
+\begin{exer}
+    Prove that if $\kappa$ is a limit cardinal and $\lambda < \cf \kappa$ then $\kappa^\lambda = \sum_{\alpha < \kappa} \abs{\alpha}^\lambda$.
+    \begin{answer}
+        As $\lambda < \cf \kappa$ we have by 3.25 that the image of every function from $\lambda$ to $\kappa$ is bounded in $\kappa$. Thus every function from $\lambda$ to $\kappa$ is a function from $\lambda$ to $\alpha$ for some ordinal $\alpha < \kappa$, so $\kappa^\lambda = \sum_{\alpha < \kappa} \abs{\alpha}^\lambda$.
+    \end{answer}
+\end{exer}
+
+\newpage
+
+\begin{exer}
+    Show $\aleph_{\omega}^{\aleph_1} = \aleph_{\omega}^{\aleph_0} \cdot 2^{\aleph_1}$.
+    \begin{answer}
+        We have that $\aleph_{\omega}^{\aleph_0} \cdot 2^{\aleph_1} = \max(\aleph_{\omega}^{\aleph_0}, 2^{\aleph_1}) \le \aleph_{\omega}^{\aleph_1}$. In the case $2^{\aleph_1} \ge \aleph_{\omega}$ we have $\aleph_{\omega}^{\aleph_1} \le (2^{\aleph_1})^{\aleph_1} = 2^{\aleph_1}$ which implies $\aleph_{\omega}^{\aleph_1} = \aleph_{\omega}^{\aleph_0} \cdot 2^{\aleph_1}$. Let us consider if $2^{\aleph_1} < \aleph_{\omega}$. We then have
+        \[
+            \aleph_{\omega}^{\aleph_1} = 
+            (\sup_{n \in \omega} \aleph_n)^{\aleph_1}
+            \le
+            (\prod_{n \in \omega} \aleph_n)^{\aleph_1}
+            = 
+            \prod_{n \in \omega} \aleph_{n}^{\aleph_1}
+        \]
+        We have that $\aleph_{0}^{\aleph_1} = 2^{\aleph_1} < \aleph_{\omega}$. Let us induct on $n$. Assuming $\aleph_{n}^{\aleph_1} < \aleph_{\omega}$ we have by 5.36 
+        \[
+            \aleph_{n + 1}^{\aleph_1} 
+            =
+            \aleph_{n}^{\aleph_1} \cdot \aleph_{n + 1}
+            < 
+            \aleph_{\omega}
+        \]
+        Thus we have $\prod_{n \in \omega} \aleph_{n}^{\aleph_1} \le \prod_{n \in \omega} \aleph_\omega = \aleph_{\omega}^{\aleph_0}$. Therefore $\aleph_{\omega}^{\aleph_1} = \aleph_{\omega}^{\aleph_0} \cdot 2^{\aleph_1}$.
+    \end{answer}
+\end{exer}
+
+\begin{exer}
+    Show that if $\alpha < \omega_1$ then $\aleph_{\alpha}^{\aleph_1} = \aleph_{\alpha}^{\aleph_0} \cdot 2^{\aleph_1}$.
+    \begin{answer}
+        % We have that $\aleph_{\alpha}^{\aleph_0} \cdot 2^{\aleph_1} = \max(\aleph_{\alpha}^{\aleph_0}, 2^{\aleph_1}) \le \aleph_{\alpha}^{\aleph_1}$. In the case $2^{\aleph_1} \ge \aleph_{\alpha}$ we have $\aleph_{\alpha}^{\aleph_1} \le (2^{\aleph_1})^{\aleph_1} = 2^{\aleph_1}$ which implies $\aleph_{\alpha}^{\aleph_1} = \aleph_{\alpha}^{\aleph_0} \cdot 2^{\aleph_1}$. Let us consider if $2^{\aleph_1} < \aleph_{\alpha}$. We then have
+        % \[
+        %     \aleph_{\alpha}^{\aleph_1} = 
+        %     (\sup_{\gamma \in \alpha} \aleph_\gamma)^{\aleph_1}
+        %     \le
+        %     (\prod_{\gamma \in \alpha} \aleph_\gamma)^{\aleph_1}
+        %     = 
+        %     \prod_{\gamma \in \alpha} \aleph_{\gamma}^{\aleph_1}
+        % \]
+        % We have that $\aleph_{0}^{\aleph_1} = 2^{\aleph_1} < \aleph_{\omega}$. Let us induct on $\gamma$. Assuming $\aleph_{\gamma}^{\aleph_1} < \aleph_{\alpha}$ we have by 5.36 
+        % \[
+        %     \aleph_{\gamma + 1}^{\aleph_1} 
+        %     =
+        %     \aleph_{\gamma}^{\aleph_1} \cdot \aleph_{\gamma + 1}
+        %     < 
+        %     \aleph_{\alpha}
+        % \]
+        % Thus we have $\prod_{n \in \omega} \aleph_{n}^{\aleph_1} \le \prod_{n \in \omega} \aleph_\omega = \aleph_{\omega}^{\aleph_1}$. Therefore $\aleph_{\omega}^{\aleph_1}$.
+        Let us induct on $\alpha$. In the case of $0$ we have $\aleph_{0}^{\aleph_1} = 2^{\aleph_1} = \aleph_{0}^{\aleph_0} \cdot 2^{\aleph_1}$. In the case $\alpha = \beta + 1$ we have by 5.36 
+        \[
+            \aleph_{\alpha}^{\aleph_1} 
+            =
+            \aleph_{\beta + 1}^{\aleph_1} 
+            =
+            \aleph_{\beta}^{\aleph_1} \cdot \aleph_{\beta + 1}
+            =
+            \aleph_{\beta + 1} \cdot 2^{\aleph_1} \cdot \aleph_{\beta}^{\aleph_0}
+            =
+            \aleph_{\beta + 1}^{\aleph_0} \cdot 2^{\aleph_1} 
+            =
+            \aleph_{\alpha}^{\aleph_0} \cdot 2^{\aleph_1}
+        \]
+        Consider the case when $\alpha$ is a limit cardinal. As $\alpha < \omega_1$ we have that $\cf \alpha \le \aleph_0$, and so there exists a $\omega$-sequence $f$ which approaches $\alpha$. Then
+        \[
+            \aleph_{\alpha}^{\aleph_1} = 
+            (\sup_{\gamma \in \alpha} \aleph_\gamma)^{\aleph_1}
+            \le
+            (\prod_{\gamma < \alpha} \aleph_\gamma)^{\aleph_1}
+            = 
+            \prod_{\gamma < \alpha} \aleph_{\gamma}^{\aleph_1}
+            = 
+        \]
+        \[
+            \prod_{\gamma < \omega} \aleph_{f(\gamma)}^{\aleph_1}
+            \le 
+            \prod_{\gamma < \omega} (\aleph_{f(\gamma)}^{\aleph_0} \cdot 2^{\aleph_1})
+            \le
+            \prod_{\gamma < \omega} (\aleph_{\alpha}^{\aleph_0} \cdot 2^{\aleph_1})
+            =
+        \]
+        \[ 
+            (\aleph_{\alpha}^{\aleph_0} \cdot 2^{\aleph_1})^{\aleph_0}
+            =
+            (\aleph_{\alpha}^{\aleph_0})^{\aleph_0} \cdot (2^{\aleph_1})^{\aleph_0}
+            =
+            \aleph_{\alpha}^{\aleph_0} \cdot 2^{\aleph_1}
+        \]
+    \end{answer}
+\end{exer}
+
+\begin{exer}
+    Show that if $\alpha < \omega_2$ then $\aleph_{\alpha}^{\aleph_2} = \aleph_{\alpha}^{\aleph_1} \cdot 2^{\aleph_2}$.
+    \begin{answer}
+        Let us induct on $\alpha$. In the case of $0$ we have $\aleph_{0}^{\aleph_2} = 2^{\aleph_2} = \aleph_{0}^{\aleph_1} \cdot 2^{\aleph_2}$. In the case $\alpha = \beta + 1$ we have by 5.36 
+        \[
+            \aleph_{\alpha}^{\aleph_2} 
+            =
+            \aleph_{\beta + 1}^{\aleph_2} 
+            =
+            \aleph_{\beta}^{\aleph_2} \cdot \aleph_{\beta + 1}
+            =
+            \aleph_{\beta + 1} \cdot 2^{\aleph_2} \cdot \aleph_{\beta}^{\aleph_1}
+            =
+            \aleph_{\beta + 1}^{\aleph_1} \cdot 2^{\aleph_2} 
+            =
+            \aleph_{\alpha}^{\aleph_1} \cdot 2^{\aleph_2}
+        \]
+        Consider the case when $\alpha$ is a limit cardinal. As $\alpha < \omega_2$ we have that $\cf \alpha \le \aleph_1$, and so there exists a $\omega_1$-sequence $f$ which approaches $\alpha$. Then
+        \[
+            \aleph_{\alpha}^{\aleph_2} = 
+            (\sup_{\gamma \in \alpha} \aleph_\gamma)^{\aleph_2}
+            \le
+            (\prod_{\gamma < \alpha} \aleph_\gamma)^{\aleph_2}
+            = 
+            \prod_{\gamma < \alpha} \aleph_{\gamma}^{\aleph_2}
+            = 
+        \]
+        \[
+            \prod_{\gamma < \omega_1} \aleph_{f(\gamma)}^{\aleph_2}
+            \le 
+            \prod_{\gamma < \omega_1} (\aleph_{f(\gamma)}^{\aleph_1} \cdot 2^{\aleph_2})
+            \le
+            \prod_{\gamma < \omega_1} (\aleph_{\alpha}^{\aleph_1} \cdot 2^{\aleph_2})
+            =
+        \]
+        \[ 
+            (\aleph_{\alpha}^{\aleph_1} \cdot 2^{\aleph_2})^{\aleph_1}
+            =
+            (\aleph_{\alpha}^{\aleph_1})^{\aleph_1} \cdot (2^{\aleph_2})^{\aleph_1}
+            =
+            \aleph_{\alpha}^{\aleph_1} \cdot 2^{\aleph_2}
+        \]
+    \end{answer}
+\end{exer}
+
+\begin{exer}
+    Prove that if $\kappa$ is a regular limit cardinal then $\kappa^{< \kappa} = 2^{< \kappa}$ and if $\kappa$ is also a strong limit cardinal then $\kappa^{< \kappa} = \kappa$.
+    \begin{answer}
+        It holds that $2^{< \kappa} \le \kappa^{< \kappa}$. If $\kappa$ is regular then we have $\cf \kappa = \kappa$. Then by 5.36 we have 
+        \[
+            \kappa^{< \lambda} 
+            =
+            \bigcup_{\lambda \in \kappa} \kappa^{\lambda}
+            =
+            \bigcup_{\lambda \in \kappa} \sum_{\alpha < \kappa} \abs{\alpha}^{\lambda}
+            \le
+            \bigcup_{\lambda \in \kappa} \sum_{\alpha < \kappa} 2^{\abs{\alpha} \cdot \lambda}
+            \le
+            \bigcup_{\lambda \in \kappa} \sum_{\alpha < \kappa} 2^{< \kappa}
+            =
+            \kappa \times \kappa \times 2^{< \kappa} 
+            =
+            2^{< \kappa} 
+        \]
+        Therefore $\kappa^{< \kappa} = 2^{< \kappa}$. If $\kappa$ is a strong limit cardinal then we have $2^{< \kappa} \ge \kappa$ as $\kappa$ is a limit cardinal and and $2^{< \kappa} \le \kappa$ as $\kappa$ is strong, so $\kappa^{< \kappa} = \kappa$.
+    \end{answer}
+\end{exer}
+
+\newpage
+
+\begin{exer}
+    Prove that if $\kappa$ is singular and is not a strong limit then $\kappa^{< \kappa} = 2^{< \kappa} > \kappa$. 
+    \begin{answer}
+        It holds that $\kappa^{< \kappa} \le 2^{< \kappa}$. As $\kappa$ is not strong we have there exists some $\lambda < \kappa$ such that $2^\lambda > \kappa$. Thus we have 
+        \[
+            \kappa^{< \kappa} 
+            = 
+            \bigcup_{\mu \in \kappa} \kappa^{\mu} 
+            \le 
+            \bigcup_{\mu \in \kappa} (2^\lambda)^{\mu}
+            =
+            \bigcup_{\mu \in \kappa} 2^{\lambda \cdot \mu}
+        \]
+        As $\lambda < \kappa$ we have $\bigcup_{\mu \in \kappa} 2^{\lambda \cdot \mu} = \bigcup_{\mu \in \kappa} 2^{\mu} = 2^{< \lambda}$ so $\kappa^{< \kappa} = 2^{< \kappa}$. Then as $\kappa$ is singular we have $\cf \kappa < \kappa$, so by 5.26 we have  $\kappa^{< \kappa} \ge \kappa^{\cf \kappa} > \kappa$.
+    \end{answer}
+\end{exer}
+
+\begin{exer}
+    Prove that if $\kappa$ is singular and a strong limit then $2^{< \kappa} = \kappa$ and $\kappa^{< \kappa} = \kappa^{\cf \kappa}$.
+    \begin{answer}
+        As $\kappa$ is strong we have that $2^{\lambda} < \kappa$ for all $\lambda < \kappa$. Thus we have $2^{< \kappa} \le \kappa$. We also have that $2^{< \kappa}$ is greater than $\lambda$ for all $\lambda < \kappa$ so $2^{< \kappa} \ge \kappa$. Therefore $2^{< \kappa} = \kappa$.
+
+        As $\kappa$ is singular we have $\cf \kappa < \kappa$. Therefore $\kappa^{\cf \kappa} \le \kappa^{< \kappa}$. Then by 5.40 we have 
+        \[
+            \kappa^{< \kappa} 
+            =
+            \bigcup_{\lambda < \kappa} \kappa^{\lambda} \le \bigcup_{\lambda < \kappa} 
+            =
+            \bigcup_{\lambda < \kappa}  (2^\kappa)^{\lambda} 
+            =
+            \bigcup_{\lambda < \kappa}  2^{\kappa \cdot \lambda} 
+            =
+            \bigcup_{\lambda < \kappa}  2^{\kappa} 
+            \le
+            \kappa \times 2^{\kappa}
+            =
+            2^{\kappa}
+            = 
+            \kappa^{\cf \kappa}
+        \]
+        Therefore $\kappa^{< \kappa} = \kappa^{\cf \kappa}$
+    \end{answer}
+\end{exer}
+
+\begin{exer}
+    Show that if $2^{\aleph_0} > \aleph_\omega$ then $\aleph_{\omega}^{\aleph_0} = 2^{\aleph_0}$.
+    \begin{answer}
+        We have that $\aleph_{\omega}^{\aleph_0} \ge 2^{\aleph_0}$. We also have that $\aleph_{\omega}^{\aleph_0} \le (2^{\aleph_0})^{\aleph_0} = 2^{\aleph_0}$. Therefore $\aleph_{\omega}^{\aleph_0} = 2^{\aleph_0}$.
+    \end{answer}
+\end{exer}
+
+\begin{exer}
+    Show that if $2^{\aleph_1} = \aleph_2$ and $\aleph_{\omega}^{\aleph_0} > \aleph_{\omega_1}$ then $\aleph_{\omega_1}^{\aleph_1} = \aleph_{\omega}^{\aleph_0}$.
+    \begin{answer}
+        We have that $\aleph_{\omega_1}^{\aleph_1} \ge \aleph_{\omega}^{\aleph_0}$. We also have that 
+        \[
+            \aleph_{\omega_1}^{\aleph_1} \le (\aleph_{\omega}^{\aleph_0})^{\aleph_1} = \aleph_{\omega}^{\aleph_1} \le (\prod_{n < \omega} \aleph_n)^{\aleph_1} = \prod_{n < \omega} \aleph_{n}^{\aleph_1}
+        \]
+    \end{answer}
+\end{exer}
+
+\begin{exer}
+    Show that if $2^{\aleph_0} \ge \aleph_{\omega_1}$ then $\gimel(\aleph_\omega) = 2^{\aleph_\omega}$ and $\gimel(\aleph_{\omega_1}) = 2^{\aleph_1}$.
+    \begin{answer}
+
+    \end{answer} 
+\end{exer}
+
+\begin{exer}
+    Show that if $2^{\aleph_1} = \aleph_2$ then $\aleph_{\omega}^{\aleph_0} \ne \aleph_{\omega_1}$. 
+\end{exer}
+
+\begin{exer}
+    Prove that if $\kappa$ is a singular cardinal and if $\kappa < \gimel(\lambda)$ for some $\lambda < \kappa$ such that $\cf \kappa \le \cf \lambda$ then $\gimel(\kappa) \le \gimel(\lambda)$.
+\end{exer}
+
+\begin{exer}
+    Prove that if $\kappa$ is a singular cardinal such that $2^{\cf \kappa} < \kappa \le \lambda^{\cf \kappa}$ for some $\lambda < \kappa$ then $\gimel(\kappa) = \gimel(\nu)$ where $\nu$ is the least $\nu$ such that $\kappa \le \nu^{\cf \kappa}$.
+\end{exer}
+
+\section{Axiom of Regularity}
+
+\begin{exer}
+    Prove that $\rank(x) = \sup \{ \rank(z) + 1 \, | \, z \in x \}$
+
+    \begin{answer}
+    \end{answer}
+\end{exer}
+
 \section{Extra Exercises}
 
 \begin{exer}
@@ -1034,7 +1367,7 @@
 \end{exer}
 
 \begin{exer}
-    Suppose there exists an infinite D-finite set. Then there are sets $X$ and $Y$ with surjections both ways but no bijection. Hint: construct natural sequence to contradict something.
+    Suppose there exists an infinite D-finite set. Then there are sets $X$ and $Y$ with surjections both ways but no bijection. Hint: construct natural sequence to contradict something (Suppose $S$ is your infinite dedekind finite set. Consider the set of all finite sequences in $S$. Let $X$ be such a set and let $Y$ be the set of nonempty finite sequences in $S$).
 \end{exer}
 
 \begin{exer}

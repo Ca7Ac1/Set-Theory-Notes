@@ -73,6 +73,8 @@
 \DeclareMathOperator{\dom}{dom}
 \DeclareMathOperator{\Ord}{Ord}
 \DeclareMathOperator{\cf}{cf}
+\DeclareMathOperator{\TC}{TC}
+\DeclareMathOperator{\ext}{ext}
 
 \newcommand{\ip}[1]{\left\langle #1 \right\rangle} % inner product
 \newcommand{\norm}[1]{\left\Vert #1 \right\Vert} % norm of a vector
@@ -118,9 +120,9 @@
 
         \item Axiom Schema of Replacement: If $F$ is a class function, then for any $X$ there exists a set $Y = F[X] = \{F(x) \, | \, x \in X\}$.
 
-        \item Axiom of Regularity: Every nonempty set has an $\in$-minimal element.
+        \item Axiom of Regularity: Every non-empty set has an $\in$-minimal element.
 
-        \item Axiom of Choice: Every family of nonempty sets has a choice function.
+        \item Axiom of Choice: Every family of non-empty sets has a choice function.
     \end{enumerate}
 \end{axm}
 
@@ -131,7 +133,7 @@
 \section{Ordinal Numbers}
 
 \begin{defn}[well ordering]
-    A linearly ordered set $(P, <)$ is well-ordered if every nonempty subset of $P$ has a least element.
+    A linearly ordered set $(P, <)$ is well-ordered if every non-empty subset of $P$ has a least element.
 \end{defn}
 
 \begin{lmma}
@@ -151,8 +153,8 @@
 \end{crly}
 
 \begin{proof}
-    Consider arbitrary isomorphisms, $f_1, f_2$, from $W_1$ to $W_2$. Assume for the sake of contradiction that $X = \{w \in W_1 \, | \, f_1(x) \ne f_2(x) \}$ is nonempty. Let $x$ be the least element of $X$. Without loss of generality let us say $f_1(x) < f_2(x)$. Then we have $f_{2}^{-1}(f_1(x)) < x$. We have $f_{2}(f_{2}^{-1}(f_1(x))) = f_1(x)$ and $f_1(f_{2}^{-1}(f_1(x))) < f_1(x)$. Therefore $f_{2}^{-1}(f_1(x)) \in X$, resulting in contradiction. 
-    % Consider the set $\{w \in W_2 \, | \, f_1(x) < w \le f_2(x) \}$. We have that such a set is nonempty, meaning it has a least element $z$. We have that $f_1(x) < z$, meaning $x < f_{1}^{-1}(z)$. Similarly, $z \le f_2(x)$, meaning $f_{2}^{-1}(z) \le x$. Therefore $f_{2}^{-1}(z) \le f_1^{-1}(z)$. 
+    Consider arbitrary isomorphisms, $f_1, f_2$, from $W_1$ to $W_2$. Assume for the sake of contradiction that $X = \{w \in W_1 \, | \, f_1(x) \ne f_2(x) \}$ is non-empty. Let $x$ be the least element of $X$. Without loss of generality let us say $f_1(x) < f_2(x)$. Then we have $f_{2}^{-1}(f_1(x)) < x$. We have $f_{2}(f_{2}^{-1}(f_1(x))) = f_1(x)$ and $f_1(f_{2}^{-1}(f_1(x))) < f_1(x)$. Therefore $f_{2}^{-1}(f_1(x)) \in X$, resulting in contradiction. 
+    % Consider the set $\{w \in W_2 \, | \, f_1(x) < w \le f_2(x) \}$. We have that such a set is non-empty, meaning it has a least element $z$. We have that $f_1(x) < z$, meaning $x < f_{1}^{-1}(z)$. Similarly, $z \le f_2(x)$, meaning $f_{2}^{-1}(z) \le x$. Therefore $f_{2}^{-1}(z) \le f_1^{-1}(z)$. 
 \end{proof}
 
 \begin{defn}[Initial Segment]
@@ -222,8 +224,8 @@
     \begin{itemize}
         \item $<$ is a linear ordering of the class $\Ord$.
         \item For each $\alpha$ we have $\alpha =  \{\beta \, | \, \beta < \alpha\}$.
-        \item If $C$ is a nonempty class of ordinals, then $\cap C$ is an ordinal, $\cap C \in C$ and $\cap C = \inf C$.
-        \item If $X$ is a nonempty set of ordinals, then $\cup X$ is an ordinal, and $\cup X = \sup X$.
+        \item If $C$ is a non-empty class of ordinals, then $\cap C$ is an ordinal, $\cap C \in C$ and $\cap C = \inf C$.
+        \item If $X$ is a non-empty set of ordinals, then $\cup X$ is an ordinal, and $\cup X = \sup X$.
         \item For every $\alpha$ we have $\alpha \cup \{\alpha\}$ is an ordinal and $\alpha \cup \{\alpha\}  = \inf \{\beta \, | \, \beta > \alpha\}$. 
     \end{itemize}
 \end{crly}
@@ -421,7 +423,7 @@
 \end{proof}
 
 \begin{defn}[Well-Founded Relation]
-    A relation $E$ on a set $P$ is well-founded if every nonempty $X \subseteq P$ has an $E$-minimal element, meaning $\exists a \in X$ such that $\forall x \in X$ we have $\neg(x E a)$. 
+    A relation $E$ on a set $P$ is well-founded if every non-empty $X \subseteq P$ has an $E$-minimal element, meaning $\exists a \in X$ such that $\forall x \in X$ we have $\neg(x E a)$. 
 \end{defn}
 
 \begin{thm}[Height]
@@ -642,9 +644,9 @@
     There exists some $(\cf \alpha)$-sequence, $\langle \gamma_\nu \, | \, \nu < \cf \alpha \rangle$ which approaches $\alpha$. Similarly, there exists some $(\cf (\cf \alpha))$-sequence, $\langle \delta_\nu \, | \, \nu < \cf (\cf \alpha) \rangle$ which approaches $\cf \alpha$. We have $\cf \alpha \ge \cf (\cf \alpha)$. We also have that $\lim_{\nu \to \cf (\cf \alpha)} \gamma_{\delta_\nu}$ approaches $\alpha$, meaning $\cf (\cf \alpha) \ge \cf \alpha$. Therefore $\cf (\cf \alpha) = \cf \alpha$.
 \end{proof}
 
-\begin{lmma}
+\begin{thm}
     If $\beta_0 \le \beta_1 \le \cdots \le \beta_\xi \le \cdots$ for $\xi < \gamma$ is a nondecreasing $\gamma$-sequence of ordinals in $\alpha$ and $\lim_{\xi \to \gamma} \beta_\xi = \alpha$, then $\cf \gamma = \cf \alpha$.
-\end{lmma}
+\end{thm}
 
 \begin{proof}
     There must exist some $(\cf \gamma)$-sequence, $\langle \xi_\nu \, | \, \nu < \cf \gamma \rangle$, which approaches $\gamma$. It holds that $\lim_{\nu \to \cf \gamma} \beta_{\xi_\nu} = \alpha$. There must exist an increasing subsequence of $\beta_{\xi_\nu}$ of length less than or equal to $\cf \gamma$ with the same limit. Thus we have $\cf \alpha \le \cf \gamma$.
@@ -753,7 +755,7 @@
 \end{thm}
 
 \begin{proof}
-    Define a Dedekind cut in $P$ to be a pair $(A, B)$ of disjoint nonempty subsets of $P$ such that $A \cup B = P$, $a < b$ for all $a \in A$ and $b \in B$, and $A$ does not have a greatest element. By the axioms of power set and seperation we have that the set $C$ of all Dedekind cuts in $P$ exists. Let us define $(A_1, B_1) \preceq (A_2, B_2)$ if $A_1 \subseteq A_2$. It follows from the properties of $\subseteq$ that $\preceq$ is a partial order. Given any such $A_1$ and $A_2$ we have that either $A_1$ contains an upper bound for $A_2$ or doesn't. If it does, it must hold that $A_1$ contains every element of $P$ less than  that upper bound, so $A_2 \subseteq A_1$. If it doesn't, each element of $A_1$ must be less than some element of $A_2$, and thus contained in $A_2$. Therefore $A_1 \subseteq A_2$. Thus $\preceq$ is a linear ordering. 
+    Define a Dedekind cut in $P$ to be a pair $(A, B)$ of disjoint non-empty subsets of $P$ such that $A \cup B = P$, $a < b$ for all $a \in A$ and $b \in B$, and $A$ does not have a greatest element. By the axioms of power set and seperation we have that the set $C$ of all Dedekind cuts in $P$ exists. Let us define $(A_1, B_1) \preceq (A_2, B_2)$ if $A_1 \subseteq A_2$. It follows from the properties of $\subseteq$ that $\preceq$ is a partial order. Given any such $A_1$ and $A_2$ we have that either $A_1$ contains an upper bound for $A_2$ or doesn't. If it does, it must hold that $A_1$ contains every element of $P$ less than  that upper bound, so $A_2 \subseteq A_1$. If it doesn't, each element of $A_1$ must be less than some element of $A_2$, and thus contained in $A_2$. Therefore $A_1 \subseteq A_2$. Thus $\preceq$ is a linear ordering. 
     
     For any Dedekind cut, $(A, B)$, $B$ must be non-empty. As $P$ is unbounded, there must must then exist some $b \in B$ which is not a lower bound of $b$. Then we have $(\{a \in P \, | \, a < b\}, \{a \in P \, | \, a > b\})$ is a Dedekind cut greater than $(A, B)$. For each $p \in P$ we have $(A_p, B_p) = (\{a \in P \, | \, a < p\}, \{a \in P \, | \, a > p\})$ defines a dedekind cut. It follows that $P$ is isomorphic to $\{(A_p, B_p) \, | \, p \in P \}$, $C$ contains a copy of $P$ and $<$ and $\prec$ agree over this copy. For any $(A_1, B_1) \prec (A_2, B_2)$ we have that $A_1 \subsetneq A_2$. Therefore there must exist a $p \in P$ such that $p \in A_2$ and $p \not\in A_1$. It follows that $p \in B_1$ so $(A_1, B_1) \prec (A_p, B_p)$ and $p$ is not the greatest element of $A_2$ so $(A_p, B_p) \prec (A_2, B_2)$. We then have $(A_1, B_1) \prec (A_p, B_p) \prec (A_2, B_2)$. Therefore $(C, \prec)$ is a linearly ordered set with a copy of $P$ which agrees in order and is dense in $C$. 
 
@@ -761,13 +763,13 @@
     \[
         (A, B) = (\bigcup \{a \, | \, \exists b \, [(a, b) \in X]\}, \bigcap \{b \, | \, \exists a \, [(a, b) \in X]\})
     \]
-    We have that $A$ is a union of nonempty sets, and thus nonempty. There must exist some upper bound $(U_A, U_B)$ of $x$. We have that $U_B$ is nonempty. Thus there exists some $u \in U_B$. Consider an arbitrary $b \in \{b \, | \, \exists a \, [(a, b) \in X]\}$. We have the existence of some $a$ such that $(a, b) \in X$. Then by construction we have $a \subseteq U_A$, so $u \not\in A$. Therefore $u \in b$. Thus $u \in B$. Therefore $B$ is nonempty. For any arbitrary $a \in A$ and $b \in B$ we have the existence of $(A', B') \in X$ such that $a \in A'$. Then by construction we have that $b \in B'$. Therefore $a < b$. We also have that $A$ is the union of sets with no greatest element, and thus has no greatest element. Therefore $(A, B)$ is a Dedekind cut. By construction all Dedekind cuts in $X$ are less than $(A, B)$ and $(A, B)$ is less than or equal to any upper bound of $X$. Therefore $(A, B)$ is the supremum of $X$, meaning that $C$ is complete.
+    We have that $A$ is a union of non-empty sets, and thus non-empty. There must exist some upper bound $(U_A, U_B)$ of $x$. We have that $U_B$ is non-empty. Thus there exists some $u \in U_B$. Consider an arbitrary $b \in \{b \, | \, \exists a \, [(a, b) \in X]\}$. We have the existence of some $a$ such that $(a, b) \in X$. Then by construction we have $a \subseteq U_A$, so $u \not\in A$. Therefore $u \in b$. Thus $u \in B$. Therefore $B$ is non-empty. For any arbitrary $a \in A$ and $b \in B$ we have the existence of $(A', B') \in X$ such that $a \in A'$. Then by construction we have that $b \in B'$. Therefore $a < b$. We also have that $A$ is the union of sets with no greatest element, and thus has no greatest element. Therefore $(A, B)$ is a Dedekind cut. By construction all Dedekind cuts in $X$ are less than $(A, B)$ and $(A, B)$ is less than or equal to any upper bound of $X$. Therefore $(A, B)$ is the supremum of $X$, meaning that $C$ is complete.
 \end{proof}
 
 \newpage
 
 \begin{defn}[Perfect Set]
-    A nonempty closed set is perfect if it contains no isolated points.
+    A non-empty closed set is perfect if it contains no isolated points.
 \end{defn}
 
 \begin{thm}
@@ -777,7 +779,7 @@
 \begin{proof}
     Consider an arbitrary perfect set $P \subseteq \R$. Let $S$ be the set of all finite sequences in $\{0, 1\}$. Let us construct sets $I_s$ for all $s \in S$ by well-founded recursion. Let $I_\mtset = \overline{B_1(p) \cap P}$ for some $p \in P$. We have that any point in $B_1(p) \cap P$ is not isolated as $B_1(p)$ is open and $P$ is perfect. Any point in $\overline{B_1(p) \cap P}  \setminus B_1(p) \cap P$ is the limit of some sequence in $\setminus B_1(p) \cap P$ and thus contained in $P$ and not an isolated point. Therefore $I_\mtset$ is a subset of $P$, and perfect. Consider an arbitrary $s \in S$ of length $n$. Let $l$ and $u$ be disjoint points in $I_s$ such that $l < u$ (such points must exist as $I_s$ is perfect). There exists an $r \in \R_{< \frac{1}{n + 1}}$ such that $\overline{B_r(l)}  \cap \overline{B_r(u)} = \mtset$. Let $I_{s \frown 0} = \overline{B_r(l) \cap I_s}$ and $I_{s \frown 1} = \overline{B_r(u) \cap I_s}$. It follows that $I_{s \frown 0}$ and $I_{s \frown 0}$ are disjoint, implying that all $I_{s'}$ where $s' \in S$ is of length $n + 1$ are disjoint. We also have that $I_{s \frown 0} \subseteq I_s$ and $I_{s \frown 1} \subseteq I_{s}$, meaning both are also subsets of $P$. Both $I_{s \frown 0}$ and $I_{s \frown 1}$ are perfect. By construction, both of these sets also have diameter less than $\frac{1}{n + 1}$.
 
-    Let us then construct a function $F: 2^{\aleph_0} \to P$. Consider an arbitrary $f \in 2^{\aleph_0}$. It must hold that $\bigcap_{n < \omega} I_{f\restriction_{n}}$ is equal to $\{p\}$ for some $p \in P$. This is because the infinite intersection of nonempty nested closed sets in $\R$ is nonempty, but the element in this set must be unique as it is contained in a sequence of sets with diameter approaching $0$. Let $F$ map $f$ to $p$. If $f_1, f_2 \in 2^{\aleph_0}$ are not equal, they must differ in some index $n$. We have that $f_1\restriction_{n + 1}, f_2\restriction_{n + 1} \in S$ and $f_1\restriction_{n + 1} \ne f_2\restriction_{n + 1}$, so $I_{f_1\restriction_{n + 1}}$ and $I_{f_2\restriction_{n + 1}}$ are disjoint, meaning $\bigcap_{n < \omega} I_{f_1\restriction_{n}} \ne \bigcap_{n < \omega} I_{f_2\restriction_{n}}$, so $F(f_1) \ne F(f_2)$. Therefore $F$ is injective, so $\abs{P} \ge 2^{\aleph_0} = \abs{R}$. As $P \subseteq \R$ we have $\abs{P} = \abs{\R}$.
+    Let us then construct a function $F: 2^{\aleph_0} \to P$. Consider an arbitrary $f \in 2^{\aleph_0}$. It must hold that $\bigcap_{n < \omega} I_{f\restriction_{n}}$ is equal to $\{p\}$ for some $p \in P$. This is because the infinite intersection of non-empty nested closed sets in $\R$ is non-empty, but the element in this set must be unique as it is contained in a sequence of sets with diameter approaching $0$. Let $F$ map $f$ to $p$. If $f_1, f_2 \in 2^{\aleph_0}$ are not equal, they must differ in some index $n$. We have that $f_1\restriction_{n + 1}, f_2\restriction_{n + 1} \in S$ and $f_1\restriction_{n + 1} \ne f_2\restriction_{n + 1}$, so $I_{f_1\restriction_{n + 1}}$ and $I_{f_2\restriction_{n + 1}}$ are disjoint, meaning $\bigcap_{n < \omega} I_{f_1\restriction_{n}} \ne \bigcap_{n < \omega} I_{f_2\restriction_{n}}$, so $F(f_1) \ne F(f_2)$. Therefore $F$ is injective, so $\abs{P} \ge 2^{\aleph_0} = \abs{R}$. As $P \subseteq \R$ we have $\abs{P} = \abs{\R}$.
 \end{proof}
 
 \begin{thm}[Cantor-Bendixson]
@@ -805,7 +807,7 @@
 \begin{proof}
     Consider arbitrary dense open sets of reals $A$ and $B$. It holds that $A \cap B$ is open. Consider an $l, r \in \R$ such that $l < r$. As $A$ is dense, there is some $a \in A$ such that $l < r$. As $A$ is open, there is some neighborhood about $a$ such that $A$ contains that neighborhood. Let $a' \in A$ be some point in that neighborhood such that $l < a' < r$. Without loss of generality, let us say $a' < a$. As $B$ is dense, there is some $b \in B$ such that $a' < b < a$. It then holds that $b \in A$. Therefore $b \in A \cap B$, so there exists some element of $A \cap B$ that is between $l$ and $r$. Therefore $A \cap B$ is dense. By induction it follows that $\bigcap_{n = 0}^{m} D_n$ is dense and open for all $m \in \omega$.
 
-    Let $\langle J_k \, | \, k \in \omega \rangle$ be an enumeration of the rational intervals. Consider an arbitrary $l, r \in \R$ such that $l < r$. Let us define a sequence of intervals $\{I_n \, | \, n \in \N\}$ recursively. Let $I_0 = (l, r)$. Let $I_{n + 1} = J_k = (q_k, r_k)$ where $k \in \N$ is the least $k$ such that the closed interval $[q_k, r_k]$ is included in $I_n \cap D_n$. As $D_n$ is dense, it must have a non-empty intersection with $I_n$. As $D_n$ is open, there must be some open-neighborhood about some point in this intersection, which then contains some smaller closed rational interval. Thus such a $k$ does exist. It follows that $\overline{I_{n + 1}}$ is a nonempty bounded closed interval contained within $\overline{I_n}$ and $D_n$. By the nested interval property we have that there exists some $x \in \bigcap_{n = 1}^\infty \overline{I_n}$. By construction we have $x \in D$ and $l < x < r$. Therefore $D$ is dense.
+    Let $\langle J_k \, | \, k \in \omega \rangle$ be an enumeration of the rational intervals. Consider an arbitrary $l, r \in \R$ such that $l < r$. Let us define a sequence of intervals $\{I_n \, | \, n \in \N\}$ recursively. Let $I_0 = (l, r)$. Let $I_{n + 1} = J_k = (q_k, r_k)$ where $k \in \N$ is the least $k$ such that the closed interval $[q_k, r_k]$ is included in $I_n \cap D_n$. As $D_n$ is dense, it must have a non-empty intersection with $I_n$. As $D_n$ is open, there must be some open-neighborhood about some point in this intersection, which then contains some smaller closed rational interval. Thus such a $k$ does exist. It follows that $\overline{I_{n + 1}}$ is a non-empty bounded closed interval contained within $\overline{I_n}$ and $D_n$. By the nested interval property we have that there exists some $x \in \bigcap_{n = 1}^\infty \overline{I_n}$. By construction we have $x \in D$ and $l < x < r$. Therefore $D$ is dense.
 \end{proof}
 
 \newpage
@@ -869,7 +871,7 @@
 \end{proof}
 
 \begin{defn}
-    A nonempty sequential tree $T$ is perfect if for every $t \in T$ there exist $s_1$ and $s_2$ such that $s_1 \subset t$, $s_2 \subset t$, and $s_1$ and $s_2$ are $\subset$-incomparable
+    A non-empty sequential tree $T$ is perfect if for every $t \in T$ there exist $s_1$ and $s_2$ such that $s_1 \subset t$, $s_2 \subset t$, and $s_1$ and $s_2$ are $\subset$-incomparable
 \end{defn}
 
 \begin{lmma}
@@ -897,7 +899,7 @@
 \section{The Axiom of Choice and Cardinal Arithmetic}
 
 \begin{axm}[Axiom of Choice]
-    Every family of nonempty sets has a choice function.
+    Every family of non-empty sets has a choice function.
 \end{axm}
 
 \begin{thm}[Zermelo's Well-Ordering Theorem]
@@ -905,11 +907,11 @@
 \end{thm}
 
 \begin{proof}
-    Let $A$ be an arbitrary set. Let $f$ be a choice function for the family $S$ of all nonempty subsets of $A$. Let us construct the transfinite sequence $a$. For every ordinal $\alpha$ let
+    Let $A$ be an arbitrary set. Let $f$ be a choice function for the family $S$ of all non-empty subsets of $A$. Let us construct the transfinite sequence $a$. For every ordinal $\alpha$ let
     \[
         a_\alpha = f(A \setminus \{a_\xi \, | \, \xi < \alpha\})    
     \] 
-    if $\{a_\xi \, | \, \xi < \alpha\}$ is nonempty. Then our sequence induces a well-ordering of $A$.
+    if $\{a_\xi \, | \, \xi < \alpha\}$ is non-empty. Then our sequence induces a well-ordering of $A$.
 \end{proof}
 
 \begin{lmma}
@@ -941,19 +943,19 @@
 \end{defn}
 
 \begin{thm}[Zorn's Lemma]
-    If $(P, <)$ is a nonempty partially ordered set such that every chain in $P$ has an upper bound, then $P$ has a maximal element.
+    If $(P, <)$ is a non-empty partially ordered set such that every chain in $P$ has an upper bound, then $P$ has a maximal element.
 \end{thm}
 
 \begin{proof}
-    By the axiom of choice there exists a choice function $f$ for nonempty subsets of $P$. By transfinite recursion let us construct the sequence $a$ such that $a_\alpha$ is equal to the the set of all elements greater than all $a_\xi$ for $\xi < \alpha$ mapped under $f$ if such a set is nonempty. The image of this function is then a chain, which then has an upper bound. Such an upper bound by construction is a maximal element of $P$.
+    By the axiom of choice there exists a choice function $f$ for non-empty subsets of $P$. By transfinite recursion let us construct the sequence $a$ such that $a_\alpha$ is equal to the the set of all elements greater than all $a_\xi$ for $\xi < \alpha$ mapped under $f$ if such a set is non-empty. The image of this function is then a chain, which then has an upper bound. Such an upper bound by construction is a maximal element of $P$.
 \end{proof}
 
 \begin{axm}[The Countable Axiom of Choice]
-    Every countable family of nonempty sets has a choice function.
+    Every countable family of non-empty sets has a choice function.
 \end{axm}
 
 \begin{axm}[The Principle of Dependent Choice]
-    If $E$ is a binary relation on a nonempty set $A$, and if for every $a \in A$ there exists $b \in A$ such that $b \, E \, a$, then there exists a sequence $\langle a_n \in A \, | \, n \in \N \rangle$ such that:
+    If $E$ is a binary relation on a non-empty set $A$, and if for every $a \in A$ there exists $b \in A$ such that $b \, E \, a$, then there exists a sequence $\langle a_n \in A \, | \, n \in \N \rangle$ such that:
     \[
         a_{n + 1} \, E \, a_n \, \forall \, n \in \N    
     \]
@@ -966,7 +968,7 @@
 \begin{proof}
     If there exists a sequence $\langle a_n \in A \, | \, n \in \N\rangle$ such that $a_{n + 1} \, E \, a_n$ for all $n \in \N$ then no element in the image of $a$ has is minimal. Therefore $E$ is not well-founded. The contrapositive gives us that if $E$ is well-founded then such a sequence does not exist.
 
-    If $E$ is not well-founded then there must exist some nonempty set $A \subseteq P$ with no $E$-minimal element. By the principle of dependent choice, there then exists a sequence $a$ such that $a_{n + 1} \, E \, a_n$ for all $n \in \N$. The contrapositive gives us that if no such sequence exists then $E$ is well-founded.
+    If $E$ is not well-founded then there must exist some non-empty set $A \subseteq P$ with no $E$-minimal element. By the principle of dependent choice, there then exists a sequence $a$ such that $a_{n + 1} \, E \, a_n$ for all $n \in \N$. The contrapositive gives us that if no such sequence exists then $E$ is well-founded.
 \end{proof}
 
 \begin{crly}
@@ -1209,9 +1211,243 @@
     If $\kappa \le \lambda$ then by 5.31 we have $\kappa^\lambda = 2^\lambda$. If there exists some $\mu < \kappa$ such that $\mu^\lambda \ge \kappa$ then $\mu^\lambda \le \kappa^\lambda \le (\mu^{\lambda})^\lambda = \mu^{\lambda}$. Let us consider when $\kappa > \lambda$ and $\mu^\lambda < \kappa$ for all $\mu < \kappa$. If $\kappa = \beta + 1$ then by 5.36 we have $\kappa^{\lambda} = \beta^\lambda \cdot \kappa = \kappa$. Otherwise we have that $\kappa$ is a limit cardinal. Then if $\cf \kappa > \lambda$ we have the image of every function from $\lambda$ to $\kappa$ is bounded so $\kappa^\lambda = \lim_{\alpha \to \kappa} \alpha^\lambda = \kappa$. If $\cf \kappa \le \lambda$ then by 5.37 we have $\kappa^\lambda = \kappa^{\cf \kappa}$.
 \end{proof}
 
+\begin{defn}[Strong Cardinal]
+    A cardinal $\kappa$ is a strong limit cardinal if $2^{\lambda} < \kappa$ for all $\lambda < \kappa$.
+\end{defn}
+
+\begin{thm}
+    If $\kappa$ is a strong limit cardinal then $2^{\kappa} = \kappa^{\cf \kappa}$.
+\end{thm}
+
+\begin{proof}
+    By 5.31 we have $2^{\kappa} = (2^{< \kappa})^{\cf \kappa}$. As $\kappa$ is strong we have $2^{< \kappa} = \kappa$ so $2^{\kappa} = \kappa^{\cf \kappa}$.
+\end{proof}
+
 \begin{defn}[SCH]
     The Singular Cardinal Hypothesis is the statement: For every singular cardinal $\kappa$, if $2^{\cf \kappa} < \kappa$ then $\kappa^{\cf \kappa} = \kappa^+$.
 \end{defn}
+
+\newpage
+
+\section{The Axiom of Regularity}
+
+\begin{axm}[Axiom of Regularity]
+    Every non-empty set has an $\in$-minimal element:
+    \[
+        \forall S \, (S \ne \mtset \to (\exists x \in S) \, S \cap x \ne \mtset )
+    \]
+\end{axm}
+
+\begin{thm}
+    For every set $S$ there exists a transitive set $T \supseteq S$.
+\end{thm}
+
+\begin{proof}
+    Let us inductively define sets $S_n$ for $n \in \N$. Let $S_0 = S$ and $S_{n + 1} = \bigcup S_n$. Then it holds that $T = \bigcup_{n = 0}^\infty S_n$ is transitive and $T \supseteq S$. It also holds that such a $T$ is the smallest transitive $T$ that is a super set of $S$ as the union over a transitive set must be a subset of itself, so any transitive set containing $S$ must contain each $S_n$ and thus contain $T$.
+\end{proof}
+
+\begin{defn}[Transitive Closure]
+    The transitive closure of $S$ is the smallest transitive $T \supseteq S$:
+    \[
+        \TC(S) = \bigcap \{T \, | \, T \supseteq S \, \text{ and $T$ is transitive}\}
+    \]  
+\end{defn}
+
+\begin{lmma}
+    Every non-empty class $C$ has an $\in$-minimal element.
+\end{lmma}
+
+\begin{proof}
+    Let $S \in C$ be arbitrary. If $S \cap C = \mtset$ then $S$ is a minimal element of $C$.  If $S \cap C \ne \mtset$ then let $X = \TC(S) \cap C$. $X$ is a non-empty set and by the Axiom of Regularity has an $\in$-minimal element, denoted $x$. As $\TC(S)$ is transitive we have that $x \subseteq \TC(S)$. For all $y \in x$ we thus have that $y \in TC(S)$. If $y \in C$ then we have $y \in x \cap (\TC(S) \cap C) = x \cap X$, meaning $x$ is not $\in$-minimal. As $x$ is $\in$-minimal, it follows that no $y \in X$ is also in $C$. Thus $x$ is a $\in$-minimal element of $C$.
+\end{proof}
+
+\begin{defn}
+    Define by transfinite recursion:
+    \[
+        V_0 = \mtset \quad\quad V_{\alpha + 1} = \powset{V_\alpha}
+    \]
+    \[
+        V_{\alpha} = \bigcup_{\beta < \alpha} V_\beta \text{ if $\alpha$ is a limit ordinal}
+    \]
+\end{defn}
+
+\begin{crly}
+    By induction we have that each $V_\alpha$ is transitive, if $\alpha < \beta$ then $V_\alpha \subsetneq V_\beta$, and $\alpha \subseteq V_\alpha$.
+\end{crly}
+
+\begin{lmma}
+    For every set $x$ there is some $\alpha$ such that $x \in V_\alpha$.
+\end{lmma}
+
+\begin{proof}
+    Let us assume for the sake of contradiction that the class $C$ of all $x \not \in \bigcup_{\alpha \in \Ord} V_\alpha$ is non-empty. By 6.4 we have that $C$ has some $\in$-minimal element, denoted $x$. It follows that for all $z \in x$ we have $z \in \bigcup_{\alpha \in \Ord} V_\alpha$. Thus $x \subseteq \bigcup_{\alpha \in \Ord} V_\alpha$. By the Axiom of Replacement there exists some ordinal $\gamma$ such that $x \subseteq \bigcup_{\alpha < \gamma} V_\alpha$. Therefore $x \subseteq V_\gamma$ so $x \in V_{\gamma + 1}$, resulting in contradiction. Therefore $C$ is empty, meaning every set must be in the union of $V_\alpha$.
+\end{proof}
+
+\begin{defn}[Rank]
+    The rank of any set $x$ is the least $\alpha$ such that $x \in V_{\alpha + 1}$.
+\end{defn}
+
+\begin{crly}
+    If $x < y$ then $\rank(x) < \rank(y)$ and for all $\alpha \in \Ord$ we have $\rank(\alpha) = \alpha$.
+\end{crly}
+
+\begin{thm}[Collection Principle]
+    Given a collection of classes $C_u$ such that $u \in X$, where $X$ is a set, then there is a set $Y$ such that for every $u \in X$ if $C_u \ne \mtset$ then $C_u \cap Y \ne \mtset$. 
+    \[
+        \forall X \, \exists Y \, (\forall u \in X) \, [\exists v \, \varphi(u, v, p) \to (\exists v \in Y) \, \varphi(u, v, p)]
+    \]
+\end{thm}
+
+\begin{proof}   
+    For each $v \in X$, let us consider all $u$ such that $\varphi(u, v, p)$. All such $u$ form a class. Let us assume such a class is non-empty. Then there is a an element in the class with some rank. We can then consider the collection of all elements from this class with rank less than or equal to this rank. Such a collection is a set as we can apply seperation to the union of $V_\alpha$ for all $\alpha$ less than or equal to the rank of our chosen element. Then, as ordinals are well-ordered, we can consider the least rank. Let $C_v$ be equal to this set of all $u$ which satisfy $\varphi(v, u, p)$ with minimal rank. We can take the union of $C_v$ for all $v \in X$. This union will then be a set which satisfies the collection principle.
+\end{proof}
+
+\begin{crly}
+    The collection principle implies the Axiom Schema of Replacement.
+\end{crly}
+
+\begin{thm}[$\in$-induction]
+    Let $T$ be a transitive class and let $\Phi$ be a property. Assume that $\Phi(\mtset)$ and if $x \in T$ and $\Phi(z)$ holds for every $z \in x$ then $\Phi(x)$. Then every $x \in T$ has property $\Phi$. 
+\end{thm}
+
+\begin{proof}
+    Assume for the sake of contradiction that the class of all $x \in T$ not satifying $\Phi$ is a non-empty class. It must hold that such a set is not empty. By 6.4 we have that there is some $\in$-minimal element in this class. As $T$ is transitive, every element in this $\in$-minimal set must be in $T$, and thus by assumption this set satisfies $\Phi$, resulting in contradiction.
+\end{proof}
+
+\newpage
+
+\begin{thm}[$\in$-recursion]
+    Let $T$ be a transitive class and let $G$ be a function. Then there is a unique function $F$ on $T$ such that 
+    \[
+        F(x) = G(F\restriction_x)
+    \]
+\end{thm}
+
+\begin{proof}
+    For every $x \in T$ let 
+    \begin{align*}
+        F(x) = y \iff & \text{there is a function $f$ such that }    
+        \\
+        & \text{$\dom(f)$ is a transitive subset of $T$ and:}
+        \\
+        & \text{(i)} \, \, (\forall z \in \dom(f)) \, \, f(z) = G(f\restriction_z)
+        \\
+        & \text{(ii)} \, \, f(x) = y
+    \end{align*}
+    It holds that $G(\mtset)$ is the unique $y$ satisfying our given condition for $F(\mtset)$. Consider an arbitrary non-empty $x \in T$. Let us assume that for all $z \in x$ we have that there is a unique $y_z$ satisfying $F(z) = y_z$. Then we have $G(\bigcup_z y_z)$ satisfies $F(x)$. We can consider an arbitrary function $g$ that satisfies the conditions imposed on $F(x)$. We have that $g(x) = G(g\restriction_x)$. If $g(x) \ne y$ then $G(g\restriction_x) \ne G(f\restriction_x)$. There must then exist some $a \in x$ such that $g(a) \ne f(a)$. However, we then have $F(x)$ is also equal to $g(a)$ resulting in contradiction. Therefore $F(x)$ is unique for all $x \in T$ by $\in$-induction.
+
+    It holds that $F(\mtset) = G(\mtset) = G(F\restriction_{\mtset})$. Consider an arbitrary non-empty $x \in T$. Let us assume that for all $z \in x$ we have that $F(z) = G(F\restriction_{z})$. We then have that $F\restriction_{x}$ is defined and satisfies $F(x)$. Therefore $F(x)$ is defined and equal to $G(F\restriction_{x})$ for all $x \in T$ by $\in$-induction.
+
+    Let us consider an arbitrary function $F'$ satisfying $F'(x) = G(F'\restriction_x)$. It holds that $F'(\mtset) = G(\mtset) = F(\mtset)$. Consider an arbitrary $x \in T$. Let us assume that for all $z \in T$ we have $F(z) = F'(z)$. We have that $F'(x) = G(F'\restriction_x) = G(F\restriction_x) = F(x)$. Therefore by $\in$-induction we have $F = F'$, so $F$ is the unique function satisfying $F(x) = G(F\restriction_x)$.
+\end{proof}
+
+\begin{crly}
+    Let $A$ be a class. There is a unique class $B$ such that 
+    \[
+        B = \{ x \in A \, | \, x \subset B \}
+    \]
+\end{crly}
+
+\begin{proof}
+    Let us define the function $F$ recursively on $A$. Let $F(\mtset) = 1$. Let $F(x) = 1$ if $F(z) = 1$ for all $z \in x$. Let $F(y) = 0$ for all $y \in A$ that are not defined through this recursive procdeure. Let $B = \{ x \, | \, F(x) = 1 \}$.
+
+    Consider an arbitrary $B'$ such that $B' = \{ x \in A \, | \, x \subset B \}$. It holds that either both or neither of $B'$ and $B$ contain the empty set. Let us assume that for all $x \in B$ we have that if $z \in x$ then $z \in B'$. It then holds that $x$ is an element of $A$ such that $x \subset B'$ so $x \in B'$. Similarly, we it follows that for all $x \in B'$ we have $x \in B$. Therefore by $\in$-induction we have $B = B'$.
+\end{proof}
+
+\begin{thm}
+    Let $T_1$ and $T_2$ be transitive classes and let $\pi$ be an $\in$-isomorphism. Then $T_1 = T_2$ and $\pi(u) = u$ for every $u \in T_1$.
+\end{thm}
+
+\begin{proof}
+    Let us assume for the sake of contradiction that $\pi(\mtset) \ne \mtset$. There must exist some $x \in \pi(\mtset)$. However, we then have $\pi^{-1}(x) \not\in \pi^{-1}(\pi(\mtset))$. Thus $\pi(\mtset) = \mtset$. Consider an arbitrary $x \in T_1$. Let us assume that for all $z \in x$ we have $\pi(z) = z$. Let us consider $\pi(x)$. Consider an arbitrary $a \in x$. We have that $\pi(a) \in \pi(x)$, so by assumption $a \in \pi(x)$. Therefore $x \subseteq \pi(x)$. Consider an arbitrary $b \in \pi(x)$. By transitivity we have $b \in T_2$. Then we know $\pi^{-1}(b) \in x$. By assumption, we then have that $\pi^{-1}(b) = \pi(\pi^{-1}(b)) = b$. Therefore $b \in x$. Thus $\pi(x) \subseteq x$. By $\in$-induction we then have that $x = \pi(x)$ for all $x \in T_1$.
+\end{proof}
+
+\begin{defn}[Extension]
+    Let $E$ be a binary relation on a class $P$. For each $x \in P$ define the extention of $x$ as: 
+    \[
+        \ext_E(x) = \{ z \in P \, | \, z E x \}
+    \]
+\end{defn}
+
+\begin{defn}
+    A relation $E$ on a class $P$ is well-founded if every non-empty set $x \subseteq P$ has an $E$-minimal element and the extention of every element in $P$ is a set.
+\end{defn}
+
+\begin{lmma}
+    If $E$ is a well-founded relation on $P$ then every non-empty class $C \subseteq P$ has an $E$-minimal element.
+\end{lmma}
+
+\begin{proof}
+    Let $S \in C$ be arbitrary. If $\ext_E(S) \cap C = \mtset$ then $S$ is a $E$-minimal element of $C$. Let us consider if $\ext_E(S) \cap C$ is non-empty. Let us define $S_n$ recursively, where $S_0 = \ext_E(S)$ and $S_{n + 1} = \bigcup \{ \ext_E(z) \, | \, z \in S_n \}$. Let $X = (\bigcup_{n = 0}^\infty S_n) \cap C$. As $X$ is a set, there is some $E$-minimal element $x \in X$. Let us assume for the sake of contradiction such an element is not $E$-minimal in $C$. Then there exists some $y \in C$ such that $y \, E \, x$. We have that $x \in S_n$ for some $n$. It follows that $y \in S_{n + 1}$, so $y \in X$. Therefore $x$ would not be $E$ minimal in $X$, resulting in contradiction. Therefore $x$ must be $E$ minimal in $C$.
+\end{proof}
+
+\begin{thm}[Well-Founded Induction]
+    Let $E$ be a well-founded relation on $P$. Let $\Phi$ be a property. If every $E$-minimal element $x$ has property $\Phi$ and $x \in P$ has property $\Phi$ if $\Phi(z)$ for all $z \in P$ such that $z \, E \, x$ then all $x \in P$ have the property $\Phi$.
+\end{thm}
+
+\begin{thm}[Well-Founded Recursion]
+    Let $E$ be a well-founded relation on $P$. Let $G$ be a function. Then there is a unique function $F$ on $P$ such that for all $x \in P$ we have:
+    \[
+        F(x) = G(x, F \restriction_{\ext_E(x)})
+    \]
+\end{thm}
+
+\begin{defn}[Transitive Collapse]
+    We can recursively define the function $\pi$ on a class $P$ with a well-founded relation $E$ as 
+    \[
+        \pi(x) = \{ \pi(z) \, | \, z \, E \, x \}        
+    \] 
+    for all $x \in P$. The range of $\pi$ is then a transitive class and for all $x, y \in P$ if $x \, E \, y$ then $\pi(x) \in \pi(y)$.
+\end{defn}
+
+\begin{defn}[Extentional Well-Founded Relation]
+    A well-founded relation $E$ on a class $P$ is extentional if 
+    \[
+        \ext_E(X) \ne \ext_E(Y)
+    \]
+    for all $X, Y \in P$ such that $X \ne Y$.
+\end{defn}
+
+\begin{defn}[Extentional Class]
+    A class $M$ is extentional if the relation $\in$ on $M$ is extentional. Equivalently, $M$ is extentional if for any distinct $X$ and $Y$ in $M$ we have $X \cap M \ne Y \cap M$. 
+\end{defn}
+
+\begin{thm}[Mostowski's Collapsing Theorem]
+    If $E$ is well-founded and an extentional relation on a class $P$ then there is a unique transitive class $M$ and a unique isomorphism $\pi$ between $(P, E)$ and $(M, \in)$. If $T \subseteq P$ is transitive then $\pi(x) = x$ for every $x \in T$.
+\end{thm}
+
+\begin{proof}
+    Let $\pi$ be the transitive collapse of $(P, E)$. It holds that $\pi$ is a surjection onto a transitive class. As $(P, E)$ is extentional and well-founded we have that there is a unique $X \in P$ such that $\ext_E(X) = \mtset$. Let us assume that $\pi$ restricted to all $X \in P$ such that $\rank(X) < \alpha$ is injective. Consider arbitrary $A, B \in P$ such that $A \ne B$ and $\rank(A) = \rank(B)$. We have that $\ext_E(A) \ne \ext_E(B)$ as $(P, E)$ is extentional and both such sets consist of elements with rank strictly less than $\alpha$. Thus by our inductive hypothesis we have $\pi(A) = \pi[\ext_E(A)] \ne \pi[\ext_E(A)] = \pi(B)$. Thus by induction on rank we have that $\pi$ is injective over all sets in $P$. Thus $\pi$ forms a bijection, and it follows that $X \, E \, Y \iff \pi(X) = \pi(Y)$, so $(P, E)$ is isomorphic to $(M, \in)$ for some transitive $M$.
+
+    By 6.15 we have that the only $\in$-isomorphism over a transitive classe is the identity automorphism. Thus we have that $M$ is the unique transitive set isomorphic to $(P, E)$ and $\pi$ is the unique isomorphism between $(P, E)$ and $(M, \in)$. 
+\end{proof}
+
+\begin{axm}[Bernays-G\"odel Axiomatic Set Theory]
+    Let there be two types of objects, sets (denoted by lower case letters) and classes (denoted by capital letters):
+    \begin{enumerate}[(A)]
+        \item 
+        \begin{enumerate}[1.]
+            \item Extentionality: $\forall u \, (u \in X \iff y \in Y) \to X - Y$ .
+            \item Every set is a class.
+            \item If $X \in Y$ then $X$ is a set .
+            \item Pairing: For any sets $x$ and $y$ there is a set $\{x, y\}$.            
+        \end{enumerate}
+        
+        \item Comprehension: $\forall X \exists Y \, Y Y = \{x \, | \, \varphi(x, X) \}$ where $\varphi$ is a formula in which only set variables are quantified.
+        
+        \item 
+        \begin{enumerate}[1.]
+            \item Infinity: There is an infinite set.
+            \item Union: for every $x$ the set $\bigcup x$ exists.
+            \item Power Set; For every set $x$ the power set $\powset{x}$ exists.
+            \item Replacement: If a class $F$ is a function and $x$ is a set then $\{ F(z) \, | \, z \in x \}$ is a set. 
+        \end{enumerate}
+
+        \item Regularity.
+        
+        \item Choice: There is a function $F$ such that $F(x) \in x$ for every non-empty set $x$. 
+    \end{enumerate}
+\end{axm}
 
 \newpage
 
@@ -1269,8 +1505,8 @@
     % \item For theorem 3.3, I'm assuming that the set should be unbounded below and above.
     % \item I think theorem 4.3 (ii) in the book should specify that the set is a field (or is unbounded). Otherwise, I think you can have a counter example like $[-\sqrt{2}, \sqrt{2}]$ which is not isomorphic to $\R$, but is a complete linear order that has a countable dense subset isomorphic to $\Q$. Besides that I really like the proofs for this theorem.
     % \item I wasn't sure about the details for theorem 4.5 in the book but I think \href{https://math.stackexchange.com/questions/201922/proof-that-a-perfect-set-is-uncountable/202054#202054}{this} link covered it well 
-    \item For theorem 4.9 what are examples of closed sets not becoming perfect after $\omega$ steps of removing isolated points?
-    \item I'm assuming the reason the book enumerates all rational sequences a bunch, even when it seems like you don't need to, is to avoid using AoC (for example in the Baire Category Theorem). Also I'd like to go over my proof of the Baire Category Theorem.
+    % \item For theorem 4.9 what are examples of closed sets not becoming perfect after $\omega$ steps of removing isolated points?
+    % \item I'm assuming the reason the book enumerates all rational sequences a bunch, even when it seems like you don't need to, is to avoid using AoC (for example in the Baire Category Theorem). Also I'd like to go over my proof of the Baire Category Theorem.
     % \item Should non-empty have the dash or not?
     % \item ``We assume that the reader is familiar with the basic theory of Lebesgue
     % measure''. Does having the picture of sideways rectangles in my head count as familiarity with the basic theory of Lebesgue measure?
@@ -1284,9 +1520,17 @@
     % \item Want to make sure 4.19 is sufficient.
     % \item Need help with 4.20. I don't see in the hint why $d(x, x_n) \le \frac{1}{n}$.
     % \item How to do thm 5.28
-    \item Intuition behind 5.12 without Konig.
-    \item I want to confirm why 5.16 doesn't work for non-limit cardinals.
-    \item Is there a not ugly way to do exercise 5.4 (specifically showing transitivity)
+    % \item Intuition behind 5.12 without Konig.
+    % \item I want to confirm why 5.16 doesn't work for non-limit cardinals.
+    % \item Is there a not ugly way to do exercise 5.4 (specifically showing transitivity)
+    % \item Want to make sure 5.6 is correct.
+    % \item Don't understand this proof of 5.8: \href{https://en.wikipedia.org/wiki/Milner%E2%80%93Rado_paradox}{link}
+    % \item For 5.8 and 9 i'm assuming that each $X_i$ is disjoint with every other $X_i$ (and same for $Y_i$) and not that the set of all $X_i$'s is disjoint from the set of all $Y_i$'s.
+    % \item I think its neat that one way I did exercise 5.11 is just a special case of the second way I did it.
+    % \item How to do 5.16, 5.25
+    % \item Does lemma 6.1 rely on regularity at all?
+    \item Want to talk over the fourth filter example (set of all sequences with the first $n$ elements fixed)
+    \item Fifth example filter is the collection of all sets where the ``growth rate'' of the set is decreasing
 \end{itemize}
 
 \end{document}
